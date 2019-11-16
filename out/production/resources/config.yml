@@ -1,0 +1,17 @@
+# MAIN CONFIG FILE FOR ACCURATEREADINGS
+# DO NOT forget ANY of the parameters, or may result in a server crash.
+# For more information, please read the wiki:
+# https://www.github.com/BetTD/AccurateReadings/wiki/ (not yet made)
+
+
+# What's the Pterodactyl panel URL? (this option is currently disabled, sorry!)
+panelUrl: "https://control.sparkedhost.us/" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
+# Generate the API key on your control panel.
+apiKey: "CHANGETHIS"
+# The server ID to monitor
+serverId: ""
+# Should the plugin add the restart feature? DEFAULT: false
+enableRestartCmd: false
+messages:
+  # Will be displayed when the command sender does not have the required permission.
+  no-permission: "&cYou do not have permission to execute this command."

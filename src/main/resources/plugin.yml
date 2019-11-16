@@ -1,0 +1,23 @@
+name: AccurateReadings
+author: BetTD
+authors: [stanjg, Pterodactyl Software]
+version: 1.0.0
+load: POSTWORLD
+website: https://www.github.com/BetTD/AccurateReading/
+main: me.bettd.accuratereadings.Main
+commands:
+  perf:
+    description: Displays the server resource usage
+    aliases: [performance, lag, gc]
+    usage: /<command>
+    permission: readings.perf
+  restart:
+    description: Restarts the server using the Pterodactyl API
+    usage: /<command>
+permissions:
+  readings.perf:
+    description: Gives access to resource usage commands
+    default: op
+  readings.restart:
+    description: Restarts the server using the Pterodactyl API
+    default: op

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Export">
+    <output-path>$PROJECT_DIR$/out/artifacts/Export</output-path>
+    <root id="archive" name="Export.jar">
+      <element id="library" level="project" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0" />
+      <element id="library" level="project" name="Gradle: com.squareup.okio:okio:1.14.0" />
+      <element id="library" level="project" name="Gradle: org.json:json:20180130" />
+    </root>
+  </artifact>
+</component>
