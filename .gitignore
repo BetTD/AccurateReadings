@@ -25,3 +25,6 @@ hs_err_pid*
 dependencias/
 Ptero4J-master-SNAPSHOT/
 out/
+
+gradlew
+*.bat
