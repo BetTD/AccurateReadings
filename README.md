@@ -1,5 +1,5 @@
 # AccurateReadings
-###### **Connects to a Pterodactyl panel to get the actual readings on resource usage.**
+#### **Connects to a Pterodactyl panel to get the actual readings on resource usage.**
 ## What's this plugin?
 AccurateReadings aims to provide accurate readings on resource usage by communicating with a Pterodactyl panel using the [Ptero4J](https://github.com/stanjg/Ptero4J) wrapper made by stanjg, and of course using the Pterodactyl panel API.
 ## Requirements
