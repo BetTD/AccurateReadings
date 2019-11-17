@@ -20,18 +20,9 @@ AccurateReadings aims to provide accurate readings on resource usage by communic
 - **The restart feature kills the server completely.** I have looked at the entire code and couldn't find a reason as to why would this happen.
 ## Disclaimer
 I am new to the programming world and my code may not look particularly good. **Any help is appreciated however**, so feel free to contribute to the code and make it more awesome!
-And now onto the serious disclaimer:
-```
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+And please read the `LICENSE` document on this repository.
 ## Credits
-A big thank you to Square for providing the [OkHttp](https://github.com/square/okhttp) and [Okio](https://github.com/square/okio) libraries used by Ptero4J, which is also a huge part of AccurateReadings by providing a wrapper to easily communicate with any Pterodactyl panel API. Thanks to the Sparked Host LLC community for giving ideas, suggestions and bug reports.
+A big thank you to Square for providing the [OkHttp](https://github.com/square/okhttp) and [Okio](https://github.com/square/okio) libraries used by [Ptero4J](https://github.com/stanjg/Ptero4J), which is also a huge part of AccurateReadings by providing a wrapper to easily communicate with any Pterodactyl panel API. Thanks to the Sparked Host LLC community for giving ideas, suggestions and bug reports.
 ## Version history
 - **1.0.0-dev01**. First version of the plugin that actually worked. It made the main thread hang while the plugin communicated with the panel.
 - **1.0.0-dev02**. Fixed the main thread freezing issue. Added new options to the config.yml
