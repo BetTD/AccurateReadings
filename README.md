@@ -1,5 +1,5 @@
-# AccurateReadings
-###### **Connects to a Pterodactyl panel to get the actual readings on resource usage.**
+# Accurate**Readings**
+#### **Connects to a Pterodactyl panel to get the actual readings on resource usage.**
 ## What's this plugin?
 AccurateReadings aims to provide accurate readings on resource usage by communicating with a Pterodactyl panel using the [Ptero4J](https://github.com/stanjg/Ptero4J) wrapper made by stanjg, and of course using the Pterodactyl panel API.
 ## Requirements
@@ -13,25 +13,17 @@ AccurateReadings aims to provide accurate readings on resource usage by communic
 5. Restart it. The server will then stop itself and the panel will detect your server in a crashed state. **This is normal.** Press Kill afterwards to stop the server restart and navigate to `plugins/AccurateReadings`, then open the config.yml file.
 6. **The panel link is hardcoded for now, as this is a pre-release for Sparked Host LLC, so the `panelUrl` option has no effect for now.** Then fill in the rest of the options: `serverId` is your server ID and you can find it on the main page of your Pterodactyl panel, at the very left of the server list; `apiKey` is the API key we copied earlier. Make sure you don't remove the quotation marks from any of the options.
 7. Save the changes and start the server. Take a look at the console and carefully read through the output. If you see this: `Ptero4J loaded! Successfully made contact with the panel.` It means you're completely good to go and the plugin is ready to go. Otherwise, double-check the config.yml file. If it still doesn't work, please read "Contact me" at the end of this document.
-
+## How to use
+**The main command is `/perf`**, although there are aliases: `/performance` and `/lag`. This may override the Essentials' `/lag` command, but you can fix this in the `commands.yml` file on your server or by using `/elag`.
 ## Known issues
 - `Command Dispatched Async: /spigot:tps`. This will be fixed in the full release.
 - `[00:20:31 WARN]: [okhttp3.OkHttpClient] A connection to <insert panel link here> was leaked. Did you forget to close a response body? To see where this was allocated, set the OkHttpClient logger level to FINE: Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);`. Unfortunately I cannot find a solution to this problem no matter what I try. I will contact the Ptero4J author in order to hopefully find a solution to this.
 - **The restart feature kills the server completely.** I have looked at the entire code and couldn't find a reason as to why would this happen.
 ## Disclaimer
 I am new to the programming world and my code may not look particularly good. **Any help is appreciated however**, so feel free to contribute to the code and make it more awesome!
-And now onto the serious disclaimer:
-```
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+And please read the `LICENSE` document on this repository.
 ## Credits
-A big thank you to Square for providing the [OkHttp](https://github.com/square/okhttp) and [Okio](https://github.com/square/okio) libraries used by Ptero4J, which is also a huge part of AccurateReadings by providing a wrapper to easily communicate with any Pterodactyl panel API. Thanks to the Sparked Host LLC community for giving ideas, suggestions and bug reports.
+A big thank you to Square for providing the [OkHttp](https://github.com/square/okhttp) and [Okio](https://github.com/square/okio) libraries used by [Ptero4J](https://github.com/stanjg/Ptero4J), which is also a huge part of AccurateReadings by providing a wrapper to easily communicate with any Pterodactyl panel API. Thanks to the Sparked Host LLC community for giving ideas, suggestions and bug reports.
 ## Version history
 - **1.0.0-dev01**. First version of the plugin that actually worked. It made the main thread hang while the plugin communicated with the panel.
 - **1.0.0-dev02**. Fixed the main thread freezing issue. Added new options to the config.yml
