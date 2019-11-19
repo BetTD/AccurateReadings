@@ -28,3 +28,4 @@ out/
 
 gradlew
 *.bat
+.idea/vcs.xml
