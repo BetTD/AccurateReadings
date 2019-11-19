@@ -29,3 +29,4 @@ out/
 gradlew
 *.bat
 .idea/vcs.xml
+.gradle/5.2.1/fileHashes/fileHashes.lock
