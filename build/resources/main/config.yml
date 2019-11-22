@@ -1,9 +1,0 @@
-# MAIN CONFIG FILE FOR ACCURATEREADINGS
-# DO NOT forget ANY of the parameters, or may result in a server crash.
-# For more information, please read the wiki:
-# https://www.github.com/BetTD/AccurateReadings/wiki/
-panelUrl: "https://control.sparkedhost.us/"
-apiKey: "CHANGETHIS"
-serverId: ""
-messages:
-  no-permission: "&cYou do not have permission to execute this command."
