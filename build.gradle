@@ -63,5 +63,5 @@ processResources {
 jar {
     actions = []
     dependsOn = []
-    dependsOn('fatJar')
+    //dependsOn('fatJar')
 }
