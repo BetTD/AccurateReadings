@@ -45,7 +45,7 @@ dependencies {
         ext { fatJarExclude = true }
     }
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
-    compile 'com.github.square:okhttp:3.10.0-SNAPSHOT'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0', {
         ext { fatJarExclude = true }
     }
