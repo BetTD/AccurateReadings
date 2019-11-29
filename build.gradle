@@ -17,8 +17,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
     //id 'eu.appsatori.fatjar'
     //id 'de.undercouch.download'
-    id 'idea'
-    id 'idea-utils'
+    //id 'idea'
+    //id 'idea-utils'
 }
 
 group 'me.bettd'
