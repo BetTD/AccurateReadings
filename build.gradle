@@ -5,20 +5,20 @@ buildscript {
         jcenter()
     }
 
-    dependencies {
-        classpath group: 'eu.appsatori', name: 'gradle-fatjar-plugin', version: '0.3'
-        classpath group: 'com.github.rodionmoiseev.gradle.plugins', name: 'idea-utils', version: '0.2'
-        classpath group: 'de.undercouch', name: 'gradle-download-task', version: '2.1.0'
-    }
+   // dependencies {
+   //     classpath group: 'eu.appsatori', name: 'eu.appsatori.fatjar.gradle.plugin', version: '0.3'
+   //     classpath group: 'com.github.rodionmoiseev.gradle.plugins', name: 'idea-utils', version: '0.2'
+   //     classpath group: 'de.undercouch', name: 'gradle-download-task', version: '2.1.0'
+   // }
 }
 
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow" version "5.2.0'
-    id 'eu.appsatori.fatjar'
-    id 'de.undercouch.download'
-    id 'idea'
-    id 'idea-utils'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    //id 'eu.appsatori.fatjar'
+    //id 'de.undercouch.download'
+    //id 'idea'
+    //id 'idea-utils'
 }
 
 group 'me.bettd'
@@ -45,7 +45,7 @@ dependencies {
         ext { fatJarExclude = true }
     }
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
-    compile 'com.github.square:okhttp:3.10.0-SNAPSHOT'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0', {
         ext { fatJarExclude = true }
     }
@@ -63,5 +63,5 @@ processResources {
 jar {
     actions = []
     dependsOn = []
-    dependsOn('fatJar')
+    //dependsOn('fatJar')
 }
