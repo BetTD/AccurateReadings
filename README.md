@@ -6,7 +6,7 @@ AccurateReadings aims to provide accurate readings on resource usage by communic
 - **A Pterodactyl panel.** If you're using a shared hosting plan and the panel is powered by Pterodactyl, then you are able to use this plugin. If you're selfhosting your server (home server, your PC, a VPS or dedicated server...), make sure you use the Pterodactyl panel, not only it's really easy to install, but is an excellent panel software. Please read the wiki for more information on how to check if your panel is powered by Pterodactyl.
 - **A CraftBukkit server.** This plugin is coded using the Spigot 1.8.8 API, but I have tested it on Paper 1.8.8 and 1.12.2, and have been told it also works on CraftBukkit 1.14.4 due to the use of simple API calls. Whatever you use, make sure it's CraftBukkit or one of its forks (e.g. Spigot, or one of its forks: Paper, BeerSpigot...)
 ## How to install
-1. Go to your Pterodactyl panel and, on the left sidebar, click on 'Account API'.
+1. Go to [your Pterodactyl panel](https://control.sparkedhost.us/account/api) and, on the left sidebar, click on 'Account API'.
 2. On the top right corner, click on Create New. Add a description (e.g. "AccurateReadings") and leave the 'Allowed Connection IPs' empty unless you're **100% sure** what IP will your server be using to connect to the API (this is hard to determine on shared hosting environments as it may use the node's main IP address to communicate).
 3. Copy the API key for later.
 4. Upload the plugin JAR (you can grab it from the [releases page](https://github.com/BetTD/AccurateReadings/releases/)) to the plugins directory on your server.
@@ -28,6 +28,6 @@ A big thank you to Square for providing the [OkHttp](https://github.com/square/o
 - **1.0.0-dev01**. First version of the plugin that actually worked. It made the main thread hang while the plugin communicated with the panel.
 - **1.0.0-dev02**. Fixed the main thread freezing issue. Added new options to the config.yml
 ## Contact me
-- Through Discord: `Raúl M.#0001`
+- Through Discord: `Raúl#1234` or the [Sparked Host Discord server](https://discord.gg/sparked)
 - Through e-mail: `between13131@gmail.com`
 - Through Twitter DMs: `@BetTD_ES` *(my profile here is in Spanish, but don't get scared by that)*
