@@ -1,5 +1,5 @@
 # MAIN CONFIG FILE FOR ACCURATEREADINGS
-# DO NOT forget ANY of the parameters, or may result in a server crash.
+# DO NOT forget ANY of the parameters, or it may result in a server crash.
 # For more information, please read the wiki:
 # https://www.github.com/BetTD/AccurateReadings/wiki/ (not yet made)
 
@@ -13,5 +13,5 @@ serverId: ""
 # Should the plugin add the restart feature? DEFAULT: false
 enableRestartCmd: false
 messages:
-  # Will be displayed when the command sender does not have the required permission.
+  # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
