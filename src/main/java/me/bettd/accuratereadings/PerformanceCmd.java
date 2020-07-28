@@ -12,12 +12,12 @@ public class PerformanceCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
         if(!(sender instanceof Player)) {
-            Thread checkStats = new CheckStats(sender, plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"), plugin.getConfig().getString("serverId"));
+            Thread checkStats = new CheckStats(plugin, sender, plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"), plugin.getConfig().getString("serverId"));
             new Thread(checkStats).start();
         } else {
             Player p = (Player) sender;
             if(p.hasPermission("readings.perf")) {
-                Thread checkStats = new CheckStats(sender, plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"), plugin.getConfig().getString("serverId"));
+                Thread checkStats = new CheckStats(plugin, sender, plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"), plugin.getConfig().getString("serverId"));
                 new Thread(checkStats).start();
             } else {
                 p.sendMessage(Methods.convert(plugin.getConfig().getString("messages.no-permission")));

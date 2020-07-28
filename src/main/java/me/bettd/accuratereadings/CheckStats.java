@@ -5,15 +5,17 @@ import com.stanjg.ptero4j.entities.panel.user.UserServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class CheckStats extends Thread {
-    private String out;
-    private String panelUrl;
-    private String apiKey;
-    private String serverId;
-    private CommandSender sender;
+    private final Main plugin;
+    private final String panelUrl;
+    private final String apiKey;
+    private final String serverId;
+    private final CommandSender sender;
 
-    public CheckStats(CommandSender sender, String panelUrl, String apiKey, String serverId) {
+    public CheckStats(Main plugin, CommandSender sender, String panelUrl, String apiKey, String serverId) {
+        this.plugin = plugin;
         this.panelUrl = panelUrl;
         this.apiKey = apiKey;
         this.serverId = serverId;
@@ -21,12 +23,13 @@ public class CheckStats extends Thread {
     }
 
     public void run() {
+
         StringBuilder outp = new StringBuilder();
         sender.sendMessage(Methods.convert("&e&lCOMMUNICATING WITH THE PANEL, SHOULD ONLY TAKE A FEW SECONDS."));
         PteroUserAPI api = new PteroUserAPI(panelUrl, apiKey);
         UserServer server = api.getServersController().getServer(serverId);
         if (!server.isOwner()) {
-            outp.append("&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser.");
+            outp.append("&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser.\n");
         }
         outp.append("&8&m        &r &f&lSTATS&r &8&m        &r\n" +
                 "&r &r\n" +
@@ -37,7 +40,13 @@ public class CheckStats extends Thread {
                 "&6&l- Server ID: " + "&e" + server.getId() + "\n" +
                 "&r &r");
         if (sender instanceof Player) {
-            ((Player) sender).chat("/spigot:tps");
+            BukkitScheduler scheduler = plugin.getServer().getScheduler();
+            scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    ((Player) sender).chat("/spigot:tps");
+                }
+            });
         } else {
             outp.append("&eFeel free to run the \"tps\" command in console now to check your server's ticks per second.");
         }
