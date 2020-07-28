@@ -1,7 +1,7 @@
 name: AccurateReadings
 author: BetTD
 authors: [stanjg, Pterodactyl Software]
-version: 1.0.0
+version: 1.1.0
 load: POSTWORLD
 website: https://www.github.com/BetTD/AccurateReading/
 main: me.bettd.accuratereadings.Main
