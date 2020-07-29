@@ -27,12 +27,18 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
         }
         getLogger().log(Level.INFO, "Using panel link: " + panelUrl);
-        if(apiKey.equalsIgnoreCase("CHANGETHIS")) {
-            getLogger().log(Level.WARNING, "You need to change the API key in your config.yml before using this plugin. Read how to get the API key on the GitHub page. SERVER WILL SHUT DOWN!");
-            Bukkit.getServer().shutdown();
+        if(apiKey.isEmpty()) {
+            getLogger().log(Level.SEVERE, "You have not provided an API key in your config.yml. Read how to get the API key on the GitHub page. The plugin will now disable itself.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+        else if(apiKey.equalsIgnoreCase("CHANGETHIS")) {
+            getLogger().log(Level.SEVERE, "You need to change the API key in your config.yml before using this plugin. Read how to get the API key on the GitHub page. The plugin will now disable itself.");
+            getServer().getPluginManager().disablePlugin(this);
         }
         if(serverId.isEmpty()) {
-            getLogger().log(Level.INFO, "The plugin needs a server ID on its config.yml in order for the plugin to work. The plugin will now disable itself.");
+            getLogger().log(Level.SEVERE, "The plugin needs a server ID on its config.yml in order for the plugin to work. The plugin will now disable itself.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
         try {
             new TestController(null, panelUrl+"api/client", "Bearer "+apiKey).testUserConnection();
         } catch (IOException e) {
