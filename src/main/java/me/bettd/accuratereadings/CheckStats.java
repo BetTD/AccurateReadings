@@ -39,6 +39,13 @@ public class CheckStats extends Thread {
                 "&6&l- Players: " + "&e" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers() + "\n" +
                 "&6&l- Server ID: " + "&e" + server.getId() + "\n" +
                 "&r &r");
+        if (plugin.getConfig().getBoolean("showSparkedTips")
+                && plugin.getConfig().getString("panelUrl").equals("https://control.sparkedhost.us/")
+                && sender.isOp()
+                && server.getServerUsage().getDiskUsage()>=45000) {
+            if (server.getServerUsage().getDiskUsage()<50000) outp.append("\n&7&l&oTIP: &7&oBy default, Sparked Host Minecraft hosting plans have a 50 GB storage soft-limit. It seems like you're approaching this limit. If you haven't already, please try to free up some space, or contact us if you have a valid reason for going over said limit. This message is only shown to server OPs and can be disabled in the config.");
+            else outp.append("\n&7&l&oTIP: &7&oBy default, Sparked Host Minecraft hosting plans have a 50 GB storage soft-limit. It seems like your server &c&ohas gone over this limit&7&o. If you haven't already, please try to free up some space, or contact us if you have a valid reason for going over said limit. This message is only shown to server OPs and can be disabled in the config.");
+        }
         if (sender instanceof Player) {
             BukkitScheduler scheduler = plugin.getServer().getScheduler();
             scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {

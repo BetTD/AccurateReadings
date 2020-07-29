@@ -12,6 +12,8 @@ apiKey: "CHANGETHIS"
 serverId: ""
 # Should the plugin add the restart feature? DEFAULT: false
 enableRestartCmd: false
+# Should we show tips specifically tailored towards Sparked Host servers? DEFAULT: true
+showSparkedTips: true
 messages:
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
