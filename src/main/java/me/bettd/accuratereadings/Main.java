@@ -26,6 +26,12 @@ public class Main extends JavaPlugin {
         }
         if(serverId.isEmpty()) {
             getLogger().log(Level.INFO, "The plugin needs a server ID on its config.yml in order for the plugin to work. The plugin will now disable itself.");
+        try {
+            new TestController(null, panelUrl+"api/client", "Bearer "+apiKey).testUserConnection();
+        } catch (IOException e) {
+            getLogger().log(Level.SEVERE, "An error occurred:");
+            e.printStackTrace();
+            getLogger().log(Level.SEVERE, "The plugin is not able to continue. The URL might be malformed or invalid, or the API key may be wrong.");
             getServer().getPluginManager().disablePlugin(this);
         }
         getLogger().log(Level.INFO, "Connection established!");
