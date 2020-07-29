@@ -19,6 +19,13 @@ public class Main extends JavaPlugin {
             getCommand("restart").setExecutor(new RestartCmd(this));
         }
         getLogger().log(Level.INFO, "Loaded all the commands. Connecting to the panel...");
+        if(panelUrl.isEmpty()) {
+            getLogger().log(Level.SEVERE, "You have not provided a panel URL in your config.yml. The plugin will now disable itself.");
+            getServer().getPluginManager().disablePlugin(this);
+        } else if (!Methods.validateURL(panelUrl)) {
+            getLogger().log(Level.SEVERE, "You have provided an invalid panel URL in your config.yml. The plugin will now disable itself.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
         getLogger().log(Level.INFO, "Using panel link: " + panelUrl);
         if(apiKey.equalsIgnoreCase("CHANGETHIS")) {
             getLogger().log(Level.WARNING, "You need to change the API key in your config.yml before using this plugin. Read how to get the API key on the GitHub page. SERVER WILL SHUT DOWN!");
