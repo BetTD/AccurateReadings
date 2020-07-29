@@ -1,9 +1,9 @@
 package me.bettd.accuratereadings;
 
-import com.stanjg.ptero4j.PteroUserAPI;
-import org.bukkit.Bukkit;
+import com.stanjg.ptero4j.controllers.TestController;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
@@ -30,8 +30,8 @@ public class Main extends JavaPlugin {
         } else {
             getLogger().log(Level.INFO, "PLUGIN LOADED.");
         }
-        PteroUserAPI api = new PteroUserAPI(panelUrl, apiKey);
-        getLogger().log(Level.INFO, "If the server has reached this point, congratulations.");
+        getLogger().log(Level.INFO, "Connection established!");
+        getLogger().log(Level.INFO, "We've tested the connection to the panel and it has succeeded! This does not mean that the API key has access to the server though, so if you encounter any issue, please make sure the server specified in the config is owned by the account used to create the API key, or has subuser access to this server.");
 
     }
 
