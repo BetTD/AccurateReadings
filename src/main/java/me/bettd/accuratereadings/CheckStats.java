@@ -31,9 +31,9 @@ public class CheckStats extends Thread {
         if (!server.isOwner()) {
             outp.append("&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser.\n");
         }
-        String diskUsage = String.valueOf(server.getServerUsage().getDiskUsage())+" MB";
+        String diskUsage = server.getServerUsage().getDiskUsage() +" MB";
         if (server.getServerUsage().getDiskUsage() >= 1000) {
-            diskUsage = String.valueOf(server.getServerUsage().getDiskUsage()/1000)+" GB";
+            diskUsage = server.getServerUsage().getDiskUsage() / 1000 +" GB";
         }
         outp.append("&8&m        &r &f&lSTATS&r &8&m        &r\n" +
                 "&r &r\n" +
