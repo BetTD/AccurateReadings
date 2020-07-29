@@ -10,7 +10,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        String panelUrl = "https://control.sparkedhost.us"; //getConfig().getString("panelUrl"); // Currently removed due to pre-release with Sparked Host LLC
+        String panelUrl = getConfig().getString("panelUrl");
         String apiKey = getConfig().getString("apiKey");
         String serverId = getConfig().getString("serverId");
         getLogger().log(Level.INFO, "AccurateReadings is loading...");
