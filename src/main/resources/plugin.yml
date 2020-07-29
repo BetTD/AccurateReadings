@@ -11,9 +11,6 @@ commands:
     aliases: [performance, lag, gc]
     usage: /<command>
     permission: readings.perf
-  restart:
-    description: Restarts the server using the Pterodactyl API
-    usage: /<command>
 permissions:
   readings.perf:
     description: Gives access to resource usage commands

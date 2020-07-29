@@ -16,7 +16,7 @@ public class Main extends JavaPlugin {
         getLogger().log(Level.INFO, "AccurateReadings is loading...");
         getCommand("perf").setExecutor(new PerformanceCmd(this));
         if(getConfig().getBoolean("enableRestartCmd")) {
-            getCommand("restart").setExecutor(new RestartCmd(this));
+            getServer().getPluginManager().registerEvents(new Events(), this);
         }
         getLogger().log(Level.INFO, "Loaded all the commands. Connecting to the panel...");
         if(panelUrl.isEmpty()) {
