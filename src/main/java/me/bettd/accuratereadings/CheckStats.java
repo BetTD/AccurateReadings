@@ -31,11 +31,15 @@ public class CheckStats extends Thread {
         if (!server.isOwner()) {
             outp.append("&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser.\n");
         }
+        String diskUsage = String.valueOf(server.getServerUsage().getDiskUsage())+" MB";
+        if (server.getServerUsage().getDiskUsage() >= 1000) {
+            diskUsage = String.valueOf(server.getServerUsage().getDiskUsage()/1000)+" GB";
+        }
         outp.append("&8&m        &r &f&lSTATS&r &8&m        &r\n" +
                 "&r &r\n" +
                 "&6&l- CPU: " + "&e" + server.getServerUsage().getCpuUsage() + "%\n" +
                 "&6&l- RAM: " + "&e" + server.getServerUsage().getMemoryUsage() + " &7/ &e" + server.getLimits().getMemory() + " MB\n" +
-                "&6&l- Disk: " + "&e" + server.getServerUsage().getDiskUsage() + " MB\n" +
+                "&6&l- Disk: " + "&e" + diskUsage + "\n" +
                 "&6&l- Players: " + "&e" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers() + "\n" +
                 "&6&l- Server ID: " + "&e" + server.getId() + "\n" +
                 "&r &r");
