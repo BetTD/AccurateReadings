@@ -27,8 +27,6 @@ public class Main extends JavaPlugin {
         if(serverId.isEmpty()) {
             getLogger().log(Level.INFO, "The plugin needs a server ID on its config.yml in order for the plugin to work. The plugin will now disable itself.");
             getServer().getPluginManager().disablePlugin(this);
-        } else {
-            getLogger().log(Level.INFO, "PLUGIN LOADED.");
         }
         getLogger().log(Level.INFO, "Connection established!");
         getLogger().log(Level.INFO, "We've tested the connection to the panel and it has succeeded! This does not mean that the API key has access to the server though, so if you encounter any issue, please make sure the server specified in the config is owned by the account used to create the API key, or has subuser access to this server.");
