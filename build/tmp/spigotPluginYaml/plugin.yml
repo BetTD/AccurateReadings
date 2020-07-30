@@ -1,4 +1,4 @@
-main: me.bettd.accuratereadings.Main
+main: com.sparkedhost.accuratereadings.Main
 name: AccurateReadings
 version: 1.1.0-SNAPSHOT
 authors: [BetTD, stanjg, Pterodactyl Software]
