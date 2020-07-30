@@ -28,15 +28,17 @@ public class CheckStats extends Thread {
         sender.sendMessage(Methods.convert("&e&lCOMMUNICATING WITH THE PANEL, SHOULD ONLY TAKE A FEW SECONDS."));
         PteroUserAPI api = new PteroUserAPI(panelUrl, apiKey);
         UserServer server = api.getServersController().getServer(serverId);
-        if (!server.isOwner()) {
-            outp.append("&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser.\n");
+        if (!server.isOwner() && !plugin.getConfig().getString("messages.api-key-not-owner").isEmpty()) {
+            outp.append(plugin.getConfig().getString("messages.api-key-not-owner")+"\n");
         }
         String diskUsage = server.getServerUsage().getDiskUsage() +" MB";
         if (server.getServerUsage().getDiskUsage() >= 1000) {
             diskUsage = server.getServerUsage().getDiskUsage() / 1000 +" GB";
         }
-        outp.append("&8&m        &r &f&lSTATS&r &8&m        &r\n" +
-                "&r &r\n" +
+        if (!plugin.getConfig().getString("messages.stats-title").isEmpty()) {
+            outp.append(plugin.getConfig().getString("messages.stats-title")+"\n");
+        }
+        outp.append("&r &r\n" +
                 "&6&l- CPU: " + "&e" + server.getServerUsage().getCpuUsage() + "%\n" +
                 "&6&l- RAM: " + "&e" + server.getServerUsage().getMemoryUsage() + " &7/ &e" + server.getLimits().getMemory() + " MB\n" +
                 "&6&l- Disk: " + "&e" + diskUsage + "\n" +
