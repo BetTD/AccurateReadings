@@ -16,6 +16,10 @@ enableRestartCmd: false
 # This will ONLY work if the panel URL is https://control.sparkedhost.us/, this will NOT work with other panels
 # as these tips are specifically aimed towards Sparked Host servers.
 showSparkedTips: true
+# This cooldown helps prevent getting rate-limited from the Pterodactyl panel. DEFAULT: true
+cooldownEnable: true
+# Cooldown time. DEFAULT: 30
+cooldownTime: 30
 
 # --------------------------------------------------------------------------------------
 # MESSAGES SECTION

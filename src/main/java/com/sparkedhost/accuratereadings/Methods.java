@@ -1,4 +1,4 @@
-package me.bettd.accuratereadings;
+package com.sparkedhost.accuratereadings;
 
 import org.bukkit.ChatColor;
 

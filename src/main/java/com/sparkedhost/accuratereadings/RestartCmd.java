@@ -1,4 +1,4 @@
-package me.bettd.accuratereadings;
+package com.sparkedhost.accuratereadings;
 
 import com.stanjg.ptero4j.PteroUserAPI;
 import com.stanjg.ptero4j.entities.objects.server.PowerAction;
