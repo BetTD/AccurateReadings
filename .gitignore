@@ -33,3 +33,4 @@ out/
 .idea/workspace.xml
 build/
 gradlew
+*.lock
