@@ -11,7 +11,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.nar
 *.ear
@@ -31,4 +31,5 @@ out/
 .gradle/
 .idea/misc.xml
 .idea/workspace.xml
+build/
 gradlew
