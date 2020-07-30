@@ -50,9 +50,7 @@ dependencies {
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
     compile 'com.squareup.okio:okio:2.7.0'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
-    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0', {
-        ext { fatJarExclude = true }
-    }
+    compile 'org.json:json:20200518'
     testImplementation 'junit:junit:4.12'
 }
 
@@ -92,6 +90,7 @@ shadowJar {
         include(dependency('com.github.stanjg:Ptero4J:master-SNAPSHOT'))
         include(dependency('com.squareup.okhttp3:okhttp:3.10.0'))
         include(dependency('com.squareup.okio:okio:2.7.0'))
+        include(dependency('org.json:json:20200518'))
     }
 }
 
