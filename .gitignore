@@ -28,6 +28,7 @@ out/
 
 *.bat
 .idea/vcs.xml
-.gradle/5.2.1/fileHashes/fileHashes.lock
+.gradle/
 .idea/misc.xml
 .idea/workspace.xml
+gradlew

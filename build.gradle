@@ -1,28 +1,29 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+//import org.apache.tools.ant.filters.ReplaceTokens
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-   // dependencies {
-   //     classpath group: 'eu.appsatori', name: 'eu.appsatori.fatjar.gradle.plugin', version: '0.3'
-   //     classpath group: 'com.github.rodionmoiseev.gradle.plugins', name: 'idea-utils', version: '0.2'
-   //     classpath group: 'de.undercouch', name: 'gradle-download-task', version: '2.1.0'
-   // }
-}
+//buildscript {
+//    repositories {
+//        jcenter()
+//    }
+//
+//    dependencies {
+//        classpath 'com.github.jengelman.gradle.plugins:shadow:6.0.0'
+//    }
+//}
 
 plugins {
-    id 'java'
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
-    //id 'eu.appsatori.fatjar'
-    //id 'de.undercouch.download'
-    //id 'idea'
-    //id 'idea-utils'
+    id "groovy"
+    id "java"
+    id 'jacoco'
+    id "idea"
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'kr.entree.spigradle' version '1.2.4'
 }
 
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
 group 'me.bettd'
-version '1.0.1-SNAPSHOT'
+version '1.1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -35,33 +36,79 @@ repositories {
             includeGroup 'org.spigotmc'
         }
     }
-    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = uri('https://oss.sonatype.org/content/repositories/snapshots') }
     maven { url = 'https://jitpack.io' }
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT', {
-        ext { fatJarExclude = true }
-    }
+    compileOnly spigot('1.8.8')
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
+    compile 'com.squareup.okio:okio:2.7.0'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0', {
         ext { fatJarExclude = true }
     }
+    testImplementation 'junit:junit:4.12'
 }
 
-processResources {
-    filter ReplaceTokens, tokens: [
-            "version": project.property("version")
-    ]
+spigot {
+    authors = ['BetTD', 'stanjg', 'Pterodactyl Software']
+    load = POST_WORLD
+    commands {
+        perf {
+            aliases = ['performance', 'lag', 'gc']
+            description = 'Displays the server resource usage'
+            permission = 'readings.perf'
+            usage = '/<command>'
+        }
+    }
+    permissions {
+        'readings.perf' {
+            description = 'Gives access to resource usage commands'
+            defaults = 'op'
+        }
+        'readings.restart' {
+            description = 'Restarts the server using the Pterodactyl API'
+            defaults = 'op'
+        }
+    }
 }
 
-
-
-
-jar {
-    actions = []
-    dependsOn = []
-    //dependsOn('fatJar')
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
 }
+
+shadowJar {
+    classifier = ''
+    dependencies {
+        include(dependency('com.github.stanjg:Ptero4J:master-SNAPSHOT'))
+        include(dependency('com.squareup.okhttp3:okhttp:3.10.0'))
+        include(dependency('com.squareup.okio:okio:2.7.0'))
+    }
+}
+
+tasks.build.dependsOn(shadowJar)
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    ignoreFailures = false
+}
+
+//processResources {
+//    filter ReplaceTokens, tokens: [
+//            "version": project.property("version")
+//    ]
+//}
+
+defaultTasks 'build'
