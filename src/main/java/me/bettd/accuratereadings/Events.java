@@ -14,7 +14,7 @@ public class Events implements Listener {
         if(e.getMessage().startsWith("/restart")) {
             PteroUserAPI api = new PteroUserAPI(Bukkit.getPluginManager().getPlugin("AccurateReadings").getConfig().getString("panelUrl"), Bukkit.getPluginManager().getPlugin("AccurateReadings").getConfig().getString("apiKey"));
             UserServer server = api.getServersController().getServer(Bukkit.getPluginManager().getPlugin("AccurateReadings").getConfig().getString("serverId"));
-            server.sendPowerAction(PowerAction.RESTART);
+            server.restart();
             e.setCancelled(true);
         }
     }
