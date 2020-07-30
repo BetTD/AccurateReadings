@@ -26,7 +26,7 @@ public class PerformanceCmd implements CommandExecutor {
                         new Thread(checkStats).start();
                         cooldown.setCooldown(p.getUniqueId(), System.currentTimeMillis());
                     } else {
-                        long timeremaining = TimeUnit.MILLISECONDS.toSeconds(timeLeft) - CooldownManager.DEFAULT_COOLDOWN;
+                        long timeremaining = Math.abs(TimeUnit.MILLISECONDS.toSeconds(timeLeft) - CooldownManager.DEFAULT_COOLDOWN);
                         p.sendMessage(Methods.convert("&cYou must wait "+timeremaining+" seconds before you can check the stats again."));
                     }
                 } else {
