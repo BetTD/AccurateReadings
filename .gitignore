@@ -32,5 +32,4 @@ out/
 .idea/misc.xml
 .idea/workspace.xml
 build/
-gradlew
 *.lock
