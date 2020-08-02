@@ -1,15 +1,3 @@
-//import org.apache.tools.ant.filters.ReplaceTokens
-
-//buildscript {
-//    repositories {
-//        jcenter()
-//    }
-//
-//    dependencies {
-//        classpath 'com.github.jengelman.gradle.plugins:shadow:6.0.0'
-//    }
-//}
-
 plugins {
     id "groovy"
     id "java"
@@ -103,11 +91,5 @@ test {
     }
     ignoreFailures = false
 }
-
-//processResources {
-//    filter ReplaceTokens, tokens: [
-//            "version": project.property("version")
-//    ]
-//}
 
 defaultTasks 'build'
