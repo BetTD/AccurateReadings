@@ -1,13 +1,11 @@
 package com.sparkedhost.accuratereadings;
 
 import com.stanjg.ptero4j.PteroUserAPI;
-import com.stanjg.ptero4j.entities.objects.server.PowerAction;
 import com.stanjg.ptero4j.entities.panel.user.UserServer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class Events implements Listener {
