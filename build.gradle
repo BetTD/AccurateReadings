@@ -4,7 +4,7 @@ plugins {
     id 'jacoco'
     id "idea"
     id 'com.github.johnrengelman.shadow' version '6.0.0'
-    id 'kr.entree.spigradle' version '1.2.4'
+    id 'kr.entree.spigradle' version '2.2.4'
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -34,12 +34,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly spigot('1.8.8')
+    compileOnly spigot('1.12.2')
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
-    compile 'com.squareup.okio:okio:2.7.0'
-    compile 'com.squareup.okhttp3:okhttp:3.10.0'
-    compile 'org.json:json:20200518'
-    testImplementation 'junit:junit:4.12'
+    compile 'com.squareup.okio:okio:2.10.0'
+    compile 'com.squareup.okhttp3:okhttp:4.9.1'
+    compile 'org.json:json:20210307'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 spigot {
@@ -73,12 +73,11 @@ compileJava {
 }
 
 shadowJar {
-    classifier = ''
     dependencies {
         include(dependency('com.github.stanjg:Ptero4J:master-SNAPSHOT'))
-        include(dependency('com.squareup.okhttp3:okhttp:3.10.0'))
-        include(dependency('com.squareup.okio:okio:2.7.0'))
-        include(dependency('org.json:json:20200518'))
+        include(dependency('com.squareup.okhttp3:okhttp:4.9.1'))
+        include(dependency('com.squareup.okio:okio:2.10.0'))
+        include(dependency('org.json:json:20210307'))
     }
 }
 
