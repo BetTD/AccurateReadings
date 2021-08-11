@@ -12,6 +12,9 @@ apiKey: "CHANGETHIS"
 serverId: ""
 # Should the plugin add the restart feature? DEFAULT: false
 enableRestartCmd: false
+# Should the plugin also broadcast a message to the entire server whenever the restart command is ran successfully? DEFAULT: false
+# NOTE: This has no effect if enableRestartCmd is false.
+announceRestart: false
 # Should we show tips specifically tailored towards Sparked Host servers? DEFAULT: true
 # This will ONLY work if the panel URL is https://control.sparkedhost.us/, this will NOT work with other panels
 # as these tips are specifically aimed towards Sparked Host servers.
@@ -34,3 +37,6 @@ messages:
   api-key-not-owner: "&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser."
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
+  # The plugin will broadcast this message to the entire server whenever the restart command is used.
+  # This only works with the restart feature of this plugin, and will only display this message if announceRestart is set to true.
+  restart-broadcast: "&e&lTHE SERVER IS RESTARTING!"
