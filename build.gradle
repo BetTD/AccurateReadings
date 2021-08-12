@@ -39,6 +39,7 @@ dependencies {
     compileOnly spigot('1.12.2')
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    // TODO Remove Ptero4J and make our own wrapper
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
     compile 'com.squareup.okio:okio:2.10.0'
     compile 'com.squareup.okhttp3:okhttp:4.9.1'

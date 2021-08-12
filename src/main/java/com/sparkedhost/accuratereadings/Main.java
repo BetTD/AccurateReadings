@@ -17,27 +17,29 @@ public class Main extends JavaPlugin {
         getCommand("perf").setExecutor(new PerformanceCmd(this));
         if(getConfig().getBoolean("enableRestartCmd")) {
             getServer().getPluginManager().registerEvents(new Events(), this);
+            // TODO Switch back to command
         }
         getLogger().log(Level.INFO, "Loaded all the commands. Connecting to the panel...");
+        // TODO Improve logic (remove repeated calls to disableItself())
         if(panelUrl.isEmpty()) {
             getLogger().log(Level.SEVERE, "You have not provided a panel URL in your config.yml. The plugin will now disable itself.");
-            getServer().getPluginManager().disablePlugin(this);
+            disableItself();
         } else if (!Methods.validateURL(panelUrl)) {
             getLogger().log(Level.SEVERE, "You have provided an invalid panel URL in your config.yml. The plugin will now disable itself.");
-            getServer().getPluginManager().disablePlugin(this);
+            disableItself();
         }
         getLogger().log(Level.INFO, "Using panel link: " + panelUrl);
         if(apiKey.isEmpty()) {
             getLogger().log(Level.SEVERE, "You have not provided an API key in your config.yml. Read how to get the API key on the GitHub page. The plugin will now disable itself.");
-            getServer().getPluginManager().disablePlugin(this);
+            disableItself();
         }
         else if(apiKey.equalsIgnoreCase("CHANGETHIS")) {
             getLogger().log(Level.SEVERE, "You need to change the API key in your config.yml before using this plugin. Read how to get the API key on the GitHub page. The plugin will now disable itself.");
-            getServer().getPluginManager().disablePlugin(this);
+            disableItself();
         }
         if(serverId.isEmpty()) {
             getLogger().log(Level.SEVERE, "The plugin needs a server ID on its config.yml in order for the plugin to work. The plugin will now disable itself.");
-            getServer().getPluginManager().disablePlugin(this);
+            disableItself();
         }
         try {
             new TestController(null, panelUrl+"api/client", "Bearer "+apiKey).testUserConnection();
@@ -45,7 +47,7 @@ public class Main extends JavaPlugin {
             getLogger().log(Level.SEVERE, "An error occurred:");
             e.printStackTrace();
             getLogger().log(Level.SEVERE, "The plugin is not able to continue. The URL might be malformed or invalid, or the API key may be wrong.");
-            getServer().getPluginManager().disablePlugin(this);
+            disableItself();
         }
         getLogger().log(Level.INFO, "Connection established!");
         getLogger().log(Level.INFO, "We've tested the connection to the panel and it has succeeded! This does not mean that the API key has access to the server though, so if you encounter any issue, please make sure the server specified in the config is owned by the account used to create the API key, or has subuser access to this server.");
@@ -54,5 +56,9 @@ public class Main extends JavaPlugin {
 
     public void onDisable() {
         getLogger().log(Level.INFO, "Plugin is disabling.");
+    }
+
+    private void disableItself() {
+        getServer().getPluginManager().disablePlugin(this);
     }
 }
