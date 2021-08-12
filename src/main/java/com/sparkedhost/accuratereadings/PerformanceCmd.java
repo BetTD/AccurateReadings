@@ -1,5 +1,6 @@
 package com.sparkedhost.accuratereadings;
 
+import com.sparkedhost.accuratereadings.managers.CooldownManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

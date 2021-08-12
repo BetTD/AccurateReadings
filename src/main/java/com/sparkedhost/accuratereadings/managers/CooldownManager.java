@@ -1,8 +1,8 @@
 // SOURCE: https://www.spigotmc.org/wiki/feature-command-cooldowns/
 
-package com.sparkedhost.accuratereadings;
+package com.sparkedhost.accuratereadings.managers;
 
-import org.bukkit.Bukkit;
+import com.sparkedhost.accuratereadings.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ public class CooldownManager {
 
     private final Map<UUID, Long> cooldowns = new HashMap<>();
 
-    public static final int DEFAULT_COOLDOWN = Bukkit.getPluginManager().getPlugin("AccurateReadings").getConfig().getInt("cooldownTime");
+    public static final int DEFAULT_COOLDOWN = Main.getInstance().getSettings().cooldown_time;
 
     public void setCooldown(UUID player, long time){
         if(time < 1) {
