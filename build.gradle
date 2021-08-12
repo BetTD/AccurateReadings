@@ -5,6 +5,8 @@ plugins {
     id "idea"
     id 'com.github.johnrengelman.shadow' version '6.0.0'
     id 'kr.entree.spigradle' version '2.2.4'
+    // TODO Switch to Lombok plugin instead of using the non-plugin version, and update Gradle (only can do after Ptero4J is no longer a dependency)
+    //id "io.freefair.lombok" version "6.1.0-m3"
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -35,6 +37,8 @@ repositories {
 
 dependencies {
     compileOnly spigot('1.12.2')
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
     compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
     compile 'com.squareup.okio:okio:2.10.0'
     compile 'com.squareup.okhttp3:okhttp:4.9.1'
