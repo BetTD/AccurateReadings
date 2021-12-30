@@ -52,3 +52,6 @@ messages:
   # The plugin will broadcast this message to the entire server whenever the restart command is used.
   # This only works with the restart feature of this plugin, and will only display this message if announceRestart is set to true.
   restart-broadcast: "&e&lTHE SERVER IS RESTARTING!"
+
+# DO NOT change this, it's used internally within the plugin to determine the config version.
+version: 1
