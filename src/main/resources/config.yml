@@ -4,25 +4,37 @@
 # https://github.com/sparkedhost/AccurateReadings/wiki/Configuration-Guide/
 
 
-# What's the Pterodactyl panel URL?
-panelUrl: "https://control.sparkedhost.us/" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
-# Generate the API key on your control panel.
-apiKey: "CHANGETHIS"
-# The server ID to monitor
-serverId: ""
-# Should the plugin add the restart feature? DEFAULT: false
-enableRestartCmd: false
-# Should the plugin also broadcast a message to the entire server whenever the restart command is ran successfully? DEFAULT: false
-# NOTE: This has no effect if enableRestartCmd is false.
-announceRestart: false
-# Should we show tips specifically tailored towards Sparked Host servers? DEFAULT: true
-# This will ONLY work if the panel URL is https://control.sparkedhost.us/, this will NOT work with other panels
-# as these tips are specifically aimed towards Sparked Host servers.
-showSparkedTips: true
-# This cooldown helps prevent getting rate-limited from the Pterodactyl panel. DEFAULT: true
-cooldownEnable: true
-# Cooldown time. DEFAULT: 30
-cooldownTime: 30
+pterodactyl:
+  # What's the Pterodactyl panel URL?
+  panel-url: "https://control.sparkedhost.us/" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
+  # Generate the API key on your control panel.
+  api-key: "CHANGETHIS"
+  # The server ID to monitor
+  server-id: ""
+
+restart:
+  # Should the plugin add the restart feature? It is experimental and may not always work. DEFAULT: false
+  enabled: false
+  # Should the plugin also broadcast a message to the entire server whenever the restart command is ran successfully? DEFAULT: false
+  # NOTE: This has no effect if "enabled" is set false. You can customize the broadcast message in the MESSAGES section below.
+  announce-restarts: false
+
+# Customization options for the /perf command or any of its aliases
+perf-customization:
+  # Should we show tips specifically tailored towards Sparked Host servers? DEFAULT: true
+  # This will ONLY work if the panel URL is https://control.sparkedhost.us/, this will NOT work with other panels
+  # as these tips are specifically aimed towards Sparked Host servers.
+  show-sparked-tips: true
+  # Command to run right after sending the stats, without the slash. DEFAULT: spigot:tps
+  # The player or console that sends the /perf command will also execute this one, so make sure they're able to run it.
+  # Leave blank for no command.
+  post-command: "spigot:tps"
+
+cooldown:
+  # This cooldown helps prevent getting rate-limited from the Pterodactyl panel. DEFAULT: true
+  enabled: true
+  # Cooldown time in seconds. DEFAULT: 30
+  time: 30
 
 # --------------------------------------------------------------------------------------
 # MESSAGES SECTION
@@ -34,7 +46,7 @@ messages:
   # This is the title of the stats message.
   stats-title: "&8&m        &r &f&lSTATS&r &8&m        &r"
   # This message will show up BEFORE the stats message if the API key provided belongs to an account that doesn't own the server but has access to it.
-  api-key-not-owner: "&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser."
+  api-key-not-owner: "&e&lINFO: &6The account that owns the API key set in the config does not own this server, but has access to it (admin or subuser account)."
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
   # The plugin will broadcast this message to the entire server whenever the restart command is used.

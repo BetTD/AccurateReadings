@@ -1,18 +1,29 @@
 package com.sparkedhost.accuratereadings;
 
+import com.sparkedhost.accuratereadings.config.Settings;
 import com.stanjg.ptero4j.controllers.TestController;
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
+    @Getter
+    private static Main instance;
+
+    @Getter
+    private final Settings settings = new Settings();
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        String panelUrl = getConfig().getString("panelUrl");
-        String apiKey = getConfig().getString("apiKey");
-        String serverId = getConfig().getString("serverId");
+        getSettings().loadValues();
+
+        String panelUrl = getSettings().pterodactyl_panelUrl;
+        String apiKey = getSettings().pterodactyl_apiKey;
+        String serverId = getSettings().pterodactyl_serverId;
+
         getLogger().log(Level.INFO, "AccurateReadings is loading...");
         getCommand("perf").setExecutor(new PerformanceCmd(this));
         if(getConfig().getBoolean("enableRestartCmd")) {
