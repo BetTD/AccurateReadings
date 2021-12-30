@@ -19,27 +19,30 @@ public class PerformanceCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
         Thread checkStats = new CheckStats(plugin, sender, panelUrl, apiKey, serverId);
-        if(!(sender instanceof Player)) {
+
+        if (!(sender instanceof Player)) {
             new Thread(checkStats).start();
-        } else {
-            Player p = (Player) sender;
-            if(p.hasPermission("readings.perf")) {
-                long timeLeft = System.currentTimeMillis() - cooldown.getCooldown(p.getUniqueId());
-                if(plugin.getSettings().cooldown_enabled) {
-                    if(TimeUnit.MILLISECONDS.toSeconds(timeLeft) >= CooldownManager.DEFAULT_COOLDOWN) {
-                        new Thread(checkStats).start();
-                        cooldown.setCooldown(p.getUniqueId(), System.currentTimeMillis());
-                    } else {
-                        long timeremaining = Math.abs(TimeUnit.MILLISECONDS.toSeconds(timeLeft) - CooldownManager.DEFAULT_COOLDOWN);
-                        p.sendMessage(Methods.convert("&cYou must wait " + timeremaining + " seconds before you can check the stats again."));
-                    }
-                } else {
-                    new Thread(checkStats).start();
-                }
-            } else {
-                p.sendMessage(Methods.convert(Main.getInstance().getSettings().messages_noPerms));
-            }
+            return true;
         }
+
+        Player p = (Player) sender;
+
+        if (!p.hasPermission("readings.perf")) {
+            p.sendMessage(Methods.convert(Main.getInstance().getSettings().messages_noPerms));
+            return false;
+        }
+
+        long timeLeft = System.currentTimeMillis() - cooldown.getCooldown(p.getUniqueId());
+
+        if (plugin.getSettings().cooldown_enabled && TimeUnit.MILLISECONDS.toSeconds(timeLeft) < CooldownManager.DEFAULT_COOLDOWN) {
+            long timeremaining = Math.abs(TimeUnit.MILLISECONDS.toSeconds(timeLeft) - CooldownManager.DEFAULT_COOLDOWN);
+            p.sendMessage(Methods.convert("&cYou must wait " + timeremaining + " seconds before you can check the stats again."));
+            return false;
+        }
+
+        if (plugin.getSettings().cooldown_enabled) cooldown.setCooldown(p.getUniqueId(), System.currentTimeMillis());
+        new Thread(checkStats).start();
+
         return true;
     }
 }

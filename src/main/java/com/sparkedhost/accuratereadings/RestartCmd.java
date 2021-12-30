@@ -17,28 +17,30 @@ public class RestartCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
-        if(!(sender instanceof Player)) {
-            sender.sendMessage(Methods.convert("&e&lCOMMUNICATING WITH THE PANEL, SHOULD ONLY TAKE TWO SECONDS."));
-            PteroUserAPI api = new PteroUserAPI(plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"));
-            String serverId = plugin.getConfig().getString("serverId");
-            UserServer server = api.getServersController().getServer(serverId);
-
-            sender.sendMessage(Methods.convert("&cRESTARTING THE SERVER"));
-            server.sendPowerAction(PowerAction.RESTART);
-        } else {
-            Player p = (Player) sender;
-            if(p.hasPermission("readings.restart")) {
-                sender.sendMessage(Methods.convert("&e&lCOMMUNICATING WITH THE PANEL, SHOULD ONLY TAKE TWO SECONDS."));
-                PteroUserAPI api = new PteroUserAPI(plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"));
-                String serverId = plugin.getConfig().getString("serverId");
-                UserServer server = api.getServersController().getServer(serverId);
-
-                Bukkit.getLogger().log(Level.WARNING, "RESTARTING THE SERVER AS PER REQUESTED BY USER " + p.getName());
-                server.sendPowerAction(PowerAction.RESTART);
-            } else {
-                p.sendMessage(Methods.convert(plugin.getConfig().getString("messages.no-permission")));
-            }
+        // If sender is a player, and it does not have the "readings.restart" permission node, send no permission message and return
+        if (sender instanceof Player && !((Player) sender).getPlayer().hasPermission("readings.restart")) {
+            sender.sendMessage(Methods.convert(plugin.getConfig().getString("messages.no-permission")));
+            return false;
         }
+
+        // From this point forward, there are no player-specific API calls, so there's no need to cast the sender to a Player object.
+
+        sender.sendMessage(Methods.convert("&7&oEstablishing connection to the panel..."));
+
+        // Attempt to establish an API connection
+        PteroUserAPI api = new PteroUserAPI(plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"));
+
+        String serverId = plugin.getConfig().getString("serverId");
+        UserServer server = api.getServersController().getServer(serverId);
+
+        sender.sendMessage(Methods.convert("&aConnection established, restarting the server."));
+
+
+        // If sender is a player, log the action
+        if (sender instanceof Player) plugin.log(Level.INFO, String.format("User %s has requested a server restart, executing.", sender.getName()));
+
+        server.sendPowerAction(PowerAction.RESTART);
+
         return true;
     }
 }

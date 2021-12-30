@@ -15,11 +15,12 @@ public class CooldownManager {
     public static final int DEFAULT_COOLDOWN = Main.getInstance().getSettings().cooldown_time;
 
     public void setCooldown(UUID player, long time){
-        if(time < 1) {
+        if (time < 1) {
             cooldowns.remove(player);
-        } else {
-            cooldowns.put(player, time);
+            return;
         }
+
+        cooldowns.put(player, time);
     }
 
     public Long getCooldown(UUID player){

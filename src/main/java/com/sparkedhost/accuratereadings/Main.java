@@ -3,6 +3,7 @@ package com.sparkedhost.accuratereadings;
 import com.sparkedhost.accuratereadings.config.Settings;
 import com.stanjg.ptero4j.controllers.TestController;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -18,6 +19,18 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
+        // This plugin's expected config version
+        int expectedConfigVersion = 1;
+
+        // Config version stored on config file
+        int configVersion = getConfig().getInt("version");
+
+        if (configVersion != expectedConfigVersion) {
+            log(Level.SEVERE, String.format("Config version does not match! Expected %s, got %s.", expectedConfigVersion, configVersion));
+            disableItself();
+        }
+
         getSettings().loadValues();
 
         String panelUrl = getSettings().pterodactyl_panelUrl;
@@ -70,6 +83,12 @@ public class Main extends JavaPlugin {
     }
 
     private void disableItself() {
+        log(Level.SEVERE, "");
         getServer().getPluginManager().disablePlugin(this);
+    }
+
+    public void log(Level level, String msg) {
+        // Shorthand function to log a message into console with the appropriate prefix
+        Bukkit.getLogger().log(level, String.format("[%s] %s", getName(), msg));
     }
 }
