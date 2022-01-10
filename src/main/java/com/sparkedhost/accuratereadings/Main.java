@@ -21,6 +21,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         saveDefaultConfig();
 
         // This plugin's expected config version
