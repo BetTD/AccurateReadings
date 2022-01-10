@@ -12,9 +12,9 @@ public class PerformanceCmd implements CommandExecutor {
     private Main plugin;
     public PerformanceCmd(Main plugin) { this.plugin = plugin; }
     private final CooldownManager cooldown = new CooldownManager();
-    private String panelUrl = plugin.getSettings().pterodactyl_panelUrl;
-    private String apiKey = plugin.getSettings().pterodactyl_apiKey;
-    private String serverId = plugin.getSettings().pterodactyl_serverId;
+    private final String panelUrl = plugin.getSettings().pterodactyl_panelUrl;
+    private final String apiKey = plugin.getSettings().pterodactyl_apiKey;
+    private final String serverId = plugin.getSettings().pterodactyl_serverId;
 
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
@@ -35,8 +35,8 @@ public class PerformanceCmd implements CommandExecutor {
         long timeLeft = System.currentTimeMillis() - cooldown.getCooldown(p.getUniqueId());
 
         if (plugin.getSettings().cooldown_enabled && TimeUnit.MILLISECONDS.toSeconds(timeLeft) < CooldownManager.DEFAULT_COOLDOWN) {
-            long timeremaining = Math.abs(TimeUnit.MILLISECONDS.toSeconds(timeLeft) - CooldownManager.DEFAULT_COOLDOWN);
-            p.sendMessage(Methods.convert("&cYou must wait " + timeremaining + " seconds before you can check the stats again."));
+            long timeRemaining = Math.abs(TimeUnit.MILLISECONDS.toSeconds(timeLeft) - CooldownManager.DEFAULT_COOLDOWN);
+            p.sendMessage(Methods.convert("&cYou must wait " + timeRemaining + " seconds before you can check the stats again."));
             return false;
         }
 
