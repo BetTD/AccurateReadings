@@ -1,6 +1,7 @@
 package com.sparkedhost.accuratereadings;
 
 import com.sparkedhost.accuratereadings.config.Settings;
+import com.stanjg.ptero4j.PteroUserAPI;
 import com.stanjg.ptero4j.controllers.TestController;
 import lombok.Getter;
 import org.bukkit.Bukkit;
