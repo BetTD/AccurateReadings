@@ -16,6 +16,8 @@ public class Main extends JavaPlugin {
     @Getter
     private final Settings settings = new Settings();
 
+    public PteroUserAPI pteroAPI;
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
@@ -39,10 +41,12 @@ public class Main extends JavaPlugin {
 
         getLogger().log(Level.INFO, "AccurateReadings is loading...");
         getCommand("perf").setExecutor(new PerformanceCmd(this));
-        if(getConfig().getBoolean("enableRestartCmd")) {
+
+        if (getConfig().getBoolean("enableRestartCmd")) {
             getServer().getPluginManager().registerEvents(new Events(), this);
             // TODO Switch back to command
         }
+
         getLogger().log(Level.INFO, "Loaded all the commands. Connecting to the panel...");
         // TODO Improve logic (remove repeated calls to disableItself())
         if(panelUrl.isEmpty()) {
@@ -75,6 +79,9 @@ public class Main extends JavaPlugin {
         }
         getLogger().log(Level.INFO, "Connection established!");
         getLogger().log(Level.INFO, "We've tested the connection to the panel and it has succeeded! This does not mean that the API key has access to the server though, so if you encounter any issue, please make sure the server specified in the config is owned by the account used to create the API key, or has subuser access to this server.");
+
+        // Initialize Pterodactyl User API interface
+        pteroAPI = new PteroUserAPI(panelUrl, apiKey);
 
     }
 
