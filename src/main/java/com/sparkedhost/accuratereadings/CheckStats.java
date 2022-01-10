@@ -8,14 +8,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 public class CheckStats extends Thread {
-    private final Main plugin;
     private final String panelUrl;
     private final String apiKey;
     private final String serverId;
     private final CommandSender sender;
 
-    public CheckStats(Main plugin, CommandSender sender, String panelUrl, String apiKey, String serverId) {
-        this.plugin = plugin;
+    public CheckStats(CommandSender sender, String panelUrl, String apiKey, String serverId) {
         this.panelUrl = panelUrl;
         this.apiKey = apiKey;
         this.serverId = serverId;
@@ -40,8 +38,8 @@ public class CheckStats extends Thread {
 
         StringBuilder outputBuilder = new StringBuilder();
 
-        if (!server.isOwner() && !plugin.getConfig().getString("messages.api-key-not-owner").isEmpty()) {
-            outputBuilder.append(plugin.getConfig().getString("messages.api-key-not-owner")).append("\n");
+        if (!server.isOwner() && !Main.getInstance().getConfig().getString("messages.api-key-not-owner").isEmpty()) {
+            outputBuilder.append(Main.getInstance().getConfig().getString("messages.api-key-not-owner")).append("\n");
         }
 
         char cpuUsageColorCode;
@@ -81,8 +79,8 @@ public class CheckStats extends Thread {
         }
 
         // If a stats title is set in the config, append it
-        if (!plugin.getConfig().getString("messages.stats-title").isEmpty()) {
-            outputBuilder.append(plugin.getConfig().getString("messages.stats-title")).append("\n");
+        if (!Main.getInstance().getConfig().getString("messages.stats-title").isEmpty()) {
+            outputBuilder.append(Main.getInstance().getConfig().getString("messages.stats-title")).append("\n");
         }
 
         // Append base message
@@ -107,8 +105,8 @@ public class CheckStats extends Thread {
                 .replace("{PLAYERLIMIT}", String.valueOf(Bukkit.getMaxPlayers()));
 
         // If a post command is set in the config, make the sender execute it
-        if (!plugin.getSettings().perf_postCommand.isEmpty()) {
-            Bukkit.getServer().dispatchCommand(sender, plugin.getSettings().perf_postCommand);
+        if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {
+            Bukkit.getServer().dispatchCommand(sender, Main.getInstance().getSettings().perf_postCommand);
         }
 
         // Finally, send response to sender

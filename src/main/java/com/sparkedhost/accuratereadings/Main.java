@@ -43,7 +43,7 @@ public class Main extends JavaPlugin {
         String serverId = getSettings().pterodactyl_serverId;
 
         getLogger().log(Level.INFO, "AccurateReadings is loading...");
-        getCommand("perf").setExecutor(new PerformanceCmd(this));
+        getCommand("perf").setExecutor(new PerformanceCmd());
 
         if (getConfig().getBoolean("enableRestartCmd")) {
             getServer().getPluginManager().registerEvents(new Events(), this);
