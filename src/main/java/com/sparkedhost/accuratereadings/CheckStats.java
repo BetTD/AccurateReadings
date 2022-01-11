@@ -1,22 +1,15 @@
 package com.sparkedhost.accuratereadings;
 
-import com.stanjg.ptero4j.PteroUserAPI;
-import com.stanjg.ptero4j.entities.objects.server.ServerLimits;
-import com.stanjg.ptero4j.entities.objects.server.ServerUsage;
-import com.stanjg.ptero4j.entities.panel.user.UserServer;
+import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
+import com.mattmalec.pterodactyl4j.entities.Limit;
+import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 public class CheckStats extends Thread {
-    private final String panelUrl;
-    private final String apiKey;
-    private final String serverId;
     private final CommandSender sender;
 
-    public CheckStats(CommandSender sender, String panelUrl, String apiKey, String serverId) {
-        this.panelUrl = panelUrl;
-        this.apiKey = apiKey;
-        this.serverId = serverId;
+    public CheckStats(CommandSender sender) {
         this.sender = sender;
     }
 
@@ -26,35 +19,31 @@ public class CheckStats extends Thread {
         // Alert the sender that the plugin is going to attempt to establish a panel connection
         sender.sendMessage(Methods.convert("&7&oEstablishing connection to the panel..."));
 
-        // Init user API to interact with the panel
-        PteroUserAPI api = new PteroUserAPI(panelUrl, apiKey);
+        PterodactylManager manager = Main.getInstance().pteroAPI;
+        ClientServer server = manager.getServer();
 
-        // Find server matching the ID set in the config
-        UserServer server = api.getServersController().getServer(serverId);
-
-        // Store the different objects as local variables for ease of use
-        ServerUsage usage = server.getServerUsage();
-        ServerLimits limits = server.getLimits();
+        // Store Limits object as local variables for ease of use
+        Limit limits = server.getLimits();
 
         StringBuilder outputBuilder = new StringBuilder();
 
-        if (!server.isOwner() && !Main.getInstance().getConfig().getString("messages.api-key-not-owner").isEmpty()) {
+        if (!server.isServerOwner() && !Main.getInstance().getConfig().getString("messages.api-key-not-owner").isEmpty()) {
             outputBuilder.append(Main.getInstance().getConfig().getString("messages.api-key-not-owner")).append("\n");
         }
 
         char cpuUsageColorCode;
-        String diskUsage = usage.getDiskUsage() + " MB";
+        String diskUsage = manager.getDiskUsage() + " MB";
         String diskLimit = limits.getDisk() + " MB";
-        String memoryUsage = usage.getMemoryUsage() + " MB";
+        String memoryUsage = manager.getMemoryUsage() + " MB";
         String memoryLimit = limits.getMemory() + " MB";
 
         /*
          * Changes CPU usage color depending on its value.
          * I don't know a better way to do this.
          */
-        if (usage.getCpuUsage() < 50) {
+        if (manager.getCpuUsage() < 50) {
             cpuUsageColorCode = 'a';
-        } else if (usage.getCpuUsage() >= 50 && usage.getCpuUsage() < 80) {
+        } else if (manager.getCpuUsage() >= 50 && manager.getCpuUsage() < 80) {
             cpuUsageColorCode = 'e';
         } else {
             cpuUsageColorCode = 'c';
@@ -62,20 +51,20 @@ public class CheckStats extends Thread {
 
         // The following block of if statements just changes the unit to GBs when sizes are over 1000 MBs
 
-        if (usage.getMemoryUsage() >= 1000) {
-            memoryUsage = usage.getMemoryUsage() / 1000 + " GB";
+        if (manager.getMemoryUsage() >= 1000) {
+            memoryUsage = manager.getMemoryUsage() / 1000 + " GB";
         }
 
-        if (limits.getMemory() >= 1000) {
-            diskUsage = limits.getMemory() / 1000 + " GB";
+        if (limits.getMemoryLong() >= 1000) {
+            memoryLimit = limits.getMemoryLong() / 1000 + " GB";
         }
 
-        if (usage.getDiskUsage() >= 1000) {
-            diskUsage = usage.getDiskUsage() / 1000 + " GB";
+        if (manager.getDiskUsage() >= 1000) {
+            diskUsage = manager.getDiskUsage() / 1000 + " GB";
         }
 
-        if (limits.getDisk() >= 1000) {
-            diskUsage = limits.getDisk() / 1000 + " GB";
+        if (limits.getDiskLong() >= 1000) {
+            diskLimit = limits.getDiskLong() / 1000 + " GB";
         }
 
         // If a stats title is set in the config, append it
@@ -95,8 +84,8 @@ public class CheckStats extends Thread {
 
         // Convert output to a string and replace variables with their actual values
         String output = outputBuilder.toString()
-                .replace("{CURRENTCPU}", "&" + cpuUsageColorCode + usage.getCpuUsage())
-                .replace("{MAXCPU}", String.valueOf(limits.getCpu()))
+                .replace("{CURRENTCPU}", "&" + cpuUsageColorCode + manager.getCpuUsage())
+                .replace("{MAXCPU}", String.valueOf(limits.getCPU()))
                 .replace("{CURRENTRAM}", memoryUsage)
                 .replace("{MAXRAM}", memoryLimit)
                 .replace("{CURRENTDISK}", diskUsage)

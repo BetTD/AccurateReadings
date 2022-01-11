@@ -1,11 +1,15 @@
 package com.sparkedhost.accuratereadings;
 
+import com.mattmalec.pterodactyl4j.client.entities.Account;
+import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
+import com.mattmalec.pterodactyl4j.exceptions.LoginException;
+import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.config.Settings;
+import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
@@ -73,20 +77,17 @@ public class Main extends JavaPlugin {
 
         // Initialize Pterodactyl User API interface
         pteroAPI = new PterodactylManager(panelUrl, apiKey, serverId);
+        pteroAPI.initializeAPI();
 
         try {
+            Account account = pteroAPI.getAccount();
+            ClientServer server = pteroAPI.getServer();
+            log(Level.INFO, "Connection established successfully! The API key specified belongs to " + account.getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
 
-        } catch (IOException e) {
-            getLogger().log(Level.SEVERE, "An error occurred:");
+        } catch (LoginException | NotFoundException e) {
             e.printStackTrace();
-            getLogger().log(Level.SEVERE, "The plugin is not able to continue. The URL might be malformed or invalid, or the API key may be wrong.");
             disableItself();
         }
-        getLogger().log(Level.INFO, "Connection established!");
-        getLogger().log(Level.INFO, "We've tested the connection to the panel and it has succeeded! This does not mean that the API key has access to the server though, so if you encounter any issue, please make sure the server specified in the config is owned by the account used to create the API key, or has subuser access to this server.");
-
-
-
     }
 
     public void onDisable() {
@@ -94,7 +95,7 @@ public class Main extends JavaPlugin {
     }
 
     private void disableItself() {
-        log(Level.SEVERE, "");
+        log(Level.SEVERE, "The plugin will now disable itself.");
         getServer().getPluginManager().disablePlugin(this);
     }
 

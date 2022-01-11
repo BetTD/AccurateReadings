@@ -16,7 +16,7 @@ public class PerformanceCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
-        Thread checkStats = new CheckStats(sender, panelUrl, apiKey, serverId);
+        Thread checkStats = new CheckStats(sender);
 
         if (!(sender instanceof Player)) {
             new Thread(checkStats).start();

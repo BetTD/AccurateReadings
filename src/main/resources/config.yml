@@ -7,7 +7,8 @@
 
 pterodactyl:
   # What's the Pterodactyl panel URL?
-  panel-url: "https://control.sparkedhost.us/" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
+  # Note: include the protocol in the URL. Do not add the trailing slash! Example: https://control.sparkedhost.us
+  panel-url: "https://control.sparkedhost.us" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
   # Generate the API key on your control panel.
   api-key: "CHANGETHIS"
   # The server ID to monitor

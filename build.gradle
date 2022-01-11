@@ -13,7 +13,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
 group 'com.sparkedhost'
-version '1.2.0-test02'
+version '1.2.0-test03'
 
 sourceCompatibility = 1.8
 
@@ -42,12 +42,12 @@ dependencies {
     compileOnly spigot('1.12.2')
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    compile 'com.squareup.okio:okio:2.10.0'
-    compile 'com.squareup.okhttp3:okhttp:4.9.3'
-    compile 'org.json:json:20210307'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
+    //compile 'com.squareup.okio:okio:2.10.0'
+    //compile 'com.squareup.okhttp3:okhttp:4.9.3'
+    //compile 'org.json:json:20210307'
+    //compile 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
     testImplementation 'junit:junit:4.13.2'
-    implementation 'com.mattmalec:Pterodactyl4J:v2.BETA_92'
+    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_92'
 }
 
 spigot {
@@ -81,11 +81,11 @@ compileJava {
 
 shadowJar {
     dependencies {
-        include(dependency('com.github.stanjg:Ptero4J:master-SNAPSHOT'))
-        include(dependency('com.squareup.okio:okio:2.10.0'))
-        include(dependency('com.squareup.okhttp3:okhttp:4.9.3'))
-        include(dependency('org.json:json:20210307'))
-        include(dependency('org.jetbrains.kotlin:kotlin-stdlib:1.6.10'))
+        //include(dependency('com.squareup.okio:okio:2.10.0'))
+        //include(dependency('com.squareup.okhttp3:okhttp:4.9.3'))
+        //include(dependency('org.json:json:20210307'))
+        //include(dependency('org.jetbrains.kotlin:kotlin-stdlib:1.6.10'))
+        include dependency('com.mattmalec:Pterodactyl4J:2.BETA_92')
     }
 }
 
