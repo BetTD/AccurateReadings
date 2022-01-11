@@ -83,7 +83,7 @@ public class Main extends JavaPlugin {
             Account account = pteroAPI.getAccount();
             ClientServer server = pteroAPI.getServer();
             log(Level.INFO, "Connection established successfully! The API key specified belongs to " + account.getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
-
+            pteroAPI.initializeWebsocket();
         } catch (LoginException | NotFoundException e) {
             e.printStackTrace();
             disableItself();
