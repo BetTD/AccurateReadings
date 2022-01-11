@@ -1,9 +1,7 @@
 package com.sparkedhost.accuratereadings;
 
-import com.stanjg.ptero4j.PteroUserAPI;
-import com.stanjg.ptero4j.entities.objects.server.PowerAction;
-import com.stanjg.ptero4j.entities.panel.user.UserServer;
-import org.bukkit.Bukkit;
+import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
+import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,19 +25,13 @@ public class RestartCmd implements CommandExecutor {
 
         sender.sendMessage(Methods.convert("&7&oEstablishing connection to the panel..."));
 
-        // Attempt to establish an API connection
-        PteroUserAPI api = new PteroUserAPI(plugin.getConfig().getString("panelUrl"), plugin.getConfig().getString("apiKey"));
-
-        String serverId = plugin.getConfig().getString("serverId");
-        UserServer server = api.getServersController().getServer(serverId);
-
-        sender.sendMessage(Methods.convert("&aConnection established, restarting the server."));
-
+        PterodactylManager manager = Main.getInstance().pteroAPI;
+        ClientServer server = manager.getServer();
 
         // If sender is a player, log the action
         if (sender instanceof Player) plugin.log(Level.INFO, String.format("User %s has requested a server restart, executing.", sender.getName()));
 
-        server.sendPowerAction(PowerAction.RESTART);
+        server.restart().execute();
 
         return true;
     }
