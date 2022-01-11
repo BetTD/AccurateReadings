@@ -52,16 +52,16 @@ public class CheckStats extends Thread {
 
         // The following block of if statements just changes the unit to GBs when applicable
 
-        if (manager.getMemoryUsage() >= 1024000) {
-            memoryUsage = manager.getMemoryUsage() / 1024000 + " GB";
+        if (manager.getMemoryUsage() >= 1024000000) {
+            memoryUsage = manager.getMemoryUsage() / 1024000000 + " GB";
         }
 
         if (limits.getMemoryLong() >= 1024) {
             memoryLimit = limits.getMemoryLong() / 1024 + " GB";
         }
 
-        if (manager.getDiskUsage() >= 1024000) {
-            diskUsage = manager.getDiskUsage() / 1024000 + " GB";
+        if (manager.getDiskUsage() >= 1024000000) {
+            diskUsage = manager.getDiskUsage() / 1024000000 + " GB";
         }
 
         if (limits.getDiskLong() >= 1024) {
