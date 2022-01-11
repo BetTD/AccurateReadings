@@ -92,7 +92,8 @@ public class CheckStats extends Thread {
                 .replace("{CURRENTDISK}", diskUsage)
                 .replace("{MAXDISK}", diskLimit)
                 .replace("{PLAYERCOUNT}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
-                .replace("{PLAYERLIMIT}", String.valueOf(Bukkit.getMaxPlayers()));
+                .replace("{PLAYERLIMIT}", String.valueOf(Bukkit.getMaxPlayers()))
+                .replace("{SERVERID}", server.getIdentifier());
 
         // If a post command is set in the config, make the sender execute it
         if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {
