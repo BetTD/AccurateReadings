@@ -52,7 +52,6 @@ public class PterodactylManager {
     public void initializeWebsocket() {
         ResourceUsageManager resourceUsageManager = new ResourceUsageManager();
         resourceUsageManager.initializeListener();
-        Main.getInstance().log(Level.INFO, "Resource usage manager has been started.");
     }
 
     @Getter
