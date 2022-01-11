@@ -50,22 +50,22 @@ public class CheckStats extends Thread {
             cpuUsageColorCode = 'c';
         }
 
-        // The following block of if statements just changes the unit to GBs when sizes are over 1000 MBs
+        // The following block of if statements just changes the unit to GBs when applicable
 
-        if (manager.getMemoryUsage() >= 1000) {
-            memoryUsage = manager.getMemoryUsage() / 1000 + " GB";
+        if (manager.getMemoryUsage() >= 1024000) {
+            memoryUsage = manager.getMemoryUsage() / 1024000 + " GB";
         }
 
-        if (limits.getMemoryLong() >= 1000) {
-            memoryLimit = limits.getMemoryLong() / 1000 + " GB";
+        if (limits.getMemoryLong() >= 1024) {
+            memoryLimit = limits.getMemoryLong() / 1024 + " GB";
         }
 
-        if (manager.getDiskUsage() >= 1000) {
-            diskUsage = manager.getDiskUsage() / 1000 + " GB";
+        if (manager.getDiskUsage() >= 1024000) {
+            diskUsage = manager.getDiskUsage() / 1024000 + " GB";
         }
 
-        if (limits.getDiskLong() >= 1000) {
-            diskLimit = limits.getDiskLong() / 1000 + " GB";
+        if (limits.getDiskLong() >= 1024) {
+            diskLimit = limits.getDiskLong() / 1024 + " GB";
         }
 
         // If a stats title is set in the config, append it
@@ -76,9 +76,9 @@ public class CheckStats extends Thread {
         // Append base message
         outputBuilder.append(String.join("\n",
                 emptyLine,
-                "&6&l- CPU: &e{CURRENTCPU}% &7(limit: {MAXCPU})",
+                "&6&l- CPU: &e{CURRENTCPU}% &7(limit: {MAXCPU}%)",
                 "&6&l- RAM: &e{CURRENTRAM} &7(limit: {MAXRAM})",
-                "&6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK}",
+                "&6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK})",
                 "&6&l- Players: &e{PLAYERCOUNT}&7/&f{PLAYERLIMIT}",
                 "&6&l- Server ID: &e{SERVERID}",
                 emptyLine));
