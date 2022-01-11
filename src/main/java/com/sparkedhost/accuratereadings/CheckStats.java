@@ -5,6 +5,7 @@ import com.mattmalec.pterodactyl4j.entities.Limit;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class CheckStats extends Thread {
     private final CommandSender sender;
@@ -95,7 +96,13 @@ public class CheckStats extends Thread {
 
         // If a post command is set in the config, make the sender execute it
         if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {
-            Bukkit.getServer().dispatchCommand(sender, Main.getInstance().getSettings().perf_postCommand);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Bukkit.getServer().dispatchCommand(sender, Main.getInstance().getSettings().perf_postCommand);
+                }
+            }.runTask(Main.getInstance());
+
         }
 
         // Finally, send response to sender
