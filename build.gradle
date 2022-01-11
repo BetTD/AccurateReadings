@@ -28,6 +28,9 @@ repositories {
     }
     maven { url = uri('https://oss.sonatype.org/content/repositories/snapshots') }
     maven { url = 'https://jitpack.io' }
+    maven {
+        url = 'https://repo.mattmalec.com/repository/releases'
+    }
     allprojects {
         repositories {
             maven { url 'https://jitpack.io' }
@@ -44,7 +47,7 @@ dependencies {
     compile 'org.json:json:20210307'
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
     testImplementation 'junit:junit:4.13.2'
-    //implementation 'com.mattmalec:Pterodactyl4J:v2.BETA_92'
+    implementation 'com.mattmalec:Pterodactyl4J:v2.BETA_92'
 }
 
 spigot {

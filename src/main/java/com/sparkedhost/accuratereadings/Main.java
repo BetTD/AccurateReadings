@@ -1,8 +1,6 @@
 package com.sparkedhost.accuratereadings;
 
 import com.sparkedhost.accuratereadings.config.Settings;
-import com.stanjg.ptero4j.PteroUserAPI;
-import com.stanjg.ptero4j.controllers.TestController;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +15,7 @@ public class Main extends JavaPlugin {
     @Getter
     private final Settings settings = new Settings();
 
-    public PteroUserAPI pteroAPI;
+    public PterodactylManager pteroAPI;
 
     @Override
     public void onEnable() {
@@ -72,8 +70,12 @@ public class Main extends JavaPlugin {
             getLogger().log(Level.SEVERE, "The plugin needs a server ID on its config.yml in order for the plugin to work. The plugin will now disable itself.");
             disableItself();
         }
+
+        // Initialize Pterodactyl User API interface
+        pteroAPI = new PterodactylManager(panelUrl, apiKey, serverId);
+
         try {
-            new TestController(null, panelUrl+"api/client", "Bearer "+apiKey).testUserConnection();
+
         } catch (IOException e) {
             getLogger().log(Level.SEVERE, "An error occurred:");
             e.printStackTrace();
@@ -83,8 +85,7 @@ public class Main extends JavaPlugin {
         getLogger().log(Level.INFO, "Connection established!");
         getLogger().log(Level.INFO, "We've tested the connection to the panel and it has succeeded! This does not mean that the API key has access to the server though, so if you encounter any issue, please make sure the server specified in the config is owned by the account used to create the API key, or has subuser access to this server.");
 
-        // Initialize Pterodactyl User API interface
-        pteroAPI = new PteroUserAPI(panelUrl, apiKey);
+
 
     }
 
