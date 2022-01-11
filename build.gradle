@@ -42,10 +42,6 @@ dependencies {
     compileOnly spigot('1.12.2')
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    //compile 'com.squareup.okio:okio:2.10.0'
-    //compile 'com.squareup.okhttp3:okhttp:4.9.3'
-    //compile 'org.json:json:20210307'
-    //compile 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.mattmalec:Pterodactyl4J:2.BETA_92'
 }
