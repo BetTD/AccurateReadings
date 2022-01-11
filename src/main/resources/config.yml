@@ -13,6 +13,10 @@ pterodactyl:
   api-key: "CHANGETHIS"
   # The server ID to monitor
   server-id: ""
+  # Should the plugin use a websocket for resource usage polling?
+  # IMPORTANT NOTE: This is disabled by default as Pterodactyl (more specifically Wings) needs to be configured to allow
+  # requests from any origin. Read more here: https://github.com/mattmalec/Pterodactyl4J/issues/24
+  use-websocket: false
 
 restart:
   # Should the plugin add the restart feature? It is experimental and may not always work. DEFAULT: false

@@ -7,6 +7,7 @@ public class Settings {
     public String pterodactyl_panelUrl;
     public String pterodactyl_apiKey;
     public String pterodactyl_serverId;
+    public boolean pterodactyl_useWebsocket;
 
     // Restart
     public boolean restart_enabled;
@@ -31,6 +32,7 @@ public class Settings {
         pterodactyl_panelUrl = Main.getInstance().getConfig().getString("pterodactyl.panel-url");
         pterodactyl_apiKey = Main.getInstance().getConfig().getString("pterodactyl.api-key");
         pterodactyl_serverId = Main.getInstance().getConfig().getString("pterodactyl.server-id");
+        pterodactyl_useWebsocket = Main.getInstance().getConfig().getBoolean("pterodactyl.use-websocket");
 
         // Restart
         restart_enabled = Main.getInstance().getConfig().getBoolean("restart.enabled");

@@ -10,7 +10,6 @@ import com.mattmalec.pterodactyl4j.client.ws.events.StatsUpdateEvent;
 import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.logging.Level;
 
@@ -18,15 +17,17 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
     PterodactylManager manager = Main.getInstance().pteroAPI;
 
     public void initializeListener() {
-        //manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
-        //        .map(builder -> builder.addEventListeners(new ResourceUsageManager())).executeAsync(WebSocketBuilder::build);
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            Utilization usage = manager.getServer().retrieveUtilization().execute();
-            manager.setCpuUsage((long) usage.getCPU());
-            manager.setMemoryUsage(usage.getMemory());
-            manager.setDiskUsage(usage.getDisk());
-        }, 0L, 200L);
+        if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
+            manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
+                    .map(builder -> builder.addEventListeners(new ResourceUsageManager())).executeAsync(WebSocketBuilder::build);
+        } else {
+            Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
+                Utilization usage = manager.getServer().retrieveUtilization().execute();
+                manager.setCpuUsage((long) usage.getCPU());
+                manager.setMemoryUsage(usage.getMemory());
+                manager.setDiskUsage(usage.getDisk());
+            }, 0L, 200L);
+        }
     }
 
     @Override
