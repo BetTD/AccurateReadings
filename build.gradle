@@ -80,13 +80,7 @@ compileJava {
 }
 
 shadowJar {
-    dependencies {
-        //include(dependency('com.squareup.okio:okio:2.10.0'))
-        //include(dependency('com.squareup.okhttp3:okhttp:4.9.3'))
-        //include(dependency('org.json:json:20210307'))
-        //include(dependency('org.jetbrains.kotlin:kotlin-stdlib:1.6.10'))
-        include dependency('com.mattmalec:Pterodactyl4J:2.BETA_92')
-    }
+    configurations = [project.configurations.runtimeClasspath]
 }
 
 tasks.build.dependsOn(shadowJar)
