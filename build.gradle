@@ -13,7 +13,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
 group 'com.sparkedhost'
-version '1.2.0-test05'
+version '1.2.0-test06'
 
 sourceCompatibility = 1.8
 
