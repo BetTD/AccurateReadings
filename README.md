@@ -1,5 +1,6 @@
 # Accurate**Readings**
-#### **Connects to a Pterodactyl panel to get the actual readings on resource usage.**
+#### **WARNING:** This version of the plugin will **NOT** work with Pterodactyl 1.x and newer versions of Spigot.
+A new version (v1.2.0) is being worked on in a separate branch, it is not produciton-ready yet but it is, to our knowledge, fully functional so far. Please take a look at the ``v1.2.0`` branch if you'd like to compile the code yourself, or check out the following pull request to stay updated: [#1 AccurateReadings v1.2.0](https://github.com/SparkedHost/AccurateReadings/pull/1)
 ## What's this plugin?
 AccurateReadings aims to provide accurate readings on resource usage by communicating with a Pterodactyl panel using the [Ptero4J](https://github.com/stanjg/Ptero4J) wrapper made by stanjg, and of course using the Pterodactyl panel API.
 ## Requirements
