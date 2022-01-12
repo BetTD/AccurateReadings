@@ -6,12 +6,8 @@ import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
 import com.mattmalec.pterodactyl4j.client.entities.PteroClient;
 import com.mattmalec.pterodactyl4j.exceptions.LoginException;
 import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
-import com.sparkedhost.accuratereadings.Main;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.logging.Level;
 
 public class PterodactylManager {
     String panelURL;
@@ -49,10 +45,14 @@ public class PterodactylManager {
         }
     }
 
-    public void initializeWebsocket() {
+    public void initializeResourceUsageMonitor() {
         ResourceUsageManager resourceUsageManager = new ResourceUsageManager();
         resourceUsageManager.initializeListener();
     }
+
+    @Getter
+    @Setter
+    boolean isServerOwner;
 
     @Getter
     @Setter
@@ -60,9 +60,21 @@ public class PterodactylManager {
 
     @Getter
     @Setter
+    long memoryLimit;
+
+    @Getter
+    @Setter
     long diskUsage;
 
     @Getter
     @Setter
+    long diskLimit;
+
+    @Getter
+    @Setter
     long cpuUsage;
+
+    @Getter
+    @Setter
+    long cpuLimit;
 }

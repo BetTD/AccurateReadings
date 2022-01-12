@@ -17,26 +17,19 @@ public class CheckStats extends Thread {
     String emptyLine = "&r &r";
 
     public void run() {
-        // Alert the sender that the plugin is going to attempt to establish a panel connection
-        sender.sendMessage(Methods.convert("&7&oEstablishing connection to the panel..."));
-
         PterodactylManager manager = Main.getInstance().pteroAPI;
-        ClientServer server = manager.getServer();
-
-        // Store Limits object as local variables for ease of use
-        Limit limits = server.getLimits();
 
         StringBuilder outputBuilder = new StringBuilder();
 
-        if (!server.isServerOwner() && !Main.getInstance().getConfig().getString("messages.api-key-not-owner").isEmpty()) {
+        if (!manager.isServerOwner() && !Main.getInstance().getConfig().getString("messages.api-key-not-owner").isEmpty()) {
             outputBuilder.append(Main.getInstance().getConfig().getString("messages.api-key-not-owner")).append("\n");
         }
 
         char cpuUsageColorCode;
         String diskUsage = manager.getDiskUsage() + " MB";
-        String diskLimit = limits.getDisk() + " MB";
+        String diskLimit = manager.getDiskLimit() + " MB";
         String memoryUsage = manager.getMemoryUsage() + " MB";
-        String memoryLimit = limits.getMemory() + " MB";
+        String memoryLimit = manager.getMemoryLimit() + " MB";
 
         /*
          * Changes CPU usage color depending on its value.
@@ -56,16 +49,16 @@ public class CheckStats extends Thread {
             memoryUsage = manager.getMemoryUsage() / 1024000000 + " GB";
         }
 
-        if (limits.getMemoryLong() >= 1024) {
-            memoryLimit = limits.getMemoryLong() / 1024 + " GB";
+        if (manager.getMemoryLimit() >= 1024) {
+            memoryLimit = manager.getMemoryLimit() / 1024 + " GB";
         }
 
         if (manager.getDiskUsage() >= 1024000000) {
             diskUsage = manager.getDiskUsage() / 1024000000 + " GB";
         }
 
-        if (limits.getDiskLong() >= 1024) {
-            diskLimit = limits.getDiskLong() / 1024 + " GB";
+        if (manager.getDiskLimit() >= 1024) {
+            diskLimit = manager.getDiskLimit() / 1024 + " GB";
         }
 
         // If a stats title is set in the config, append it
@@ -86,14 +79,14 @@ public class CheckStats extends Thread {
         // Convert output to a string and replace variables with their actual values
         String output = outputBuilder.toString()
                 .replace("{CURRENTCPU}", "&" + cpuUsageColorCode + manager.getCpuUsage())
-                .replace("{MAXCPU}", String.valueOf(limits.getCPU()))
+                .replace("{MAXCPU}", String.valueOf(manager.getCpuLimit()))
                 .replace("{CURRENTRAM}", memoryUsage)
                 .replace("{MAXRAM}", memoryLimit)
                 .replace("{CURRENTDISK}", diskUsage)
                 .replace("{MAXDISK}", diskLimit)
                 .replace("{PLAYERCOUNT}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
                 .replace("{PLAYERLIMIT}", String.valueOf(Bukkit.getMaxPlayers()))
-                .replace("{SERVERID}", server.getIdentifier());
+                .replace("{SERVERID}", manager.getServerId());
 
         // If a post command is set in the config, make the sender execute it
         if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {

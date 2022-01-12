@@ -72,7 +72,12 @@ public class Main extends JavaPlugin {
             Account account = pteroAPI.getAccount();
             ClientServer server = pteroAPI.getServer();
             log(Level.INFO, "Connection established successfully! The API key specified belongs to " + account.getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
-            pteroAPI.initializeWebsocket();
+
+            // Starts resource usage polling
+            pteroAPI.initializeResourceUsageMonitor();
+
+            // Stores whether the account used to access this server owns it or not
+            pteroAPI.setServerOwner(server.isServerOwner());
         } catch (LoginException | NotFoundException e) {
             e.printStackTrace();
             disableItself();
