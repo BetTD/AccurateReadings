@@ -83,6 +83,9 @@ compileJava {
 
 shadowJar {
     configurations = [project.configurations.runtimeClasspath]
+    dependencies {
+        exclude dependency('org.jetbrains:annotations:22.0.0')
+    }
 }
 
 tasks.build.dependsOn(shadowJar)
