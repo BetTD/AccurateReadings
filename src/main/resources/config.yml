@@ -37,8 +37,8 @@ perf-customization:
   post-command: "spigot:tps"
 
 cooldown:
-  # This cooldown helps prevent getting rate-limited from the Pterodactyl panel. DEFAULT: true
-  enabled: true
+  # Pretty self-explanatory. This now comes disabled by default as the plugin no longer makes a request every single time the command is run.
+  enabled: false
   # Cooldown time in seconds. DEFAULT: 30
   time: 30
 

@@ -13,7 +13,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
 group 'com.sparkedhost'
-version '1.2.0-test07'
+version '1.2.0-test08'
 
 sourceCompatibility = 1.8
 
@@ -31,6 +31,9 @@ repositories {
     maven {
         url = 'https://repo.mattmalec.com/repository/releases'
     }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
     allprojects {
         repositories {
             maven { url 'https://jitpack.io' }
@@ -39,16 +42,19 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jetbrains:annotations:22.0.0'
     compileOnly spigot('1.12.2')
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.mattmalec:Pterodactyl4J:2.BETA_92'
+    compileOnly 'me.clip:placeholderapi:2.11.1'
 }
 
 spigot {
     authors = ['BetTD']
     load = POST_WORLD
+    softDepends = ['PlaceholderAPI']
     commands {
         perf {
             aliases = ['performance', 'lag', 'gc']
