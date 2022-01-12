@@ -26,9 +26,9 @@ public class CheckStats extends Thread {
         }
 
         char cpuUsageColorCode;
-        String diskUsage = manager.getDiskUsage() + " MB";
+        String diskUsage = (manager.getDiskUsage() / 1024000) + " MB";
         String diskLimit = manager.getDiskLimit() + " MB";
-        String memoryUsage = manager.getMemoryUsage() + " MB";
+        String memoryUsage = (manager.getMemoryUsage() / 1024000) + " MB";
         String memoryLimit = manager.getMemoryLimit() + " MB";
 
         /*
