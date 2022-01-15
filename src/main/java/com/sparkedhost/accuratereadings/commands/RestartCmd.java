@@ -1,6 +1,8 @@
-package com.sparkedhost.accuratereadings;
+package com.sparkedhost.accuratereadings.commands;
 
 import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
+import com.sparkedhost.accuratereadings.Main;
+import com.sparkedhost.accuratereadings.Methods;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
