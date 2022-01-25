@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 public class Events implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRestartCommand(PlayerCommandPreprocessEvent e) {
-        if ((e.getMessage().startsWith("/restart") || e.getMessage().equals("/restart")) && e.getPlayer().hasPermission("readings.restart")) {
+        if (e.getMessage().equals("/restart") && e.getPlayer().hasPermission("readings.restart")) {
             Main.getInstance().pteroAPI.getServer().restart().execute();
             e.setCancelled(true);
         }
