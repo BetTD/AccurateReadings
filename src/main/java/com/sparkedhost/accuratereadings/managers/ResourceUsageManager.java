@@ -49,6 +49,9 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         }, 0L, 200L);
     }
 
+    /**
+     * Stops resource usage listener.
+     */
     public void stopListener() {
         setRunning(false);
 
@@ -75,12 +78,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
     @Override
     public void onStatsUpdate(StatsUpdateEvent e) {
         manager.setCpuUsage((long) e.getCPU());
-        manager.setCpuLimit(e.getServer().getLimits().getCPULong());
-
         manager.setMemoryUsage(e.getMemory());
-        manager.setMemoryLimit(e.getMaxMemory());
-
         manager.setDiskUsage(e.getDisk());
-        manager.setDiskLimit(e.getServer().getLimits().getDiskLong());
     }
 }
