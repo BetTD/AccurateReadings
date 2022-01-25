@@ -4,32 +4,76 @@ import com.mattmalec.pterodactyl4j.PteroBuilder;
 import com.mattmalec.pterodactyl4j.client.entities.Account;
 import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
 import com.mattmalec.pterodactyl4j.client.entities.PteroClient;
+import com.mattmalec.pterodactyl4j.entities.Limit;
 import com.mattmalec.pterodactyl4j.exceptions.LoginException;
 import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
+import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.logging.Level;
 
 public class PterodactylManager {
     String panelURL;
     String apiKey;
 
     @Getter
-    String serverId;
+    @Setter
+    Account account;
 
-    public PterodactylManager(String panelURL, String apiKey, String serverId) {
-        this.panelURL = panelURL;
-        this.apiKey = apiKey;
-        this.serverId = serverId;
-    }
+    @Getter
+    @Setter
+    ClientServer server;
+
+    @Getter
+    String serverId;
 
     @Getter
     private PteroClient api;
 
-    public void initializeAPI() {
+    @Getter
+    private final ResourceUsageManager resourceUsageManager = new ResourceUsageManager();
+
+    /**
+     * Gets everything ready: initializes PteroClient object, validates credentials and server access, and starts the
+     * resource usage monitor.
+     */
+    public void initializeClient() {
+        // Initialize values and PteroClient API object
+        initializeAPI();
+        try {
+            account = login();
+            server = findServer();
+
+            Main.getInstance().log(Level.INFO, "Connection established successfully! The API key specified belongs to " + getAccount().getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
+
+            setLimits();
+            getResourceUsageManager().initializeListener();
+
+            // Stores whether the account used to access this server owns it or not
+            setServerOwner(server.isServerOwner());
+        } catch (LoginException | NotFoundException e) {
+            // This should be Throwable#getMessage() but IntelliJ IDEA was complaining... this should still work
+            e.getLocalizedMessage();
+            Main.getInstance().disableItself();
+        }
+    }
+
+    /**
+     * Initializes values from config file, and PteroClient object.
+     */
+    private void initializeAPI() {
+        panelURL = Main.getInstance().getSettings().pterodactyl_panelUrl;
+        apiKey = Main.getInstance().getSettings().pterodactyl_apiKey;
+        serverId = Main.getInstance().getSettings().pterodactyl_serverId;
         api = PteroBuilder.createClient(panelURL, apiKey);
     }
 
-    public Account getAccount() {
+    /**
+     * Get account from PteroClient
+     * @return Account object
+     */
+    private Account login() {
         try {
             return api.retrieveAccount().execute();
         } catch (LoginException e) {
@@ -37,18 +81,32 @@ public class PterodactylManager {
         }
     }
 
-    public ClientServer getServer() {
+    /**
+     * Retrieve server from PteroClient, by server ID
+     * @return Server object
+     */
+    private ClientServer findServer() {
         try {
             return api.retrieveServerByIdentifier(serverId).execute();
         } catch (NotFoundException e) {
-            throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() + "' is unable to access it.");
+            throw new NotFoundException("This server doesn't exist, or the account '" + login().getEmail() + "' is unable to access it.");
         }
     }
 
-    public void initializeResourceUsageMonitor() {
-        ResourceUsageManager resourceUsageManager = new ResourceUsageManager();
-        resourceUsageManager.initializeListener();
+    /**
+     * Store resource limits.
+     */
+    private void setLimits() {
+        Limit limits = getServer().getLimits();
+        setCpuLimit(limits.getCPULong());
+        setMemoryLimit(limits.getMemoryLong());
+        setDiskLimit(limits.getDiskLong());
     }
+
+    /*
+     * And here lies:
+     * The almighty list of Getters and Setters
+     */
 
     @Getter
     @Setter

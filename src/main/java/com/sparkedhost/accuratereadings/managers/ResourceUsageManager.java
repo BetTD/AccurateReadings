@@ -1,6 +1,5 @@
 package com.sparkedhost.accuratereadings.managers;
 
-import com.mattmalec.pterodactyl4j.DataType;
 import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
 import com.mattmalec.pterodactyl4j.client.entities.Utilization;
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketBuilder;
@@ -8,39 +7,58 @@ import com.mattmalec.pterodactyl4j.client.managers.WebSocketManager;
 import com.mattmalec.pterodactyl4j.client.ws.events.AuthSuccessEvent;
 import com.mattmalec.pterodactyl4j.client.ws.events.StatsUpdateEvent;
 import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
-import com.mattmalec.pterodactyl4j.entities.Limit;
 import com.sparkedhost.accuratereadings.Main;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.logging.Level;
 
 public class ResourceUsageManager extends ClientSocketListenerAdapter {
     PterodactylManager manager = Main.getInstance().pteroAPI;
+    private final ResourceUsageManager resManagerThread = new ResourceUsageManager();
+
+    @Getter
+    private BukkitTask fallbackTimer;
+
+    @Getter
+    @Setter
+    private boolean isRunning = false;
 
     /**
-     * Initializes resource usage listener.
+     * Starts resource usage listener.
      */
     public void initializeListener() {
+        setRunning(true);
+
         // If use-websocket is set to true in the config, use that to gather resource usage stats.
         if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
             manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
-                    .map(builder -> builder.addEventListeners(new ResourceUsageManager())).executeAsync(WebSocketBuilder::build);
-        } else {
-            // Standard API polling as fallback, every 200 server ticks (or 10 seconds on 20 TPS)
-            Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-                Utilization usage = manager.getServer().retrieveUtilization().execute();
-                Limit limits = manager.getServer().getLimits();
-
-                manager.setCpuUsage((long) usage.getCPU());
-                manager.setCpuLimit(limits.getCPULong());
-
-                manager.setMemoryUsage(usage.getMemory());
-                manager.setMemoryLimit(limits.getMemoryLong());
-
-                manager.setDiskUsage(usage.getDisk());
-                manager.setDiskLimit(limits.getDiskLong());
-            }, 0L, 200L);
+                    .map(builder -> builder.addEventListeners(resManagerThread)).executeAsync(WebSocketBuilder::build);
+            return;
         }
+
+        // Standard API polling as fallback, every 200 server ticks (or 10 seconds on 20 TPS)
+        fallbackTimer = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
+            Utilization usage = manager.getServer().retrieveUtilization().execute();
+
+            manager.setCpuUsage((long) usage.getCPU());
+            manager.setMemoryUsage(usage.getMemory());
+            manager.setDiskUsage(usage.getDisk());
+        }, 0L, 200L);
+    }
+
+    public void stopListener() {
+        setRunning(false);
+
+        if (getFallbackTimer() == null) {
+            manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
+                    .map(builder -> builder.removeEventListeners(resManagerThread)).executeAsync();
+            return;
+        }
+
+        getFallbackTimer().cancel();
     }
 
     /*

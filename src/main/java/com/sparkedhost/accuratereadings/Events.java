@@ -9,7 +9,7 @@ public class Events implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRestartCommand(PlayerCommandPreprocessEvent e) {
         if(e.getMessage().startsWith("/restart") || e.getMessage().equals("/restart")) {
-            Main.getInstance().pteroAPI.getServer().restart().execute();
+            Main.getInstance().pteroAPI.findServer().restart().execute();
             e.setCancelled(true);
         }
     }

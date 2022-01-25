@@ -4,7 +4,7 @@ import com.mattmalec.pterodactyl4j.client.entities.Account;
 import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
 import com.mattmalec.pterodactyl4j.exceptions.LoginException;
 import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
-import com.sparkedhost.accuratereadings.commands.PerformanceCmd;
+import com.sparkedhost.accuratereadings.commands.*;
 import com.sparkedhost.accuratereadings.config.Settings;
 import com.sparkedhost.accuratereadings.managers.PlaceholderAPIManager;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
@@ -24,13 +24,16 @@ public class Main extends JavaPlugin {
     String panelUrl;
     String apiKey;
     String serverId;
+    boolean useWebsocket;
 
     public PterodactylManager pteroAPI;
 
     @Override
     public void onEnable() {
+        // Set @Getter "instance" to this class
         instance = this;
 
+        // Stores default configuration file inside the plugin's directory if not present
         saveDefaultConfig();
 
         // This plugin's expected config version
@@ -45,18 +48,23 @@ public class Main extends JavaPlugin {
             return;
         }
 
+        // Load configuration values into Settings class
         getSettings().loadValues();
 
+        // Retrieves Pterodactyl login credentials from the config
         panelUrl = getSettings().pterodactyl_panelUrl;
         apiKey = getSettings().pterodactyl_apiKey;
         serverId = getSettings().pterodactyl_serverId;
+        useWebsocket = getSettings().pterodactyl_useWebsocket;
 
         log(Level.INFO, "AccurateReadings is loading...");
+
         getCommand("perf").setExecutor(new PerformanceCmd());
+        getCommand("arc").setExecutor(new ARCCommand());
 
         if (getConfig().getBoolean("enableRestartCmd")) {
+            // TODO Switch back to onCommand
             getServer().getPluginManager().registerEvents(new Events(), this);
-            // TODO Switch back to command
         }
 
         log(Level.INFO, "Loaded all the commands. Connecting to the panel using '" + panelUrl + "'...");
@@ -67,44 +75,75 @@ public class Main extends JavaPlugin {
         }
 
         // Initialize Pterodactyl User API interface
-        pteroAPI = new PterodactylManager(panelUrl, apiKey, serverId);
-        pteroAPI.initializeAPI();
+        pteroAPI = new PterodactylManager();
 
-        try {
-            Account account = pteroAPI.getAccount();
-            ClientServer server = pteroAPI.getServer();
-            log(Level.INFO, "Connection established successfully! The API key specified belongs to " + account.getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
+        // Initialize PteroClient
+        pteroAPI.initializeClient();
 
-            // Starts resource usage polling
-            pteroAPI.initializeResourceUsageMonitor();
-
-            // Stores whether the account used to access this server owns it or not
-            pteroAPI.setServerOwner(server.isServerOwner());
-        } catch (LoginException | NotFoundException e) {
-            e.printStackTrace();
-            disableItself();
-        }
-
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new PlaceholderAPIManager().register();
-            log(Level.INFO, "PlaceholderAPI found! Our placeholders have been registered.");
-        }
+        // Register PlaceholderAPI placeholders
+        registerPlaceholders();
     }
 
     public void onDisable() {
-        getLogger().log(Level.INFO, "Plugin is disabling.");
+        log(Level.INFO, "Plugin is disabling.");
+        pteroAPI.getResourceUsageManager().stopListener();
+        log(Level.INFO, "Stopped resource usage monitor.");
+
+        log(Level.INFO, "Plugin disabled, have a nice day.");
     }
 
-    private void disableItself() {
+    /**
+     * Shorthand function to log a message with the appropriate prefix.
+     * @param level Level of logging
+     * @param msg Message to log
+     */
+    public void log(Level level, String msg) {
+        getLogger().log(level, String.format("[%s] %s", getName(), msg));
+    }
+
+    /**
+     * Disables the plugin, only used when an error occurs during startup.
+     */
+    public void disableItself() {
         log(Level.SEVERE, "The plugin will now disable itself.");
         getServer().getPluginManager().disablePlugin(this);
     }
 
-    public void log(Level level, String msg) {
-        // Shorthand function to log a message into console with the appropriate prefix
-        Bukkit.getLogger().log(level, String.format("[%s] %s", getName(), msg));
+    /**
+     * Registers AccurateReadings' placeholders into PlaceholderAPI.
+     */
+    private void registerPlaceholders() {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            boolean success = new PlaceholderAPIManager().register();
+
+            if (!success) {
+                log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
+                return;
+            }
+
+            log(Level.INFO, "Successfully hooked into PlaceholderAPI and registered our placeholders.");
+        }
     }
 
+    /**
+     * Reloads the configuration, and restarts the resource usage manager if needed.
+     */
+    public void reload() {
+        reloadConfig();
+        getSettings().loadValues();
+        log(Level.INFO, "Configuration file has been reloaded.");
+
+        if (hasPteroConfigChanged()) {
+            log(Level.INFO, "Pterodactyl configuration has changed, restarting resource usage monitor...");
+            pteroAPI.getResourceUsageManager().stopListener();
+            pteroAPI.initializeClient();
+        }
+    }
+
+    /**
+     * Validates the configuration file.
+     * @return Validation result in boolean
+     */
     private boolean isConfigValid() {
         if (panelUrl.isEmpty()) {
             log(Level.SEVERE, "You have not provided a panel URL in your config.yml.");
@@ -128,5 +167,16 @@ public class Main extends JavaPlugin {
 
         // All checks passed
         return true;
+    }
+
+    /**
+     * Returns whether the Pterodactyl-specific configuration differs from what's currently stored in memory.
+     * @return Result in boolean
+     */
+    private boolean hasPteroConfigChanged() {
+        return getSettings().pterodactyl_panelUrl.equals(panelUrl) &&
+                getSettings().pterodactyl_apiKey.equals(apiKey) &&
+                getSettings().pterodactyl_serverId.equals(serverId) &&
+                (getSettings().pterodactyl_useWebsocket == useWebsocket);
     }
 }

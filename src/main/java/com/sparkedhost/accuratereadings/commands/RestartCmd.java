@@ -28,7 +28,7 @@ public class RestartCmd implements CommandExecutor {
         sender.sendMessage(Methods.convert("&7&oEstablishing connection to the panel..."));
 
         PterodactylManager manager = Main.getInstance().pteroAPI;
-        ClientServer server = manager.getServer();
+        ClientServer server = manager.findServer();
 
         // If sender is a player, log the action
         if (sender instanceof Player) plugin.log(Level.INFO, String.format("User %s has requested a server restart, executing.", sender.getName()));
