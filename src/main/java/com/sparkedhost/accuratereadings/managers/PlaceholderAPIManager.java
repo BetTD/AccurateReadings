@@ -1,14 +1,13 @@
 package com.sparkedhost.accuratereadings.managers;
 
-import com.mattmalec.pterodactyl4j.client.entities.PteroClient;
 import com.sparkedhost.accuratereadings.Main;
 import org.jetbrains.annotations.NotNull;
-import lombok.Getter;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
 public class PlaceholderAPIManager extends PlaceholderExpansion {
     PterodactylManager manager = Main.getInstance().pteroAPI;
+
     @Override
     public @NotNull String getAuthor() {
         return "BetTD";

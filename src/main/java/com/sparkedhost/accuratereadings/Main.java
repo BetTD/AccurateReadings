@@ -1,9 +1,5 @@
 package com.sparkedhost.accuratereadings;
 
-import com.mattmalec.pterodactyl4j.client.entities.Account;
-import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
-import com.mattmalec.pterodactyl4j.exceptions.LoginException;
-import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.commands.*;
 import com.sparkedhost.accuratereadings.config.Settings;
 import com.sparkedhost.accuratereadings.managers.PlaceholderAPIManager;
