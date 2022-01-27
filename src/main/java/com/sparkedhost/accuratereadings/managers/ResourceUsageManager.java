@@ -17,7 +17,7 @@ import java.util.logging.Level;
 
 public class ResourceUsageManager extends ClientSocketListenerAdapter {
     PterodactylManager manager = Main.getInstance().pteroAPI;
-    private final ResourceUsageManager resManagerThread = new ResourceUsageManager();
+    private ResourceUsageManager resManagerThread;
 
     @Getter
     private BukkitTask fallbackTimer;
@@ -34,6 +34,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
 
         // If use-websocket is set to true in the config, use that to gather resource usage stats.
         if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
+            resManagerThread = new ResourceUsageManager();
             manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
                     .map(builder -> builder.addEventListeners(resManagerThread)).executeAsync(WebSocketBuilder::build);
             return;
