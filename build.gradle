@@ -61,6 +61,10 @@ spigot {
             description = 'Displays the server resource usage'
             permission = 'readings.perf'
         }
+        arc {
+            description = 'Controls AccurateReadings functionality'
+            permission = 'readings.control'
+        }
     }
     permissions {
         'readings.perf' {
@@ -69,6 +73,10 @@ spigot {
         }
         'readings.restart' {
             description = 'Restarts the server using the Pterodactyl API'
+            defaults = 'op'
+        }
+        'readings.control' {
+            description = 'Grants access to /arc command'
             defaults = 'op'
         }
     }
