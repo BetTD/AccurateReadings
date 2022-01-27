@@ -32,7 +32,7 @@ public class PterodactylManager {
     private PteroClient api;
 
     @Getter
-    private final ResourceUsageManager resourceUsageManager = new ResourceUsageManager();
+    private ResourceUsageManager resourceUsageManager;
 
     /**
      * Gets everything ready: initializes PteroClient object, validates credentials and server access, and starts the
@@ -48,6 +48,8 @@ public class PterodactylManager {
             Main.getInstance().log(Level.INFO, "Connection established successfully! The API key specified belongs to " + getAccount().getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
 
             setLimits();
+
+            resourceUsageManager = new ResourceUsageManager();
             getResourceUsageManager().initializeListener();
 
             // Stores whether the account used to access this server owns it or not
