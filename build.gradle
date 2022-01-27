@@ -86,6 +86,12 @@ shadowJar {
     dependencies {
         exclude dependency('org.jetbrains:annotations:22.0.0')
     }
+    configure {
+        classifier = null
+    }
+}
+tasks.jar.configure {
+    classifier = 'noshadow'
 }
 
 tasks.build.dependsOn(shadowJar)
