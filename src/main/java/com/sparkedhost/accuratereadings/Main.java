@@ -126,7 +126,7 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * Reloads the configuration, and restarts the resource usage manager if needed.
+     * Reloads the configuration, and reinitializes the API if needed.
      */
     public void reload() {
         reloadConfig();
@@ -134,7 +134,7 @@ public class Main extends JavaPlugin {
         log(Level.INFO, "Configuration file has been reloaded.");
 
         if (hasPteroConfigChanged()) {
-            log(Level.INFO, "Pterodactyl configuration has changed, restarting resource usage monitor...");
+            log(Level.INFO, "Pterodactyl configuration has changed, logging back in...");
             pteroAPI.getResourceUsageManager().stopListener();
             pteroAPI.initializeClient();
         }
@@ -174,9 +174,9 @@ public class Main extends JavaPlugin {
      * @return Result in boolean
      */
     private boolean hasPteroConfigChanged() {
-        return getSettings().pterodactyl_panelUrl.equals(panelUrl) &&
+        return !(getSettings().pterodactyl_panelUrl.equals(panelUrl) &&
                 getSettings().pterodactyl_apiKey.equals(apiKey) &&
                 getSettings().pterodactyl_serverId.equals(serverId) &&
-                (getSettings().pterodactyl_useWebsocket == useWebsocket);
+                (getSettings().pterodactyl_useWebsocket == useWebsocket));
     }
 }
