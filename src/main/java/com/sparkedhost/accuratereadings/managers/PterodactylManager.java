@@ -125,25 +125,25 @@ public class PterodactylManager {
 
     @Getter
     @Setter
-    long memoryUsage;
+    long memoryUsage = 0;
 
     @Getter
     @Setter
-    long memoryLimit;
+    long memoryLimit = 0;
 
     @Getter
     @Setter
-    long diskUsage;
+    long diskUsage = 0;
 
     @Getter
     @Setter
-    long diskLimit;
+    long diskLimit = 0;
 
     @Getter
     @Setter
-    long cpuUsage;
+    long cpuUsage = 0;
 
     @Getter
     @Setter
-    long cpuLimit;
+    long cpuLimit = 0;
 }
