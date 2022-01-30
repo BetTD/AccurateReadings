@@ -114,9 +114,9 @@ public class Main extends JavaPlugin {
      */
     private void registerPlaceholders() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            boolean success = new PlaceholderAPIManager().register();
+            boolean placeholderApiSuccess = new PlaceholderAPIManager().register();
 
-            if (!success) {
+            if (!placeholderApiSuccess) {
                 log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
                 return;
             }
