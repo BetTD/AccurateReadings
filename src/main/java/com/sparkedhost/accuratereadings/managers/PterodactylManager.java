@@ -43,7 +43,7 @@ public class PterodactylManager {
         initializeAPI();
         try {
             account = login();
-            server = findServer();
+            server = retrieveServer();
 
             Main.getInstance().log(Level.INFO, "Connection established successfully! The API key specified belongs to " + getAccount().getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
 
@@ -87,11 +87,11 @@ public class PterodactylManager {
      * Retrieve server from PteroClient, by server ID
      * @return Server object
      */
-    private ClientServer findServer() {
+    private ClientServer retrieveServer() {
         try {
             return api.retrieveServerByIdentifier(serverId).execute();
         } catch (NotFoundException e) {
-            throw new NotFoundException("This server doesn't exist, or the account '" + login().getEmail() + "' is unable to access it.");
+            throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() + "' is unable to access it.");
         }
     }
 
