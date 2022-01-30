@@ -98,7 +98,7 @@ public class Main extends JavaPlugin {
      * @param msg Message to log
      */
     public void log(Level level, String msg) {
-        getLogger().log(level, String.format("[%s] %s", getName(), msg));
+        getLogger().log(level, msg);
     }
 
     /**
