@@ -42,7 +42,7 @@ public class ARCCommand implements CommandExecutor {
                     }
 
                     resManager.initializeListener();
-                    sender.sendMessage(Methods.convert("&7The resource usage monitor has been &cstarted&7."));
+                    sender.sendMessage(Methods.convert("&7The resource usage monitor has been &astarted&7."));
                     return true;
 
                 case "res-stop":
