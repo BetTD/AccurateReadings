@@ -16,7 +16,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.logging.Level;
 
 public class ResourceUsageManager extends ClientSocketListenerAdapter {
-    PterodactylManager manager = Main.getInstance().pteroAPI;
+    PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     private ResourceUsageManager resManagerThread;
 
     @Getter
@@ -31,22 +31,23 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
      */
     public void initializeListener() {
         setRunning(true);
+        Main.getInstance().log(Level.INFO, "Resource usage monitor has been started.");
 
         // If use-websocket is set to true in the config, use that to gather resource usage stats.
         if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
             resManagerThread = new ResourceUsageManager();
-            manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
+            pteroManager.getApi().retrieveServerByIdentifier(pteroManager.getServerId()).map(ClientServer::getWebSocketBuilder)
                     .map(builder -> builder.addEventListeners(resManagerThread)).executeAsync(WebSocketBuilder::build);
             return;
         }
 
         // Standard API polling as fallback, every 200 server ticks (or 10 seconds on 20 TPS)
         fallbackTimer = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            Utilization usage = manager.getServer().retrieveUtilization().execute();
+            Utilization usage = pteroManager.getServer().retrieveUtilization().execute();
 
-            manager.setCpuUsage((long) usage.getCPU());
-            manager.setMemoryUsage(usage.getMemory());
-            manager.setDiskUsage(usage.getDisk());
+            pteroManager.setCpuUsage((long) usage.getCPU());
+            pteroManager.setMemoryUsage(usage.getMemory());
+            pteroManager.setDiskUsage(usage.getDisk());
         }, 0L, 200L);
     }
 
@@ -55,9 +56,10 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
      */
     public void stopListener() {
         setRunning(false);
+        Main.getInstance().log(Level.INFO, "Resource usage monitor has been stopped.");
 
         if (getFallbackTimer() == null) {
-            manager.getApi().retrieveServerByIdentifier(manager.getServerId()).map(ClientServer::getWebSocketBuilder)
+            pteroManager.getApi().retrieveServerByIdentifier(pteroManager.getServerId()).map(ClientServer::getWebSocketBuilder)
                     .map(builder -> builder.removeEventListeners(resManagerThread)).executeAsync();
             return;
         }
@@ -78,8 +80,8 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
 
     @Override
     public void onStatsUpdate(StatsUpdateEvent e) {
-        manager.setCpuUsage((long) e.getCPU());
-        manager.setMemoryUsage(e.getMemory());
-        manager.setDiskUsage(e.getDisk());
+        pteroManager.setCpuUsage((long) e.getCPU());
+        pteroManager.setMemoryUsage(e.getMemory());
+        pteroManager.setDiskUsage(e.getDisk());
     }
 }
