@@ -28,7 +28,7 @@ public class ARCCommand implements CommandExecutor {
 
             switch (args[0]) {
                 case "version":
-                    printVersion();
+                    printVersion(false);
                     return true;
 
                 case "help":
@@ -42,7 +42,7 @@ public class ARCCommand implements CommandExecutor {
                     }
 
                     resManager.initializeListener();
-                    sender.sendMessage(Methods.convert("&cThe resource usage monitor has been started."));
+                    sender.sendMessage(Methods.convert("&7The resource usage monitor has been &cstarted&7."));
                     return true;
 
                 case "res-stop":
@@ -52,29 +52,45 @@ public class ARCCommand implements CommandExecutor {
                     }
 
                     resManager.stopListener();
-                    sender.sendMessage(Methods.convert("&cThe resource usage monitor has been stopped."));
+                    sender.sendMessage(Methods.convert("&7The resource usage monitor has been &cstopped&7."));
                     return true;
 
                 case "reload":
                     Main.getInstance().reload();
                     sender.sendMessage(Methods.convert("&aThe configuration file has been reloaded!"));
                     return true;
+
+                default:
+                    sender.sendMessage(Methods.convert("&7Invalid subcommand. Run &f/arc help&7 for a full list of subcommands."));
+                    return false;
             }
         }
 
         // No args
 
-        printVersion();
+        printVersion(true);
         return true;
     }
 
-    private void printVersion() {
-        sender.sendMessage(Methods.convert(String.format("&7You're running &fAccurateReadings&7 version &f%s&7. Run &f/arc help&7 for a full list of subcommands.", Main.getInstance().getDescription().getVersion())));
+    private void printVersion(boolean printHelpMsg) {
+        StringBuilder versionMessage = new StringBuilder()
+                .append(String.format("&7You're running &fAccurateReadings&7 version &f%s&7.", Main.getInstance().getDescription().getVersion()));
+
+        if (printHelpMsg) {
+            versionMessage.append(" Run &f/arc help&7 for a full list of subcommands.");
+        }
+
+        sender.sendMessage(Methods.convert(versionMessage.toString()));
     }
 
     private void printHelp() {
         // TODO Finish help message
         sender.sendMessage(Methods.convert(String.join("\n",
-                "")));
+                "&e&lACCURATE&6&lREADINGS &f&lHELP MENU",
+                "&7- &f/arc &lres-start&8 »&7 Starts the resource usage monitor.",
+                "&7- &f/arc &lres-stop&8 »&7 Stops the resource usage monitor.",
+                "&7- &f/arc &lreload&8 »&7 Reloads the configuration file.",
+                "&7- &f/arc &lversion&8 »&7 Shows current plugin version.",
+                "&7- &f/arc &lversion&8 »&7 Prints plugin version.")));
     }
 }
