@@ -105,6 +105,15 @@ public class PterodactylManager {
         setDiskLimit(limits.getDiskLong());
     }
 
+    /**
+     * Resets the resource limits.
+     */
+    protected void resetLimits() {
+        setCpuLimit(0);
+        setMemoryLimit(0);
+        setDiskLimit(0);
+    }
+
     /*
      * And here lies:
      * The almighty list of Getters and Setters

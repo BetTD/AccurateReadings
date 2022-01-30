@@ -65,6 +65,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         }
 
         getFallbackTimer().cancel();
+        pteroManager.resetLimits();
     }
 
     /*
