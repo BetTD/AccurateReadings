@@ -83,7 +83,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         log(Level.INFO, "Plugin is disabling.");
 
-        if (pteroAPI != null) {
+        if (pteroAPI != null && pteroAPI.getResourceUsageManager().isRunning()) {
             pteroAPI.getResourceUsageManager().stopListener();
         }
 
