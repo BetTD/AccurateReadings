@@ -8,7 +8,7 @@
 pterodactyl:
   # What's the Pterodactyl panel URL?
   # Note: include the protocol in the URL. Do not add the trailing slash! Example: https://control.sparkedhost.us
-  panel-url: "https://control.sparkedhost.us" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
+  panel-url: "https://control.sparkedhost.us"
   # Generate the API key on your control panel.
   api-key: "CHANGETHIS"
   # The server ID to monitor
@@ -21,23 +21,20 @@ pterodactyl:
 restart:
   # Should the plugin add the restart feature? It is experimental and may not always work. DEFAULT: false
   enabled: false
-  # Should the plugin also broadcast a message to the entire server whenever the restart command is ran successfully? DEFAULT: false
-  # NOTE: This has no effect if "enabled" is set false. You can customize the broadcast message in the MESSAGES section below.
+  # Should the plugin also broadcast a message to the entire server if successful? DEFAULT: false
+  # NOTE: This has no effect if "enabled" is set false. You can customize the broadcast message below.
   announce-restarts: false
 
 # Customization options for the /perf command or any of its aliases
 perf-customization:
-  # Should we show tips specifically tailored towards Sparked Host servers? DEFAULT: true
-  # This will ONLY work if the panel URL is https://control.sparkedhost.us/, this will NOT work with other panels
-  # as these tips are specifically aimed towards Sparked Host servers.
-  show-sparked-tips: true
   # Command to run right after sending the stats, without the slash. DEFAULT: spigot:tps
   # The player or console that sends the /perf command will also execute this one, so make sure they're able to run it.
   # Leave blank for no command.
   post-command: "spigot:tps"
 
 cooldown:
-  # Pretty self-explanatory. This now comes disabled by default as the plugin no longer makes a request every single time the command is run.
+  # Pretty self-explanatory. This now comes disabled by default as the plugin no longer makes a request every single
+  # time the command is run.
   enabled: false
   # Cooldown time in seconds. DEFAULT: 30
   time: 30
@@ -49,10 +46,28 @@ cooldown:
 # --------------------------------------------------------------------------------------
 
 messages:
-  # This is the title of the stats message.
-  stats-title: "&8&m        &r &f&lSTATS&r &8&m        &r"
-  # This message will show up BEFORE the stats message if the API key provided belongs to an account that doesn't own the server but has access to it.
-  api-key-not-owner: "&e&lINFO: &6The account that owns the API key set in the config does not own this server, but has access to it (admin or subuser account)."
+  # /perf message body
+  # Valid placeholders:
+  # - {CURRENTCPU} -> Prints current CPU usage, no % sign
+  # - {MAXCPU} -> Prints CPU limit, no % sign
+  # - {CURRENTRAM} -> Prints current memory usage, incl. units (MB or GB)
+  # - {MAXRAM} -> Prints memory limit, incl. units (MB or GB)
+  # - {CURRENTDISK} -> Prints current disk usage, incl. units (MB or GB)
+  # - {MAXDISK} -> Prints disk limit, incl. units (MB or GB)
+  # - {PLAYERCOUNT} -> Prints current amount of players
+  # - {MAXPLAYERS} -> Prints total player slots available
+  # - {SERVERID} -> Prints server ID being monitored
+  # If empty, the plugin will use the default value. It will also log a warning in console to let you know.
+  stats-message: |
+    &8&m        &r &f&lSTATS&r &8&m        &r
+    &r &r
+    &6&l- CPU: &e{CURRENTCPU}% &7(limit: {MAXCPU}%)
+    &6&l- RAM: &e{CURRENTRAM} &7(limit: {MAXRAM})
+    &6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK})
+    &6&l- Players: &e{PLAYERCOUNT}&7/&f{MAXPLAYERS}
+    &6&l- Server ID: &e{SERVERID}
+    &r &r
+
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
   # The plugin will broadcast this message to the entire server whenever the restart command is used.

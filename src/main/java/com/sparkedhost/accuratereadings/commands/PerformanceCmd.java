@@ -95,20 +95,8 @@ public class PerformanceCmd implements CommandExecutor {
             diskLimit = manager.getDiskLimit() / 1024 + " GB";
         }
 
-        // If a stats title is set in the config, append it
-        if (!Main.getInstance().getConfig().getString("messages.stats-title").isEmpty()) {
-            outputBuilder.append(Main.getInstance().getConfig().getString("messages.stats-title")).append("\n");
-        }
-
         // Append base message
-        outputBuilder.append(String.join("\n",
-                "&r &r",
-                "&6&l- CPU: &e{CURRENTCPU}% &7(limit: {MAXCPU}%)",
-                "&6&l- RAM: &e{CURRENTRAM} &7(limit: {MAXRAM})",
-                "&6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK})",
-                "&6&l- Players: &e{PLAYERCOUNT}&7/&f{PLAYERLIMIT}",
-                "&6&l- Server ID: &e{SERVERID}",
-                "&r &r"));
+        outputBuilder.append(Main.getInstance().getSettings().messages_statsMessage);
 
         // Convert output to a string and replace variables with their actual values
         String output = outputBuilder.toString()
@@ -119,7 +107,7 @@ public class PerformanceCmd implements CommandExecutor {
                 .replace("{CURRENTDISK}", diskUsage)
                 .replace("{MAXDISK}", diskLimit)
                 .replace("{PLAYERCOUNT}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
-                .replace("{PLAYERLIMIT}", String.valueOf(Bukkit.getMaxPlayers()))
+                .replace("{MAXPLAYERS}", String.valueOf(Bukkit.getMaxPlayers()))
                 .replace("{SERVERID}", manager.getServerId());
 
         // If a post command is set in the config, make the sender execute it
