@@ -2,6 +2,8 @@ package com.sparkedhost.accuratereadings.config;
 
 import com.sparkedhost.accuratereadings.Main;
 
+import java.util.logging.Level;
+
 public class Settings {
 
     /*
