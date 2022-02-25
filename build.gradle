@@ -5,8 +5,6 @@ plugins {
     id "idea"
     id 'com.github.johnrengelman.shadow' version '6.0.0'
     id 'kr.entree.spigradle' version '2.2.4'
-    // TODO Switch to Lombok plugin instead of using the non-plugin version, and update Gradle (only can do after Ptero4J is no longer a dependency)
-    //id "io.freefair.lombok" version "6.1.0-m3"
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -44,8 +42,8 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
     compileOnly spigot('1.12.2')
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.mattmalec:Pterodactyl4J:2.BETA_92'
     compileOnly 'me.clip:placeholderapi:2.11.1'
@@ -57,11 +55,12 @@ spigot {
     softDepends = ['PlaceholderAPI']
     commands {
         perf {
-            aliases = ['performance', 'lag', 'gc']
+            aliases = ['performance', 'lag']
             description = 'Displays the server resource usage'
             permission = 'readings.perf'
         }
         arc {
+            aliases = ['accuratereadings', 'arcontrol']
             description = 'Controls AccurateReadings functionality'
             permission = 'readings.control'
         }
