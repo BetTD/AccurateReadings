@@ -1,7 +1,7 @@
 package com.sparkedhost.accuratereadings.commands;
 
 import com.sparkedhost.accuratereadings.Main;
-import com.sparkedhost.accuratereadings.Methods;
+import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.managers.CooldownManager;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import org.bukkit.Bukkit;
@@ -22,7 +22,7 @@ public class PerformanceCmd implements CommandExecutor {
             Player p = (Player) sender;
 
             if (!p.hasPermission("readings.perf")) {
-                p.sendMessage(Methods.convert(Main.getInstance().getSettings().messages_noPerms));
+                p.sendMessage(Utils.convert(Main.getInstance().getSettings().messages_noPerms));
                 return false;
             }
 
@@ -35,7 +35,7 @@ public class PerformanceCmd implements CommandExecutor {
                 // If the difference is smaller than the default cooldown value, deny access to the command
                 if (TimeUnit.MILLISECONDS.toSeconds(difference) < CooldownManager.DEFAULT_COOLDOWN) {
                     long timeRemaining = Math.abs(TimeUnit.MILLISECONDS.toSeconds(difference) - CooldownManager.DEFAULT_COOLDOWN);
-                    p.sendMessage(Methods.convert("&cYou must wait " + timeRemaining + " seconds before you can check the stats again."));
+                    p.sendMessage(Utils.convert("&cYou must wait " + timeRemaining + " seconds before you can check the stats again."));
                     return false;
                 }
 
@@ -116,7 +116,7 @@ public class PerformanceCmd implements CommandExecutor {
         }
 
         // Finally, send response to sender
-        sender.sendMessage(Methods.convert(output));
+        sender.sendMessage(Utils.convert(output));
 
         return true;
     }

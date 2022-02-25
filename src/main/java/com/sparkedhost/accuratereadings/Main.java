@@ -150,7 +150,7 @@ public class Main extends JavaPlugin {
             return false;
         }
 
-        if (!Methods.validateURL(panelUrl)) {
+        if (!Utils.validateURL(panelUrl)) {
             log(Level.SEVERE, "You have provided an invalid panel URL in your config.yml.");
             return false;
         }

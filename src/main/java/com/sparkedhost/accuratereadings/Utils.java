@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-public class Methods {
+public class Utils {
     public static String convert(String input) {
         return ChatColor.translateAlternateColorCodes('&', input);
     }
