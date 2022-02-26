@@ -50,11 +50,6 @@ public class PerformanceCmd implements CommandExecutor {
 
         StringBuilder outputBuilder = new StringBuilder();
 
-        // If the account associated with the API key provided does not own the server, append a note to the message
-        if (!manager.isServerOwner() && !Main.getInstance().getConfig().getString("messages.api-key-not-owner").isEmpty()) {
-            outputBuilder.append(Main.getInstance().getConfig().getString("messages.api-key-not-owner")).append("\n");
-        }
-
         char cpuUsageColorCode;
 
         // Resource usage is reported in bytes, while actual limits are returned in megabytes, which means we have to do
