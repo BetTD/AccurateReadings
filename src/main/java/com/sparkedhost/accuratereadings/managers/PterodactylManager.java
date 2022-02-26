@@ -55,8 +55,7 @@ public class PterodactylManager {
             // Stores whether the account used to access this server owns it or not
             setServerOwner(server.isServerOwner());
         } catch (LoginException | NotFoundException e) {
-            // This should be Throwable#getMessage() but IntelliJ IDEA was complaining... this should still work
-            e.getLocalizedMessage();
+            e.printStackTrace();
             Main.getInstance().disableItself();
         }
     }
