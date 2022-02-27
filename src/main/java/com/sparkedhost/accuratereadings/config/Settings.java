@@ -15,6 +15,7 @@ public class Settings {
     public String pterodactyl_apiKey;
     public String pterodactyl_serverId;
     public boolean pterodactyl_useWebsocket;
+    public long pterodactyl_updateFrequency;
 
     /*
      * Settings:
@@ -62,6 +63,7 @@ public class Settings {
         pterodactyl_apiKey = Main.getInstance().getConfig().getString("pterodactyl.api-key");
         pterodactyl_serverId = Main.getInstance().getConfig().getString("pterodactyl.server-id");
         pterodactyl_useWebsocket = Main.getInstance().getConfig().getBoolean("pterodactyl.use-websocket");
+        pterodactyl_updateFrequency = Main.getInstance().getConfig().getLong("pterodactyl.update-frequency");
 
         /*
          * Settings:

@@ -29,6 +29,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
     /**
      * Starts resource usage listener.
      */
+
     public void initializeListener() {
         setRunning(true);
         Main.getInstance().log(Level.INFO, "Resource usage monitor has been started.");
@@ -41,14 +42,14 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
             return;
         }
 
-        // Standard API polling as fallback, every 200 server ticks (or 10 seconds on 20 TPS)
+        // Standard API polling as fallback, every X seconds (specified in the config)
         fallbackTimer = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
             Utilization usage = pteroManager.getServer().retrieveUtilization().execute();
 
             pteroManager.setCpuUsage((long) usage.getCPU());
             pteroManager.setMemoryUsage(usage.getMemory());
             pteroManager.setDiskUsage(usage.getDisk());
-        }, 0L, 200L);
+        }, 0L, (Main.getInstance().getSettings().pterodactyl_updateFrequency) * 20);
     }
 
     /**
