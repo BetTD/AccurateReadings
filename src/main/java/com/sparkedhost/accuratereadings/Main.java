@@ -22,6 +22,9 @@ public class Main extends JavaPlugin {
     String serverId;
     boolean useWebsocket;
 
+    @Getter
+    private boolean isPAPIPresent;
+
     public PterodactylManager pteroAPI;
 
     @Override
@@ -114,6 +117,7 @@ public class Main extends JavaPlugin {
     private void registerPlaceholders() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             boolean placeholderApiSuccess = new PlaceholderAPIManager().register();
+            isPAPIPresent = true;
 
             if (!placeholderApiSuccess) {
                 log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");

@@ -38,6 +38,7 @@ public class PterodactylManager {
      * Gets everything ready: initializes PteroClient object, validates credentials and server access, and starts the
      * resource usage monitor.
      */
+
     public void initializeClient() {
         // Initialize values and PteroClient API object
         initializeAPI();
@@ -63,6 +64,7 @@ public class PterodactylManager {
     /**
      * Initializes values from config file, and PteroClient object.
      */
+
     private void initializeAPI() {
         panelURL = Main.getInstance().getSettings().pterodactyl_panelUrl;
         apiKey = Main.getInstance().getSettings().pterodactyl_apiKey;
@@ -74,6 +76,7 @@ public class PterodactylManager {
      * Get account from PteroClient
      * @return Account object
      */
+
     private Account login() {
         try {
             return api.retrieveAccount().execute();
@@ -86,6 +89,7 @@ public class PterodactylManager {
      * Retrieve server from PteroClient, by server ID
      * @return Server object
      */
+
     private ClientServer retrieveServer() {
         try {
             return api.retrieveServerByIdentifier(serverId).execute();
@@ -97,6 +101,7 @@ public class PterodactylManager {
     /**
      * Store resource limits.
      */
+
     private void setLimits() {
         Limit limits = getServer().getLimits();
         setCpuLimit(limits.getCPULong());
@@ -107,6 +112,7 @@ public class PterodactylManager {
     /**
      * Resets the resource utilization and limits variables.
      */
+
     protected void resetVariables() {
         setCpuUsage(0);
         setCpuLimit(0);

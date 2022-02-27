@@ -58,9 +58,10 @@ messages:
   # - {MAXRAM} -> Prints memory limit, incl. units (MB or GB)
   # - {CURRENTDISK} -> Prints current disk usage, incl. units (MB or GB)
   # - {MAXDISK} -> Prints disk limit, incl. units (MB or GB)
-  # - {PLAYERCOUNT} -> Prints current amount of players
+  # - {PLAYERCOUNT} -> Prints current amount of players (does NOT include vanished players)
   # - {MAXPLAYERS} -> Prints total player slots available
   # - {SERVERID} -> Prints server ID being monitored
+  # - Any PlaceholderAPI placeholders if the plugin is present
   # If empty, the plugin will use the default value. It will also log a warning in console to let you know.
   stats-message: |
     &8&m        &r &f&lSTATS&r &8&m        &r

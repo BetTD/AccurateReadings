@@ -93,8 +93,8 @@ public class PerformanceCmd implements CommandExecutor {
         // Append base message
         outputBuilder.append(Main.getInstance().getSettings().messages_statsMessage);
 
-        // Convert output to a string and replace variables with their actual values
-        String output = outputBuilder.toString()
+        // Convert output to a string and replace variables with their actual values, incl. PlaceholderAPI placeholders.
+        String output = Utils.parsePlaceholdersIfPresent(sender instanceof Player ? (Player) sender : null, outputBuilder.toString()
                 .replace("{CURRENTCPU}", "&" + cpuUsageColorCode + manager.getCpuUsage())
                 .replace("{MAXCPU}", String.valueOf(manager.getCpuLimit()))
                 .replace("{CURRENTRAM}", memoryUsage)
@@ -103,7 +103,7 @@ public class PerformanceCmd implements CommandExecutor {
                 .replace("{MAXDISK}", diskLimit)
                 .replace("{PLAYERCOUNT}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
                 .replace("{MAXPLAYERS}", String.valueOf(Bukkit.getMaxPlayers()))
-                .replace("{SERVERID}", manager.getServerId());
+                .replace("{SERVERID}", manager.getServerId()));
 
         // If a post command is set in the config, make the sender execute it
         if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {
