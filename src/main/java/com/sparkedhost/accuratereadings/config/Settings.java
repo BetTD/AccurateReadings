@@ -107,7 +107,6 @@ public class Settings {
                     "&6&l- RAM: &e{CURRENTRAM} &7(limit: {MAXRAM})",
                     "&6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK})",
                     "&6&l- Players: &e{PLAYERCOUNT}&7/&f{PLAYERLIMIT}",
-                    "&6&l- Server ID: &e{SERVERID}",
                     "&r &r");
             Main.getInstance().log(Level.WARNING, "'stats-message' is empty, replacing with default value (only on runtime). Please fix this in the config file!");
         }

@@ -69,7 +69,6 @@ messages:
     &6&l- RAM: &e{CURRENTRAM} &7(limit: {MAXRAM})
     &6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK})
     &6&l- Players: &e{PLAYERCOUNT}&7/&f{MAXPLAYERS}
-    &6&l- Server ID: &e{SERVERID}
     &r &r
 
   # Will be displayed when the command sender does not have the required permission to run a command.
