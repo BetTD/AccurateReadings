@@ -115,11 +115,9 @@ public class PterodactylManager {
 
     protected void resetVariables() {
         setCpuUsage(0);
-        setCpuLimit(0);
         setMemoryUsage(0);
-        setMemoryLimit(0);
         setDiskUsage(0);
-        setDiskLimit(0);
+        setUptime("(resource usage manager not running)");
     }
 
     /*
