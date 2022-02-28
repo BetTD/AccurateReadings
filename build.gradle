@@ -4,7 +4,7 @@ plugins {
     id 'jacoco'
     id "idea"
     id 'com.github.johnrengelman.shadow' version '6.0.0'
-    id 'kr.entree.spigradle' version '2.2.4'
+    id 'kr.entree.spigradle' version '2.3.4'
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -52,6 +52,7 @@ dependencies {
 spigot {
     authors = ['BetTD']
     load = POST_WORLD
+    description = 'Your go-to solution for keeping track of server resource utilization!'
     softDepends = ['PlaceholderAPI']
     commands {
         perf {
