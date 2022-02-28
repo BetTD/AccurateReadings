@@ -67,6 +67,15 @@ spigot {
         }
     }
     permissions {
+        'readings.*' {
+            description = 'God mode - Grants access to everything in this plugin'
+            defaults = 'op'
+            children = [
+                    'readings.perf': true,
+                    'readings.restart': true,
+                    'readings.control': true
+            ]
+        }
         'readings.perf' {
             description = 'Gives access to resource usage commands'
             defaults = 'op'
