@@ -49,6 +49,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
             pteroManager.setCpuUsage((long) usage.getCPU());
             pteroManager.setMemoryUsage(usage.getMemory());
             pteroManager.setDiskUsage(usage.getDisk());
+            pteroManager.setUptime(usage.getUptimeFormatted());
         }, 0L, (Main.getInstance().getSettings().pterodactyl_updateFrequency) * 20);
     }
 
@@ -85,5 +86,6 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         pteroManager.setCpuUsage((long) e.getCPU());
         pteroManager.setMemoryUsage(e.getMemory());
         pteroManager.setDiskUsage(e.getDisk());
+        pteroManager.setUptime(e.getUptimeFormatted());
     }
 }

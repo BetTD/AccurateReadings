@@ -154,4 +154,8 @@ public class PterodactylManager {
     @Getter
     @Setter
     long cpuLimit = 0;
+
+    @Getter
+    @Setter
+    String uptime;
 }
