@@ -103,7 +103,8 @@ public class PerformanceCmd implements CommandExecutor {
                 .replace("{MAXDISK}", diskLimit)
                 .replace("{PLAYERCOUNT}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
                 .replace("{MAXPLAYERS}", String.valueOf(Bukkit.getMaxPlayers()))
-                .replace("{SERVERID}", manager.getServerId()));
+                .replace("{SERVERID}", manager.getServerId())
+                .replace("{UPTIME}", manager.getUptime()));
 
         // If a post command is set in the config, make the sender execute it
         if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {

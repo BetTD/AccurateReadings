@@ -46,7 +46,6 @@ cooldown:
 # --------------------------------------------------------------------------------------
 # MESSAGES SECTION
 # This allows you to customize the messages sent by the plugin to your liking.
-# If any of these lines are left empty (""), the plugin will skip the message entirely.
 # --------------------------------------------------------------------------------------
 
 messages:
@@ -61,6 +60,7 @@ messages:
   # - {PLAYERCOUNT} -> Prints current amount of players (does NOT include vanished players)
   # - {MAXPLAYERS} -> Prints total player slots available
   # - {SERVERID} -> Prints server ID being monitored
+  # - {UPTIME} -> Prints total server uptime as reported by Pterodactyl (aka since the container was started)
   # - Any PlaceholderAPI placeholders if the plugin is present
   # If empty, the plugin will use the default value. It will also log a warning in console to let you know.
   stats-message: |
