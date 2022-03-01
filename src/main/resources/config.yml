@@ -72,7 +72,6 @@ messages:
     &6&l- Players: &e{PLAYERCOUNT}&7/&f{MAXPLAYERS}
     &6&l- Uptime: &e{UPTIME}
     &r &r
-
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
   # The plugin will broadcast this message to the entire server whenever the restart command is used.
