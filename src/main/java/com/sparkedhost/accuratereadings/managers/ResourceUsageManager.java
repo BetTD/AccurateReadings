@@ -46,6 +46,8 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         fallbackTimer = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
             Utilization usage = pteroManager.getServer().retrieveUtilization().execute();
 
+            Main.getInstance().log(Level.INFO, String.format("[DEBUG] Retrieved utilization. cpu=%s, mem=%s, disk=%s, uptime=%s", usage.getCPU(), usage.getMemory(), usage.getDisk(), usage.getUptimeFormatted()));
+
             pteroManager.setCpuUsage((long) usage.getCPU());
             pteroManager.setMemoryUsage(usage.getMemory());
             pteroManager.setDiskUsage(usage.getDisk());
