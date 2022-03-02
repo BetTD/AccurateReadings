@@ -21,6 +21,7 @@ public class Main extends JavaPlugin {
     String apiKey;
     String serverId;
     boolean useWebsocket;
+    long updateFrequency;
 
     @Getter
     private boolean isPAPIPresent;
@@ -55,6 +56,7 @@ public class Main extends JavaPlugin {
         apiKey = getSettings().pterodactyl_apiKey;
         serverId = getSettings().pterodactyl_serverId;
         useWebsocket = getSettings().pterodactyl_useWebsocket;
+        updateFrequency = getSettings().pterodactyl_updateFrequency;
 
         log(Level.INFO, "AccurateReadings is loading...");
 
@@ -180,6 +182,7 @@ public class Main extends JavaPlugin {
         return !(getSettings().pterodactyl_panelUrl.equals(panelUrl) &&
                 getSettings().pterodactyl_apiKey.equals(apiKey) &&
                 getSettings().pterodactyl_serverId.equals(serverId) &&
-                (getSettings().pterodactyl_useWebsocket == useWebsocket));
+                getSettings().pterodactyl_useWebsocket == useWebsocket &&
+                getSettings().pterodactyl_updateFrequency == updateFrequency);
     }
 }
