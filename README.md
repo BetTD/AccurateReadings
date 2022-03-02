@@ -13,9 +13,9 @@ your server's playerlist/tab using TitleManager? No problem!
 able to use this plugin. If you're self-hosting your server (home server, your PC, a VPS or dedicated server...), make
 sure you use Pterodactyl, not only is it really easy to install, but it is an excellent panel software. Please read the
 wiki for instructions on how to check if the panel you're using is powered by Pterodactyl.
-- **A Spigot server.** This plugin has been coded against Spigot 1.12.2, but it has been tested on Purpur 1.18.8. It 
-should work on any server running Spigot, or one of its forks: Paper, Purpur...
-While it is only expected to work on 1.12.2 through 1.18.1, this plugin has been coded with simplicity in mind, so it
+- **A Spigot server.** This plugin has been coded against Spigot 1.12.2, but it has been tested on Pufferfish 1.17.1 and 
+Purpur 1.18.1. It should work on any server running Spigot, or one of its forks: Paper, Purpur...
+While it is only expected to work on 1.12.2 through 1.18.2, this plugin has been coded with simplicity in mind, so it
 should work on 1.8.8 and newer versions of the game.
 
 ## How to install
