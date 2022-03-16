@@ -16,6 +16,7 @@ public class Settings {
     public String pterodactyl_serverId;
     public boolean pterodactyl_useWebsocket;
     public long pterodactyl_updateFrequency;
+    public boolean pterodactyl_autoStopOnEmpty;
 
     /*
      * Settings:
@@ -64,6 +65,7 @@ public class Settings {
         pterodactyl_serverId = Main.getInstance().getConfig().getString("pterodactyl.server-id");
         pterodactyl_useWebsocket = Main.getInstance().getConfig().getBoolean("pterodactyl.use-websocket");
         pterodactyl_updateFrequency = Main.getInstance().getConfig().getLong("pterodactyl.update-frequency");
+        pterodactyl_autoStopOnEmpty = Main.getInstance().getConfig().getBoolean("pterodactyl.auto-stop-on-empty");
 
         /*
          * Settings:

@@ -51,7 +51,7 @@ public class PterodactylManager {
             setLimits();
 
             resourceUsageManager = new ResourceUsageManager();
-            getResourceUsageManager().initializeListener();
+            getResourceUsageManager().startListener();
 
             // Stores whether the account used to access this server owns it or not
             setServerOwner(server.isServerOwner());

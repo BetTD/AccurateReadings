@@ -1,11 +1,12 @@
-package com.sparkedhost.accuratereadings;
+package com.sparkedhost.accuratereadings.events;
 
+import com.sparkedhost.accuratereadings.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class Events implements Listener {
+public class RestartCmdEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRestartCommand(PlayerCommandPreprocessEvent e) {
         if (e.getMessage().equals("/restart") && e.getPlayer().hasPermission("readings.restart")) {

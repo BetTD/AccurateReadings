@@ -21,6 +21,10 @@ pterodactyl:
   # This is then converted to in-game ticks.
   # DEFAULT: 2
   update-frequency: 2
+  # Auto-stop resource usage monitor if server is empty.
+  # Useful to avoid unnecessary requests.
+  # DEFAULT: false
+  auto-stop-on-empty: false
 
 restart:
   # Should the plugin add the restart feature? It is experimental and may not always work. DEFAULT: false

@@ -30,7 +30,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
      * Starts resource usage listener.
      */
 
-    public void initializeListener() {
+    public void startListener() {
         setRunning(true);
         Main.getInstance().log(Level.INFO, "Resource usage monitor has been started.");
 

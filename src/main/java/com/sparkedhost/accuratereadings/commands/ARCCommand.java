@@ -41,7 +41,7 @@ public class ARCCommand implements CommandExecutor {
                         return false;
                     }
 
-                    resManager.initializeListener();
+                    resManager.startListener();
                     sender.sendMessage(Utils.convert("&7The resource usage monitor has been &astarted&7."));
                     return true;
 
@@ -90,7 +90,6 @@ public class ARCCommand implements CommandExecutor {
                 "&7- &f/arc &lres-start&8 »&7 Starts the resource usage monitor.",
                 "&7- &f/arc &lres-stop&8 »&7 Stops the resource usage monitor.",
                 "&7- &f/arc &lreload&8 »&7 Reloads the configuration file.",
-                "&7- &f/arc &lversion&8 »&7 Shows current plugin version.",
-                "&7- &f/arc &lversion&8 »&7 Prints plugin version.")));
+                "&7- &f/arc &lversion&8 »&7 Shows current plugin version.")));
     }
 }

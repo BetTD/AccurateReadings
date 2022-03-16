@@ -2,6 +2,7 @@ package com.sparkedhost.accuratereadings;
 
 import com.sparkedhost.accuratereadings.commands.*;
 import com.sparkedhost.accuratereadings.config.Settings;
+import com.sparkedhost.accuratereadings.events.RestartCmdEvent;
 import com.sparkedhost.accuratereadings.managers.PlaceholderAPIManager;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import lombok.Getter;
@@ -65,7 +66,7 @@ public class Main extends JavaPlugin {
 
         if (getConfig().getBoolean("enableRestartCmd")) {
             // TODO Switch back to onCommand
-            getServer().getPluginManager().registerEvents(new Events(), this);
+            getServer().getPluginManager().registerEvents(new RestartCmdEvent(), this);
         }
 
         log(Level.INFO, "Loaded all the commands. Connecting to the panel using '" + panelUrl + "'...");
