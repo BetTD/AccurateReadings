@@ -1,12 +1,12 @@
 package com.sparkedhost.accuratereadings.managers;
 
-import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
-import com.mattmalec.pterodactyl4j.client.entities.Utilization;
-import com.mattmalec.pterodactyl4j.client.managers.WebSocketBuilder;
-import com.mattmalec.pterodactyl4j.client.managers.WebSocketManager;
-import com.mattmalec.pterodactyl4j.client.ws.events.AuthSuccessEvent;
-import com.mattmalec.pterodactyl4j.client.ws.events.StatsUpdateEvent;
-import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
+import com.sparkedhost.pterodactyl4j.client.entities.ClientServer;
+import com.sparkedhost.pterodactyl4j.client.entities.Utilization;
+import com.sparkedhost.pterodactyl4j.client.managers.WebSocketBuilder;
+import com.sparkedhost.pterodactyl4j.client.managers.WebSocketManager;
+import com.sparkedhost.pterodactyl4j.client.ws.events.AuthSuccessEvent;
+import com.sparkedhost.pterodactyl4j.client.ws.events.StatsUpdateEvent;
+import com.sparkedhost.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,12 +1,12 @@
 package com.sparkedhost.accuratereadings.managers;
 
-import com.mattmalec.pterodactyl4j.PteroBuilder;
-import com.mattmalec.pterodactyl4j.client.entities.Account;
-import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
-import com.mattmalec.pterodactyl4j.client.entities.PteroClient;
-import com.mattmalec.pterodactyl4j.entities.Limit;
-import com.mattmalec.pterodactyl4j.exceptions.LoginException;
-import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
+import com.sparkedhost.pterodactyl4j.PteroBuilder;
+import com.sparkedhost.pterodactyl4j.client.entities.Account;
+import com.sparkedhost.pterodactyl4j.client.entities.ClientServer;
+import com.sparkedhost.pterodactyl4j.client.entities.PteroClient;
+import com.sparkedhost.pterodactyl4j.entities.Limit;
+import com.sparkedhost.pterodactyl4j.exceptions.LoginException;
+import com.sparkedhost.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +34,10 @@ public class PterodactylManager {
     @Getter
     private ResourceUsageManager resourceUsageManager;
 
+    private final Main plugin = Main.getInstance();
+
+    private final String userAgent = String.format("%s v%s; +https://sparked.host/arua", plugin.getName(), plugin.getDescription().getVersion());
+
     /**
      * Gets everything ready: initializes PteroClient object, validates credentials and server access, and starts the
      * resource usage monitor.
@@ -46,7 +50,7 @@ public class PterodactylManager {
             account = login();
             server = retrieveServer();
 
-            Main.getInstance().log(Level.INFO, "Connection established successfully! The API key specified belongs to " + getAccount().getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
+            plugin.log(Level.INFO, "Connection established successfully! The API key specified belongs to " + getAccount().getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
 
             setLimits();
 
@@ -57,7 +61,7 @@ public class PterodactylManager {
             setServerOwner(server.isServerOwner());
         } catch (LoginException | NotFoundException e) {
             e.printStackTrace();
-            Main.getInstance().disableItself();
+            plugin.disableItself();
         }
     }
 
@@ -66,10 +70,10 @@ public class PterodactylManager {
      */
 
     private void initializeAPI() {
-        panelURL = Main.getInstance().getSettings().pterodactyl_panelUrl;
-        apiKey = Main.getInstance().getSettings().pterodactyl_apiKey;
-        serverId = Main.getInstance().getSettings().pterodactyl_serverId;
-        api = PteroBuilder.createClient(panelURL, apiKey);
+        panelURL = plugin.getSettings().pterodactyl_panelUrl;
+        apiKey = plugin.getSettings().pterodactyl_apiKey;
+        serverId = plugin.getSettings().pterodactyl_serverId;
+        api = PteroBuilder.createClient(panelURL, apiKey, userAgent);
     }
 
     /**

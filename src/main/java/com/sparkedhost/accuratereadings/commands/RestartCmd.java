@@ -1,6 +1,6 @@
 package com.sparkedhost.accuratereadings.commands;
 
-import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
+import com.sparkedhost.pterodactyl4j.client.entities.ClientServer;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
