@@ -105,7 +105,7 @@ compileJava {
 shadowJar {
     configurations = [project.configurations.runtimeClasspath]
     dependencies {
-        exclude dependency('org.jetbrains:annotations:22.0.0')
+        exclude dependency('org.jetbrains:annotations:23.0.0')
     }
     configure {
         classifier = null
