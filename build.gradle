@@ -112,7 +112,7 @@ shadowJar {
     }
 }
 tasks.jar.configure {
-    classifier = 'noshadow'
+    classifier = 'original'
 }
 
 tasks.build.dependsOn(shadowJar)
