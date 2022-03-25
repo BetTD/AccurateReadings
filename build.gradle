@@ -10,8 +10,12 @@ plugins {
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
+def getDate() {
+    return new Date().format('yyyyMMddHHmm')
+}
+
 group 'com.sparkedhost'
-version '1.2.0-testing'
+version '1.2.0-' + getDate()
 
 sourceCompatibility = 1.8
 
