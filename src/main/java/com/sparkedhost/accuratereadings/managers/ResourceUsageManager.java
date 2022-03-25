@@ -6,6 +6,8 @@ import com.sparkedhost.pterodactyl4j.client.managers.WebSocketBuilder;
 import com.sparkedhost.pterodactyl4j.client.managers.WebSocketManager;
 import com.sparkedhost.pterodactyl4j.client.ws.events.AuthSuccessEvent;
 import com.sparkedhost.pterodactyl4j.client.ws.events.StatsUpdateEvent;
+import com.sparkedhost.pterodactyl4j.client.ws.events.connection.DisconnectedEvent;
+import com.sparkedhost.pterodactyl4j.client.ws.events.token.TokenEvent;
 import com.sparkedhost.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
@@ -87,5 +89,17 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         pteroManager.setMemoryUsage(e.getMemory());
         pteroManager.setDiskUsage(e.getDisk());
         pteroManager.setUptime(e.getUptimeFormatted());
+    }
+
+    @Override
+    public void onTokenUpdate(TokenEvent e) {
+        Main.getInstance().log(Level.INFO, "The authentication token has been updated.");
+    }
+
+    @Override
+    public void onDisconnected(DisconnectedEvent e) {
+        Main.getInstance().log(Level.WARNING, "Websocket connection lost, restarting resource usage manager...");
+        stopListener();
+        startListener();
     }
 }
