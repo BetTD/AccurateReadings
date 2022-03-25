@@ -100,6 +100,6 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
     public void onDisconnected(DisconnectedEvent e) {
         Main.getInstance().log(Level.WARNING, "Websocket connection lost, restarting resource usage manager...");
         stopListener();
-        startListener();
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), this::startListener, 60L);
     }
 }
