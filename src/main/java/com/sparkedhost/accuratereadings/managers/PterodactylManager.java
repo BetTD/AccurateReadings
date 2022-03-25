@@ -36,7 +36,7 @@ public class PterodactylManager {
 
     private final Main plugin = Main.getInstance();
 
-    private final String userAgent = String.format("%s v%s; +https://sparked.host/arua", plugin.getName(), plugin.getDescription().getVersion());
+    private final String userAgent = String.format("%s/%s; +https://sparked.host/arua", plugin.getName(), plugin.getDescription().getVersion());
 
     /**
      * Gets everything ready: initializes PteroClient object, validates credentials and server access, and starts the
