@@ -17,7 +17,7 @@ public class Utils {
      * @return Translated string
      */
 
-    public static String convert(String input) {
+    public static String colorize(String input) {
         return ChatColor.translateAlternateColorCodes('&', input);
     }
 

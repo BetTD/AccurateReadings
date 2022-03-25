@@ -17,7 +17,7 @@ public class ARCCommand implements CommandExecutor {
 
         // If sender is a player, and it does not have the "readings.control" permission node, send no permission message and return
         if (sender instanceof Player && !((Player) sender).getPlayer().hasPermission("readings.control")) {
-            sender.sendMessage(Utils.convert(Main.getInstance().getSettings().messages_noPerms));
+            sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
             return false;
         }
 
@@ -37,31 +37,31 @@ public class ARCCommand implements CommandExecutor {
 
                 case "res-start":
                     if (resManager.isRunning()) {
-                        sender.sendMessage(Utils.convert("&cThe resource usage monitor is already running."));
+                        sender.sendMessage(Utils.colorize("&cThe resource usage monitor is already running."));
                         return false;
                     }
 
                     resManager.startListener();
-                    sender.sendMessage(Utils.convert("&7The resource usage monitor has been &astarted&7."));
+                    sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &astarted&7."));
                     return true;
 
                 case "res-stop":
                     if (!resManager.isRunning()) {
-                        sender.sendMessage(Utils.convert("&cThe resource usage monitor is already stopped."));
+                        sender.sendMessage(Utils.colorize("&cThe resource usage monitor is already stopped."));
                         return false;
                     }
 
                     resManager.stopListener();
-                    sender.sendMessage(Utils.convert("&7The resource usage monitor has been &cstopped&7."));
+                    sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &cstopped&7."));
                     return true;
 
                 case "reload":
                     Main.getInstance().reload();
-                    sender.sendMessage(Utils.convert("&aThe configuration file has been reloaded!"));
+                    sender.sendMessage(Utils.colorize("&aThe configuration file has been reloaded!"));
                     return true;
 
                 default:
-                    sender.sendMessage(Utils.convert("&7Invalid subcommand. Run &f/arc help&7 for a full list of subcommands."));
+                    sender.sendMessage(Utils.colorize("&7Invalid subcommand. Run &f/arc help&7 for a full list of subcommands."));
                     return false;
             }
         }
@@ -80,12 +80,12 @@ public class ARCCommand implements CommandExecutor {
             versionMessage.append(" Run &f/arc help&7 for a full list of subcommands.");
         }
 
-        sender.sendMessage(Utils.convert(versionMessage.toString()));
+        sender.sendMessage(Utils.colorize(versionMessage.toString()));
     }
 
     private void printHelp() {
         // TODO Finish help message
-        sender.sendMessage(Utils.convert(String.join("\n",
+        sender.sendMessage(Utils.colorize(String.join("\n",
                 "&e&lACCURATE&6&lREADINGS &f&lHELP MENU",
                 "&7- &f/arc &lres-start&8 »&7 Starts the resource usage monitor.",
                 "&7- &f/arc &lres-stop&8 »&7 Stops the resource usage monitor.",
