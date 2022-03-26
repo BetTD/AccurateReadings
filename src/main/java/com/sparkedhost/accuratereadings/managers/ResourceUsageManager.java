@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.logging.Level;
 
 public class ResourceUsageManager extends ClientSocketListenerAdapter {
-    PterodactylManager pteroManager = Main.getInstance().pteroAPI;
+    final PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     private ResourceUsageManager resManagerThread;
 
     @Getter

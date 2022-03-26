@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoinLeave implements Listener {
     private final ResourceUsageManager resManager = Main.getInstance().pteroAPI.getResourceUsageManager();
-    private boolean autoStopOnEmpty = Main.getInstance().getSettings().pterodactyl_autoStopOnEmpty;
+    private final boolean autoStopOnEmpty = Main.getInstance().getSettings().pterodactyl_autoStopOnEmpty;
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent e) {
