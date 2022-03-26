@@ -31,11 +31,7 @@ repositories {
     maven { url = uri('https://oss.sonatype.org/content/repositories/snapshots') }
     maven { url = 'https://jitpack.io' }
     maven {
-        url = 'https://maven.pkg.github.com/sparkedhost/pterodactyl4j'
-        credentials {
-            username = System.getenv("USERNAME") ?: System.getenv("GITHUB_USERNAME")
-            password = System.getenv("TOKEN") ?: System.getenv("GITHUB_TOKEN")
-        }
+        url = 'https://repo.mattmalec.com/repository/releases'
     }
     maven {
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
@@ -53,7 +49,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testImplementation 'junit:junit:4.13.2'
-    implementation 'com.sparkedhost:pterodactyl4j:2.0-DEV'
+    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_114'
     compileOnly 'me.clip:placeholderapi:2.11.1'
 }
 

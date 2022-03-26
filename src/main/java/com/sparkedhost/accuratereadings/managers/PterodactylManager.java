@@ -1,12 +1,12 @@
 package com.sparkedhost.accuratereadings.managers;
 
-import com.sparkedhost.pterodactyl4j.PteroBuilder;
-import com.sparkedhost.pterodactyl4j.client.entities.Account;
-import com.sparkedhost.pterodactyl4j.client.entities.ClientServer;
-import com.sparkedhost.pterodactyl4j.client.entities.PteroClient;
-import com.sparkedhost.pterodactyl4j.entities.Limit;
-import com.sparkedhost.pterodactyl4j.exceptions.LoginException;
-import com.sparkedhost.pterodactyl4j.exceptions.NotFoundException;
+import com.mattmalec.pterodactyl4j.PteroBuilder;
+import com.mattmalec.pterodactyl4j.client.entities.Account;
+import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
+import com.mattmalec.pterodactyl4j.client.entities.PteroClient;
+import com.mattmalec.pterodactyl4j.entities.Limit;
+import com.mattmalec.pterodactyl4j.exceptions.LoginException;
+import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,7 +73,7 @@ public class PterodactylManager {
         panelURL = plugin.getSettings().pterodactyl_panelUrl;
         apiKey = plugin.getSettings().pterodactyl_apiKey;
         serverId = plugin.getSettings().pterodactyl_serverId;
-        api = PteroBuilder.createClient(panelURL, apiKey, userAgent);
+        api = PteroBuilder.create(panelURL, apiKey).setUserAgent(userAgent).buildClient();
     }
 
     /**
