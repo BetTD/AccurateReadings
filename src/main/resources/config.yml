@@ -14,9 +14,10 @@ pterodactyl:
   # The server ID to monitor
   server-id: ""
   # Should the plugin use a websocket for resource usage polling?
-  # IMPORTANT NOTE: This is disabled by default as Pterodactyl (more specifically Wings) needs to be configured to allow
-  # requests from any origin. Read more here: https://github.com/mattmalec/Pterodactyl4J/issues/24
-  use-websocket: false
+  # IMPORTANT NOTE: The Pterodactyl4J primary developer has recently added a workaround for this which spoofs the
+  # origin header to the panel URL. This may not always work, but it should work for most cases. If you're seeing a
+  # 403 Forbidden error, you may need to disable this option.
+  use-websocket: true
   # Frequency (in seconds) at which the plugin should make a request to the panel to poll resource usage statistics.
   # This is then converted to in-game ticks.
   # DEFAULT: 2
