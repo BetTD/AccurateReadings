@@ -6,9 +6,14 @@ import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-public class ARCCommand implements CommandExecutor {
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class ARCCommand implements CommandExecutor, TabCompleter {
     private CommandSender sender;
 
     @Override
@@ -70,6 +75,17 @@ public class ARCCommand implements CommandExecutor {
 
         printVersion(true);
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> subcommands = Collections.emptyList();
+
+        if (args.length == 0) {
+            subcommands = Arrays.asList("version", "help", "res-start", "res-stop", "reload");
+        }
+
+        return subcommands;
     }
 
     private void printVersion(boolean printHelpMsg) {

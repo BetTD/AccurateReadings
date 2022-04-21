@@ -8,11 +8,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class PerformanceCmd implements CommandExecutor {
+public class PerformanceCmd implements CommandExecutor, TabCompleter {
     private final CooldownManager cooldown = new CooldownManager();
 
     @Override
@@ -115,5 +118,10 @@ public class PerformanceCmd implements CommandExecutor {
         sender.sendMessage(Utils.colorize(output));
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        return Collections.emptyList();
     }
 }
