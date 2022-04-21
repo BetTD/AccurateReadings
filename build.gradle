@@ -49,7 +49,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testImplementation 'junit:junit:4.13.2'
-    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_116'
+    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_119'
     compileOnly 'me.clip:placeholderapi:2.11.1'
 }
 
