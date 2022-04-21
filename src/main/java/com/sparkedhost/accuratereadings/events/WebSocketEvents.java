@@ -34,12 +34,6 @@ public class WebSocketEvents extends ClientSocketListenerAdapter {
     public void onFailure(FailureEvent e) {
         Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
 
-        if (resourceUsageManager.getWebSocketManager() != null) {
-            resourceUsageManager.getWebSocketManager().reconnect();
-            return;
-        }
-
-        // Fallback just in case getWebSocketManager() returns null
         resourceUsageManager.stopListener();
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> resourceUsageManager.startListener(), 60L);
     }
