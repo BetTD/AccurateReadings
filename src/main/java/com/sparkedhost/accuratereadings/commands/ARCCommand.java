@@ -81,7 +81,7 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> subcommands = Collections.emptyList();
 
-        if (args.length == 0) {
+        if (args.length == 1) {
             subcommands = Arrays.asList("version", "help", "res-start", "res-stop", "reload");
         }
 
