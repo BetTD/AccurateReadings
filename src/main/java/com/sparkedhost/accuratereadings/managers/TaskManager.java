@@ -29,4 +29,18 @@ public class TaskManager {
     public void setInst() {
         inst = this;
     }
+
+    /**
+     * Find a Task instance by name
+     * @param name Name of the task
+     * @return Task object, or null if it doesn't exist
+     */
+    public Task findTask(String name) {
+        for (Task task : getTasks()) {
+            if (task.getName().equalsIgnoreCase(name)) {
+                return task;
+            }
+        }
+        return null;
+    }
 }
