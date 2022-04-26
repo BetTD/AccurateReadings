@@ -29,6 +29,9 @@ public class Main extends JavaPlugin {
 
     public PterodactylManager pteroAPI;
 
+    @Getter
+    private TaskManager taskManager;
+
     @Override
     public void onEnable() {
         // Set @Getter "instance" to this class
@@ -49,10 +52,11 @@ public class Main extends JavaPlugin {
             return;
         }
 
-        // Load configuration values into Settings class
+        taskManager = new TaskManager();
+        taskManager.setInst();
+
         getSettings().loadValues();
 
-        // Retrieves Pterodactyl login credentials from the config
         panelUrl = getSettings().pterodactyl_panelUrl;
         apiKey = getSettings().pterodactyl_apiKey;
         serverId = getSettings().pterodactyl_serverId;

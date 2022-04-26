@@ -124,6 +124,10 @@ public class PterodactylManager {
         setUptime("(resource usage manager not running)");
     }
 
+    protected void setPowerStatus(PowerAction action) {
+        getServer().setPower(action);
+    }
+
     /*
      * And here lies:
      * The almighty list of Getters and Setters

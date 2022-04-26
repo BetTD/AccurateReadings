@@ -49,6 +49,22 @@ cooldown:
   time: 30
 
 # --------------------------------------------------------------------------------------
+# TASKS SECTION
+# This section is for customizing the tasks that the plugin will run on the server when
+# certain conditions are met. Have fun!
+# --------------------------------------------------------------------------------------
+
+tasks:
+  'example':
+    type: BROADCAST
+    threshold: '90%'
+    payload: "This is an example task that runs after the server has reached 90% memory usage."
+  'poweraction':
+    type: POWER
+    threshold: '100%'
+    payload: STOP
+
+# --------------------------------------------------------------------------------------
 # MESSAGES SECTION
 # This allows you to customize the messages sent by the plugin to your liking.
 # --------------------------------------------------------------------------------------

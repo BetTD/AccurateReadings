@@ -1,6 +1,7 @@
 package com.sparkedhost.accuratereadings.config;
 
 import com.sparkedhost.accuratereadings.Main;
+import lombok.Getter;
 
 import java.util.logging.Level;
 
@@ -42,6 +43,15 @@ public class Settings {
 
     public boolean cooldown_enabled;
     public int cooldown_time;
+
+
+    /*
+     * Settings:
+     * TASKS
+     */
+
+    @Getter
+    TaskSettings taskSettings = new TaskSettings();
 
 
     /*
@@ -92,6 +102,13 @@ public class Settings {
         cooldown_enabled = Main.getInstance().getConfig().getBoolean("cooldown.enabled");
         cooldown_time = Main.getInstance().getConfig().getInt("cooldown.time");
 
+
+        /*
+         * Settings:
+         * TASKS
+         */
+
+        getTaskSettings().load();
 
         /*
          * Settings:
