@@ -23,10 +23,10 @@ public class TaskProcessor {
             case COMMAND:
                 break;
             case POWER:
-                PowerAction action = task.getPowerAction();
+                PowerAction action = (PowerAction) task.getPayload();
                 break;
             case BROADCAST:
-                Bukkit.broadcastMessage(Utils.colorize(task.getPayload()));
+                Bukkit.broadcastMessage(Utils.colorize((String) task.getPayload()));
                 break;
         }
 

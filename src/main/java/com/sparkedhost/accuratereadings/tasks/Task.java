@@ -11,20 +11,12 @@ public class Task {
     private String name;
     private TaskType type;
     private String threshold;
-    private String payload;
-    private PowerAction powerAction;
+    private Object payload;
 
-    Task(String name, TaskType type, String threshold, @Nullable String payload) {
+    Task(String name, TaskType type, String threshold, @Nullable Object payload) {
         this.name = name;
         this.type = type;
         this.threshold = threshold;
         this.payload = payload;
-    }
-
-    Task(String name, TaskType type, String threshold, @Nullable PowerAction payload) {
-        this.name = name;
-        this.type = type;
-        this.threshold = threshold;
-        this.powerAction = payload;
     }
 }

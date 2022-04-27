@@ -37,7 +37,7 @@ public class TaskSettings {
 
                 switch (taskType) {
                     case POWER:
-                        taskBuilder.powerAction(TaskValidator.validatePowerAction(tasksSection.getString(taskEntry + ".payload")));
+                        taskBuilder.payload(TaskValidator.validatePowerAction(tasksSection.getString(taskEntry + ".payload")));
                     case BROADCAST:
                     case COMMAND:
                         taskBuilder.payload(tasksSection.getString(taskEntry + ".payload"));
