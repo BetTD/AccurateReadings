@@ -5,6 +5,7 @@ import com.sparkedhost.accuratereadings.config.Settings;
 import com.sparkedhost.accuratereadings.events.RestartCmdEvent;
 import com.sparkedhost.accuratereadings.managers.PlaceholderAPIManager;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
+import com.sparkedhost.accuratereadings.managers.TaskManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
