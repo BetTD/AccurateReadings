@@ -52,7 +52,26 @@ cooldown:
 # TASKS SECTION
 # This section is for customizing the tasks that the plugin will run on the server when
 # certain conditions are met. Have fun!
-# --------------------------------------------------------------------------------------
+#
+# VALID TASK TYPES:
+# - COMMAND ----> This will execute a command via console.
+# - BROADCAST --> This will send a message to all online players.
+# - POWER ------> This will run a power action against your server, see valid power actions
+#                 below.
+#
+# VALID THRESHOLD VALUES:
+# A threshold is the value at which the plugin will trigger a given task. There are two
+# possible ways to specify a value:
+# - PERCENTAGE ->
+#
+# VALID POWER ACTIONS:
+# (these go in "payload")
+# - START ------> This is basically useless, it's assumed that your server is already started
+#                 up.
+# - STOP    ----> STOP and RESTART will gracefully stop your server. RESTART will also
+# - RESTART _/    automatically start your server back up.
+# - KILL -------> This will **IMMEDIATELY** kill your server process. Use at your own risk.
+# ---------------------------------------------------------------------------------------
 
 tasks:
   'example':
