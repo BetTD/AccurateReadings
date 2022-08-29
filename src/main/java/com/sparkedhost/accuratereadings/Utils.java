@@ -1,5 +1,7 @@
 package com.sparkedhost.accuratereadings;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,9 +10,14 @@ import org.jetbrains.annotations.Nullable;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class Utils {
+    @Getter
+    @Setter
+    public static Logger logger;
+
     /**
      * Shorthand for ChatColor#translateAlternateColorCodes() because it's a pain to type.
      * @param input String input
@@ -56,5 +63,9 @@ public class Utils {
         }
 
         return input;
+    }
+
+    public static void logi(String message) {
+
     }
 }

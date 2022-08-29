@@ -35,10 +35,11 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Set @Getter "instance" to this class
         instance = this;
 
-        // Stores default configuration file inside the plugin's directory if not present
+        // Set logger
+        Utils.setLogger(getLogger());
+
         saveDefaultConfig();
 
         // This plugin's expected config version
