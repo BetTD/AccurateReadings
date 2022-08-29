@@ -3,7 +3,6 @@ package com.sparkedhost.accuratereadings.managers;
 import com.sparkedhost.accuratereadings.exceptions.AlreadyExistsException;
 import com.sparkedhost.accuratereadings.tasks.Task;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Set;
 
