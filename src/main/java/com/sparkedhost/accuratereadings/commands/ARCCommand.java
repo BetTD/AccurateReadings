@@ -3,6 +3,9 @@ package com.sparkedhost.accuratereadings.commands;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
+import com.sparkedhost.accuratereadings.managers.TaskManager;
+import com.sparkedhost.accuratereadings.tasks.Task;
+import com.sparkedhost.accuratereadings.tasks.TaskProcessor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -59,6 +62,21 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
                     resManager.stopListener();
                     sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &cstopped&7."));
                     return true;
+
+                case "firetask":
+                    if (args.length < 2) {
+                        sender.sendMessage(Utils.colorize("&7You need to specify the name of the task that you'd like to fire."));
+                        return false;
+                    }
+
+                    Task task = TaskManager.getInst().findTask(args[2]);
+                    if (task == null) {
+                        sender.sendMessage(Utils.colorize("&cThe task you specified does not exist."));
+                        return false;
+                    }
+
+                    // TODO Potentially handle this case with an exception instead of sending the entire CommandSender object
+                    TaskProcessor.processTask(task, true, sender);
 
                 case "reload":
                     Main.getInstance().reload();
