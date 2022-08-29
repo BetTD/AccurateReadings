@@ -4,6 +4,7 @@ import com.mattmalec.pterodactyl4j.PowerAction;
 import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 
 public class TaskProcessor {
     /**
@@ -11,7 +12,7 @@ public class TaskProcessor {
      * @param task The task to process.
      * @param force If true, the task will be processed even if the criteria isn't met.
      */
-    public static void processTask(Task task, boolean force) {
+    public static void processTask(Task task, boolean force, CommandSender sender) {
         if (!force) {
             if (task.getThreshold().endsWith("%")) {
                 int percentage = Integer.parseInt(task.getThreshold().replace("%", ""));
@@ -31,6 +32,18 @@ public class TaskProcessor {
         }
 
         Utils.logi("Task '" + task.getName() + "' has been triggered successfully.");
+
+        if (force && sender != null) {
+            sender.sendMessage(Utils.colorize("&aThe task '" + task.getName() + "&a' has been processed successfully."));
+        }
+    }
+
+    public static void processTask(Task task, boolean force) {
+        processTask(task, force, null);
+    }
+
+    public static void processTask(Task task) {
+        processTask(task, false, null);
     }
 
     public static void processAllTasks() {
