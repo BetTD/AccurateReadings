@@ -10,12 +10,8 @@ plugins {
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-def getDate() {
-    return new Date().format('yyyy-MM-dd_HH-mm')
-}
-
 group 'com.sparkedhost'
-version '1.2.0_' + getDate()
+version '1.2.0-SNAPSHOT-b' + System.getenv("BUILD_NUMBER") ?: "local"
 
 sourceCompatibility = 1.8
 
@@ -46,11 +42,11 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
     compileOnly spigot('1.12.2')
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testImplementation 'junit:junit:4.13.2'
-    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_122'
-    compileOnly 'me.clip:placeholderapi:2.11.1'
+    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_134'
+    compileOnly 'me.clip:placeholderapi:2.11.2'
 }
 
 spigot {
