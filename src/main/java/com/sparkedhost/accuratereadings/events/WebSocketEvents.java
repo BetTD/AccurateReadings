@@ -10,11 +10,13 @@ import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
 import org.bukkit.Bukkit;
 
+import java.net.ProtocolException;
 import java.util.logging.Level;
 
 public class WebSocketEvents extends ClientSocketListenerAdapter {
     PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     ResourceUsageManager resourceUsageManager = pteroManager.getResourceUsageManager();
+
     @Override
     public void onAuthSuccess(AuthSuccessEvent e) {
         Main.getInstance().log(Level.INFO, "Successfully established a websocket connection.");
@@ -32,6 +34,14 @@ public class WebSocketEvents extends ClientSocketListenerAdapter {
 
     @Override
     public void onFailure(FailureEvent e) {
+        if (e.getThrowable() instanceof ProtocolException) {
+            Main.getInstance().log(Level.WARNING, "Unable to utilize websockets, falling back to API polling...");
+            resourceUsageManager.stopListener();
+            Main.getInstance().getSettings().pterodactyl_useWebsocket = false;
+            resourceUsageManager.startListener();
+            return;
+        }
+
         Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
 
         if (resourceUsageManager.getWebSocketManager() != null) {

@@ -16,12 +16,14 @@ pterodactyl:
   # Should the plugin use a websocket for resource usage polling?
   # IMPORTANT NOTE: The Pterodactyl4J primary developer has recently added a workaround for this which spoofs the
   # origin header to the panel URL. This may not always work, but it should work for most cases. If you're seeing a
-  # 403 Forbidden error, you may need to disable this option.
+  # 403 Forbidden error, you may need to disable this option. Please note that the API fallback method is kind of slow.
   use-websocket: true
   # Frequency (in seconds) at which the plugin should make a request to the panel to poll resource usage statistics.
-  # This is then converted to in-game ticks.
-  # DEFAULT: 2
-  update-frequency: 2
+  # This is then converted to in-game ticks. THIS VALUE IS ONLY USED WHEN IN API FALLBACK MODE, AND IS IGNORED WHEN
+  # USING A WEBSOCKET CONNECTION!
+  # DEFAULT: 10 (this is how often Pterodactyl itself pulls data from Wings, going any lower is not going to yield
+  # better results by default)
+  update-frequency: 10
   # Auto-stop resource usage monitor if server is empty.
   # Useful to avoid unnecessary requests.
   # DEFAULT: false
