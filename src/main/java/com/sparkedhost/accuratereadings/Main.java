@@ -10,6 +10,8 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
@@ -49,15 +51,18 @@ public class Main extends JavaPlugin {
         int configVersion = getConfig().getInt("version");
 
         if (configVersion != expectedConfigVersion) {
-            log(Level.SEVERE, String.format("Config version does not match! Expected %s, got %s.", expectedConfigVersion, configVersion));
-            disableItself();
-            return;
+            log(Level.WARNING, String.format("Config version does not match! Expected %s, got %s. It's very likely the " +
+                    "configuration file is out of date. Continue at your own risk.", expectedConfigVersion, configVersion));
         }
 
         taskManager = new TaskManager();
         taskManager.setInst();
 
         getSettings().loadValues();
+
+        if (!isPterodactyl()) {
+            log(Level.SEVERE, "Pterodactyl check failed! Are you sure this server is running in Pterodactyl?");
+        }
 
         panelUrl = getSettings().pterodactyl_panelUrl;
         apiKey = getSettings().pterodactyl_apiKey;
@@ -191,5 +196,9 @@ public class Main extends JavaPlugin {
                 getSettings().pterodactyl_serverId.equals(serverId) &&
                 getSettings().pterodactyl_useWebsocket == useWebsocket &&
                 getSettings().pterodactyl_updateFrequency == updateFrequency);
+    }
+
+    private boolean isPterodactyl() {
+        return Files.exists(Paths.get("/.dockerenv")) && System.getProperty("user.name").equals("container");
     }
 }
