@@ -28,6 +28,11 @@ pterodactyl:
   # Useful to avoid unnecessary requests.
   # DEFAULT: false
   auto-stop-on-empty: false
+  # Bypasses Pterodactyl check - only set to "true" if REALLY needed.
+  # This check ensures that the server is running as the "container" user (which is default for all Pterodactyl
+  # installations) and that the .dockerenv file exists in the filesystem root.
+  # DEFAULT: false
+  ignore-pterodactyl-check: false
 
 restart:
   # Should the plugin add the restart feature? It is experimental and may not always work. DEFAULT: false
@@ -64,7 +69,15 @@ cooldown:
 # VALID THRESHOLD VALUES:
 # A threshold is the value at which the plugin will trigger a given task. There are two
 # possible ways to specify a value:
-# - PERCENTAGE ->
+# - PERCENTAGE
+# - ABSOLUTE
+#
+# VALID THRESHOLD TYPES:
+# A threshold type is the kind of resource that should trigger the task once its usage is above
+# the specified threshold value.
+# - CPU
+# - MEMORY
+# - DISK
 #
 # VALID POWER ACTIONS:
 # (these go in "payload")
@@ -77,12 +90,16 @@ cooldown:
 
 tasks:
   'example':
+    active: true
     type: BROADCAST
-    threshold: '90%'
+    threshold-value: '90%'
+    threshold-type: MEMORY
     payload: "This is an example task that runs after the server has reached 90% memory usage."
   'poweraction':
+    active: true
     type: POWER
-    threshold: '100%'
+    threshold-value: '100%'
+    threshold-type: CPU
     payload: STOP
 
 # --------------------------------------------------------------------------------------

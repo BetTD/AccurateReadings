@@ -14,8 +14,8 @@ public class TaskProcessor {
      */
     public static void processTask(Task task, boolean force, CommandSender sender) {
         if (!force) {
-            if (task.getThreshold().endsWith("%")) {
-                int percentage = Integer.parseInt(task.getThreshold().replace("%", ""));
+            if (task.getThresholdValue().endsWith("%")) {
+                int percentage = Integer.parseInt(task.getThresholdValue().replace("%", ""));
                 //
             }
         }

@@ -27,20 +27,27 @@ public class TaskSettings {
             return;
         }
 
+        int activeTasks = 0;
         for (String taskEntry : tasksSet) {
             try {
                 TaskType taskType = TaskValidator.validateTaskType(tasksSection.getString(taskEntry + ".type").toUpperCase());
+                boolean isActive = tasksSection.getBoolean(taskEntry + ".active", true);
                 Task.TaskBuilder taskBuilder = Task.builder()
                         .name(taskEntry)
+                        .active(isActive)
                         .type(taskType)
-                        .threshold(tasksSection.getString(taskEntry + ".threshold"));
+                        .thresholdValue(tasksSection.getString(taskEntry + ".threshold"));
+
+                if (isActive) activeTasks++;
 
                 switch (taskType) {
                     case POWER:
                         taskBuilder.payload(TaskValidator.validatePowerAction(tasksSection.getString(taskEntry + ".payload")));
+                        break;
                     case BROADCAST:
                     case COMMAND:
                         taskBuilder.payload(tasksSection.getString(taskEntry + ".payload"));
+                        break;
                 }
 
                 TaskManager.getInst().addTask(taskBuilder.build());
@@ -53,6 +60,6 @@ public class TaskSettings {
             }
         }
 
-        Main.getInstance().getLogger().info("Successfully loaded " + TaskManager.getInst().getTasks().size() + " tasks.");
+        Main.getInstance().getLogger().info("Successfully loaded " + TaskManager.getInst().getTasks().size() + " tasks, " + activeTasks + " active.");
     }
 }
