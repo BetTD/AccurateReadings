@@ -1,4 +1,4 @@
-package com.sparkedhost.accuratereadings.events;
+package com.sparkedhost.accuratereadings.listeners;
 
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class PlayerJoinLeave implements Listener {
+public class PlayerJoinLeaveListener implements Listener {
     private final ResourceUsageManager resManager = Main.getInstance().pteroAPI.getResourceUsageManager();
     private final boolean autoStopOnEmpty = Main.getInstance().getSettings().pterodactyl_autoStopOnEmpty;
 

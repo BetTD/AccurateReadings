@@ -4,14 +4,9 @@ import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
 import com.mattmalec.pterodactyl4j.client.entities.Utilization;
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketBuilder;
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketManager;
-import com.mattmalec.pterodactyl4j.client.ws.events.AuthSuccessEvent;
-import com.mattmalec.pterodactyl4j.client.ws.events.StatsUpdateEvent;
-import com.mattmalec.pterodactyl4j.client.ws.events.connection.DisconnectedEvent;
-import com.mattmalec.pterodactyl4j.client.ws.events.connection.FailureEvent;
-import com.mattmalec.pterodactyl4j.client.ws.events.token.TokenEvent;
 import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
-import com.sparkedhost.accuratereadings.events.WebSocketEvents;
+import com.sparkedhost.accuratereadings.listeners.WebsocketListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -44,7 +39,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         // If use-websocket is set to true in the config, use that to gather resource usage stats.
         if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
             pteroManager.getApi().retrieveServerByIdentifier(pteroManager.getServerId()).map(ClientServer::getWebSocketBuilder)
-                    .map(builder -> builder.addEventListeners(new WebSocketEvents())).executeAsync(WebSocketBuilder::build);
+                    .map(builder -> builder.addEventListeners(new WebsocketListener())).executeAsync(WebSocketBuilder::build);
             return;
         }
 

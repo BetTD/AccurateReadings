@@ -1,4 +1,4 @@
-package com.sparkedhost.accuratereadings.events;
+package com.sparkedhost.accuratereadings.listeners;
 
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketManager;
 import com.mattmalec.pterodactyl4j.client.ws.events.AuthSuccessEvent;
@@ -13,7 +13,7 @@ import org.bukkit.Bukkit;
 import java.net.ProtocolException;
 import java.util.logging.Level;
 
-public class WebSocketEvents extends ClientSocketListenerAdapter {
+public class WebsocketListener extends ClientSocketListenerAdapter {
     PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     ResourceUsageManager resourceUsageManager = pteroManager.getResourceUsageManager();
 
