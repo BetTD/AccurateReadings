@@ -12,17 +12,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ARCCommand implements CommandExecutor, TabCompleter {
-    private CommandSender sender;
 
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
-        this.sender = sender;
-
         // If sender is a player, and it does not have the "readings.control" permission node, send no permission message and return
         if (sender instanceof Player && !((Player) sender).getPlayer().hasPermission("readings.control")) {
             sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
@@ -34,49 +29,86 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
         if (args.length > 0) {
             ResourceUsageManager resManager = Main.getInstance().pteroAPI.getResourceUsageManager();
 
-            switch (args[0]) {
+            switch (args[0].toLowerCase()) {
                 case "version":
-                    printVersion(false);
+                    sender.sendMessage(printVersion(false));
                     return true;
 
                 case "help":
-                    printHelp();
+                    sender.sendMessage(printHelp());
                     return true;
 
-                case "res-start":
-                    if (resManager.isRunning()) {
-                        sender.sendMessage(Utils.colorize("&cThe resource usage monitor is already running."));
+                case "resource":
+                case "res":
+                    if (args.length != 2) {
+                        sender.sendMessage(Utils.colorize("&b&l»&7 Available subcommands:"));
                         return false;
                     }
 
-                    resManager.startListener();
-                    sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &astarted&7."));
-                    return true;
+                    switch (args[1].toLowerCase()) {
+                        case "status":
+                            sender.sendMessage(Utils.colorize("&f&l»&7 The resource usage monitor is currently " +
+                                    (resManager.isRunning() ? "&arunning" : "&cstopped") +
+                                    "&7."));
+                            return true;
+                        case "start":
+                            if (resManager.isRunning()) {
+                                sender.sendMessage(Utils.colorize("&cThe resource usage monitor is already running."));
+                                return false;
+                            }
 
-                case "res-stop":
-                    if (!resManager.isRunning()) {
-                        sender.sendMessage(Utils.colorize("&cThe resource usage monitor is already stopped."));
-                        return false;
+                            resManager.startListener();
+                            sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &astarted&7."));
+                            return true;
+
+                        case "stop":
+                            if (!resManager.isRunning()) {
+                                sender.sendMessage(Utils.colorize("&cThe resource usage monitor is already stopped."));
+                                return false;
+                            }
+
+                            resManager.stopListener();
+                            sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &cstopped&7."));
+                            return true;
+                        default:
+                            sender.sendMessage(Utils.colorize("&cThis subcommand does not exist!"));
                     }
 
-                    resManager.stopListener();
-                    sender.sendMessage(Utils.colorize("&7The resource usage monitor has been &cstopped&7."));
-                    return true;
-
-                case "firetask":
+                case "tasks":
+                    TaskManager taskManager = TaskManager.getInst();
                     if (args.length < 2) {
-                        sender.sendMessage(Utils.colorize("&7You need to specify the name of the task that you'd like to fire."));
+                        // TODO add response
                         return false;
                     }
 
-                    Task task = TaskManager.getInst().findTask(args[2]);
-                    if (task == null) {
-                        sender.sendMessage(Utils.colorize("&cThe task you specified does not exist."));
-                        return false;
-                    }
+                    switch (args[1].toLowerCase()) {
+                        case "list":
+                            Set<Task> tasks = taskManager.getTasks();
+                            StringJoiner joiner = new StringJoiner("\n");
+                            joiner.add("&bList of loaded tasks:");
 
-                    // TODO Potentially handle this case with an exception instead of sending the entire CommandSender object
-                    TaskProcessor.processTask(task, true, sender);
+                            for (Task task : tasks) {
+                                joiner.add(String.format("%s&l•&7 %s", task.isActive() ? "&a" : "&c", task.getName()));
+                            }
+
+                            sender.sendMessage(Utils.colorize(joiner.toString()));
+                            return true;
+                        case "fire":
+                            if (args.length < 3) {
+                                sender.sendMessage(Utils.colorize("&7You need to specify the name of the task that you'd like to fire."));
+                                return false;
+                            }
+
+                            Task task = taskManager.findTask(args[2]);
+                            if (task == null) {
+                                sender.sendMessage(Utils.colorize("&cThe task you specified does not exist."));
+                                return false;
+                            }
+
+                            // TODO Potentially handle this case with an exception instead of sending the entire CommandSender object
+                            TaskProcessor.processTask(task, true, sender);
+                            return true;
+                    }
 
                 case "reload":
                     Main.getInstance().reload();
@@ -100,30 +132,36 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
         List<String> subcommands = Collections.emptyList();
 
         if (args.length == 1) {
-            subcommands = Arrays.asList("version", "help", "res-start", "res-stop", "reload");
+            subcommands = Arrays.asList("help", "reload", "res", "resource", "version");
+        }
+
+        if (args.length == 2 && (args[1].equals("res") || args[1].equals("resource"))) {
+            subcommands = Arrays.asList("start", "status", "stop");
         }
 
         return subcommands;
     }
 
-    private void printVersion(boolean printHelpMsg) {
+    private String printVersion(boolean printHelpMsg) {
         StringBuilder versionMessage = new StringBuilder()
-                .append(String.format("&7You're running &fAccurateReadings&7 version &f%s&7.", Main.getInstance().getDescription().getVersion()));
+                .append(String.format("&7This server is running running &fAccurateReadings&7 version &f%s&7.", Main.getInstance().getDescription().getVersion()));
 
         if (printHelpMsg) {
             versionMessage.append(" Run &f/arc help&7 for a full list of subcommands.");
+        } else {
+            versionMessage.append("\n").append("&b&l»&7 By &fBetTD and contributors&7.")
+                    .append("\n").append("&b&l»&7 Site: &fhttps://github.com/SparkedHost/AccurateReadings");
         }
 
-        sender.sendMessage(Utils.colorize(versionMessage.toString()));
+        return Utils.colorize(versionMessage.toString());
     }
 
-    private void printHelp() {
+    private String printHelp() {
         // TODO Finish help message
-        sender.sendMessage(Utils.colorize(String.join("\n",
+        return Utils.colorize(String.join("\n",
                 "&e&lACCURATE&6&lREADINGS &f&lHELP MENU",
-                "&7- &f/arc &lres-start&8 »&7 Starts the resource usage monitor.",
-                "&7- &f/arc &lres-stop&8 »&7 Stops the resource usage monitor.",
-                "&7- &f/arc &lreload&8 »&7 Reloads the configuration file.",
-                "&7- &f/arc &lversion&8 »&7 Shows current plugin version.")));
+                "&7- &f/arc &lres&7 <start|stop|status>&8 »&7 Manage resource usage monitor.",
+                "&7- &f/arc &lreload&8 »&7 Reload configuration file.",
+                "&7- &f/arc &lversion&8 »&7 Show current plugin version."));
     }
 }
