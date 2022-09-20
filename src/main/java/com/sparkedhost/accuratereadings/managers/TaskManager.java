@@ -4,6 +4,7 @@ import com.sparkedhost.accuratereadings.exceptions.AlreadyExistsException;
 import com.sparkedhost.accuratereadings.tasks.Task;
 import lombok.Getter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TaskManager {
@@ -11,7 +12,7 @@ public class TaskManager {
     private static TaskManager inst;
 
     @Getter
-    private Set<Task> tasks;
+    private final Set<Task> tasks = new HashSet<>();
 
     public void addTask(Task task) throws AlreadyExistsException {
         if (getTasks().contains(task)) {
