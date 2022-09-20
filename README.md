@@ -1,6 +1,22 @@
 # Accurate**Readings**
 #### **WARNING:** This version of the plugin will **NOT** work with Pterodactyl 1.x and newer versions of Spigot.
-A new version (v1.2.0) is being worked on in a separate branch, it is not produciton-ready yet but it is, to our knowledge, fully functional so far. Please take a look at the ``v1.2.0`` branch if you'd like to compile the code yourself, or check out the following pull request to stay updated: [#1 AccurateReadings v1.2.0](https://github.com/SparkedHost/AccurateReadings/pull/1)
+A new version (v1.2.0) is being worked on in a separate branch, it is not production-ready yet but it is, to our knowledge, fully functional so far. Please take a look at the ``v1.2.0`` branch if you'd like to compile the code yourself, or check out the following pull request to stay updated: [#1 AccurateReadings v1.2.0](https://github.com/SparkedHost/AccurateReadings/pull/1)
+
+**Alternatively, you may download the latest stable v1.2.0 build by clicking [here](https://builds.bettd.me/java/bukkit/accuratereadings/AccurateReadings-1.2.0-pre1.jar).** This build has been in use in a live environment for over 4 months without major issues. If you have an old config file, **it will not be compatible** and you should remake it. Before v1.2.0 is released, we will attempt to create a system that automatically converts your old configuration to the new format.
+
+[There's also a CI server with freshly-baked builds](https://ci.bettd.me/job/SparkedHost/job/AccurateReadings/), but at the time of writing (September 20th, 2022) they currently contain unfinished features which may break the plugin's functionality entirely during runtime.
+
+Here's a few of the new version's highlights:
+
+- Code quality has been greatly improved
+- Switched to a better & newer API wrapper for Pterodactyl
+- Added PlaceholderAPI support: this plugin now registers a number of placeholders that may be used with any other plugin that supports the use of PAPI placeholders.
+- Multi-version support: even though this is considered a "legacy" plugin and was compiled against Java 8, it should still work with anything from Spigot 1.8.8 all the way to the latest Purpur build for **1.19.2**.
+
+**ANYTHING BELOW THIS LINE IS PART OF v1.1.0's README!** [You can find an up-to-date README here](https://github.com/SparkedHost/AccurateReadings/tree/v1.2.0#readme).
+
+---
+
 ## What's this plugin?
 AccurateReadings aims to provide accurate readings on resource usage by communicating with a Pterodactyl panel using the [Ptero4J](https://github.com/stanjg/Ptero4J) wrapper made by stanjg, and of course using the Pterodactyl panel API.
 ## Requirements
