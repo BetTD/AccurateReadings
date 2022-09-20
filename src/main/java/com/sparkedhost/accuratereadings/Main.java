@@ -19,7 +19,7 @@ public class Main extends JavaPlugin {
     private static Main instance;
 
     @Getter
-    private final Settings settings = new Settings();
+    private Settings settings;
 
     String panelUrl;
     String apiKey;
@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
         Utils.setLogger(getLogger());
 
         saveDefaultConfig();
+        settings = new Settings();
 
         // This plugin's expected config version
         int expectedConfigVersion = 1;
@@ -53,6 +54,13 @@ public class Main extends JavaPlugin {
         if (configVersion != expectedConfigVersion) {
             log(Level.WARNING, String.format("Config version does not match! Expected %s, got %s. It's very likely the " +
                     "configuration file is out of date. Continue at your own risk.", expectedConfigVersion, configVersion));
+            log(Level.WARNING, "Resuming startup in 2 seconds...");
+
+            try {
+                wait(2000);
+            } catch (InterruptedException e) {
+                log(Level.WARNING, "Timeout interrupted.");
+            }
         }
 
         taskManager = new TaskManager();
