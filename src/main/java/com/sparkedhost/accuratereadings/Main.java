@@ -207,6 +207,6 @@ public class Main extends JavaPlugin {
     }
 
     private boolean isPterodactyl() {
-        return Files.exists(Paths.get("/.dockerenv")) && System.getProperty("user.name").equals("container");
+        return Files.exists(Paths.get("/entrypoint.sh")) && System.getProperty("user.name").equals("container");
     }
 }
