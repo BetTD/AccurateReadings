@@ -64,7 +64,6 @@ public class Main extends JavaPlugin {
         }
 
         taskManager = new TaskManager();
-        taskManager.setInst();
 
         getSettings().loadValues();
 

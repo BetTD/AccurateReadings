@@ -1,6 +1,7 @@
 package com.sparkedhost.accuratereadings.tasks;
 
 import com.mattmalec.pterodactyl4j.PowerAction;
+import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import org.bukkit.Bukkit;
@@ -22,9 +23,11 @@ public class TaskProcessor {
 
         switch (task.getType()) {
             case COMMAND:
+                Bukkit.getConsoleSender().sendMessage("/" + task.getPayload());
                 break;
             case POWER:
                 PowerAction action = (PowerAction) task.getPayload();
+                Main.getInstance().pteroAPI.sendPowerAction(action);
                 break;
             case BROADCAST:
                 Bukkit.broadcastMessage(Utils.colorize((String) task.getPayload()));

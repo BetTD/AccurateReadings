@@ -102,6 +102,8 @@ public class PterodactylManager {
             throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() + "' is unable to access it.");
         }
     }
+    
+    
 
     /**
      * Store resource limits.
@@ -125,7 +127,7 @@ public class PterodactylManager {
         setUptime("(resource usage manager not running)");
     }
 
-    protected void setPowerStatus(PowerAction action) {
+    public void sendPowerAction(PowerAction action) {
         getServer().setPower(action);
     }
 

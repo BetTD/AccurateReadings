@@ -14,6 +14,10 @@ public class TaskManager {
     @Getter
     private final Set<Task> tasks = new HashSet<>();
 
+    public TaskManager() {
+        inst = this;
+    }
+
     public void addTask(Task task) throws AlreadyExistsException {
         if (getTasks().contains(task)) {
             throw new AlreadyExistsException("Task already exists.");
@@ -24,10 +28,6 @@ public class TaskManager {
 
     public void clear() {
         getTasks().clear();
-    }
-
-    public void setInst() {
-        inst = this;
     }
 
     /**

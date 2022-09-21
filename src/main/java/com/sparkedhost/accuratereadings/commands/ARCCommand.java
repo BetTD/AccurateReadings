@@ -2,6 +2,7 @@ package com.sparkedhost.accuratereadings.commands;
 
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
+import com.sparkedhost.accuratereadings.exceptions.TaskExecutionException;
 import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import com.sparkedhost.accuratereadings.tasks.Task;
@@ -106,8 +107,13 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
                             }
 
                             // TODO Potentially handle this case with an exception instead of sending the entire CommandSender object
-                            TaskProcessor.processTask(task, true, sender);
-                            return true;
+                            try {
+                                TaskProcessor.processTask(task, true);
+                                sender.sendMessage(Utils.colorize("&aThe task "));
+                                return true;
+                            } catch (TaskExecutionException ex) {
+
+                            }
                     }
 
                 case "reload":
