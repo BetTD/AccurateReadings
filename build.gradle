@@ -106,6 +106,12 @@ shadowJar {
     configure {
         classifier = null
     }
+    relocate("com.mattmalec.pterodactyl4j", "com.sparkedhost.libs.p4j")
+    relocate("okhttp3", "com.sparkedhost.libs.okhttp3")
+    relocate("okio", "com.sparkedhost.libs.okio")
+    relocate("org.slf4j", "com.sparkedhost.libs.slf4j")
+    relocate("org.json", "com.sparkedhost.libs.json")
+
 }
 tasks.jar.configure {
     classifier = 'original'
