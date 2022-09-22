@@ -106,14 +106,8 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
                                 return false;
                             }
 
-                            // TODO Potentially handle this case with an exception instead of sending the entire CommandSender object
-                            try {
-                                TaskProcessor.processTask(task, true);
-                                sender.sendMessage(Utils.colorize("&aThe task "));
-                                return true;
-                            } catch (TaskExecutionException ex) {
-
-                            }
+                            // Let TaskProcessor take care of error handling
+                            TaskProcessor.processTask(task, true, sender);
                     }
 
                 case "reload":

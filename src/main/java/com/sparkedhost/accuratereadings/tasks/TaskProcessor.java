@@ -3,9 +3,12 @@ package com.sparkedhost.accuratereadings.tasks;
 import com.mattmalec.pterodactyl4j.PowerAction;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
+import com.sparkedhost.accuratereadings.exceptions.TaskExecutionException;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+
+import java.util.logging.Level;
 
 public class TaskProcessor {
     /**
@@ -16,7 +19,11 @@ public class TaskProcessor {
     public static void processTask(Task task, boolean force, CommandSender sender) {
         if (!force) {
             if (task.getThresholdValue().endsWith("%")) {
-                int percentage = Integer.parseInt(task.getThresholdValue().replace("%", ""));
+                try {
+                    int percentage = Integer.parseInt(task.getThresholdValue().replace("%", ""));
+                } catch (NumberFormatException exception) {
+                    exception.printStackTrace();
+                }
                 //
             }
         }
@@ -24,13 +31,30 @@ public class TaskProcessor {
         switch (task.getType()) {
             case COMMAND:
                 Bukkit.getConsoleSender().sendMessage("/" + task.getPayload());
+                sender.sendMessage(Utils.colorize("&aThe task has been completed successfully."));
                 break;
             case POWER:
                 PowerAction action = (PowerAction) task.getPayload();
-                Main.getInstance().pteroAPI.sendPowerAction(action);
+                Main.getInstance().getPteroAPI().sendPowerAction(action)
+                        .executeAsync(unused -> {
+                            if (action == PowerAction.START)
+                                sender.sendMessage(Utils.colorize("&aThe task has been completed successfully.\n" +
+                                        "&7You're only receiving this message as this task has a power action of " +
+                                        "START defined in its configuration. Any other value will not return " +
+                                        "anything, because well, you'd definitely notice if the action was " +
+                                        "successful."));
+                        }, exception -> {
+                            if (sender != null)
+                                sender.sendMessage(Utils.colorize("&cThe task could not be completed:\n&7" +
+                                        exception.getMessage() +
+                                        "\n&cCheck the console for a stacktrace."));
+                            Main.getInstance().log(Level.SEVERE, "An exception occurred while processing task '" + task.getName() + "'!");
+                            exception.printStackTrace();
+                        });;
                 break;
             case BROADCAST:
                 Bukkit.broadcastMessage(Utils.colorize((String) task.getPayload()));
+                sender.sendMessage(Utils.colorize(""));
                 break;
         }
 

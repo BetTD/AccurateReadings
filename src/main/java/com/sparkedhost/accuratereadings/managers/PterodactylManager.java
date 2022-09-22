@@ -1,6 +1,7 @@
 package com.sparkedhost.accuratereadings.managers;
 
 import com.mattmalec.pterodactyl4j.PowerAction;
+import com.mattmalec.pterodactyl4j.PteroAction;
 import com.mattmalec.pterodactyl4j.PteroBuilder;
 import com.mattmalec.pterodactyl4j.client.entities.Account;
 import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
@@ -102,8 +103,6 @@ public class PterodactylManager {
             throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() + "' is unable to access it.");
         }
     }
-    
-    
 
     /**
      * Store resource limits.
@@ -127,8 +126,8 @@ public class PterodactylManager {
         setUptime("(resource usage manager not running)");
     }
 
-    public void sendPowerAction(PowerAction action) {
-        getServer().setPower(action);
+    public PteroAction<Void> sendPowerAction(PowerAction action) {
+        return getServer().setPower(action);
     }
 
     /*
