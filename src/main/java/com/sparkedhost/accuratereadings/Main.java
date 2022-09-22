@@ -30,6 +30,7 @@ public class Main extends JavaPlugin {
     @Getter
     private boolean isPAPIPresent;
 
+    @Getter
     public PterodactylManager pteroAPI;
 
     @Getter
