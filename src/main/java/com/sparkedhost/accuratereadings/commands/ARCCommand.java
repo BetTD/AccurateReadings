@@ -42,7 +42,11 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
                 case "resource":
                 case "res":
                     if (args.length != 2) {
-                        sender.sendMessage(Utils.colorize("&b&l»&7 Available subcommands:"));
+                        // TODO complete
+                        sender.sendMessage(Utils.colorize(new StringJoiner("\n")
+                                .add("&b&l»&7 Available subcommands:")
+                                .add("")
+                                .toString()));
                         return false;
                     }
 
@@ -75,10 +79,15 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
                             sender.sendMessage(Utils.colorize("&cThis subcommand does not exist!"));
                     }
 
+                case "task":
                 case "tasks":
                     TaskManager taskManager = TaskManager.getInst();
                     if (args.length < 2) {
-                        // TODO add response
+                        // TODO complete
+                        sender.sendMessage(Utils.colorize(new StringJoiner("\n")
+                                .add("&b&l»&7 Available subcommands:")
+                                .add("")
+                                .toString()));
                         return false;
                     }
 
@@ -94,6 +103,11 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
 
                             sender.sendMessage(Utils.colorize(joiner.toString()));
                             return true;
+                        case "enable":
+                            // TODO create enable and disable subcommands
+                            break;
+                        case "disable":
+                            break;
                         case "fire":
                             if (args.length < 3) {
                                 sender.sendMessage(Utils.colorize("&7You need to specify the name of the task that you'd like to fire."));
@@ -123,7 +137,7 @@ public class ARCCommand implements CommandExecutor, TabCompleter {
 
         // No args
 
-        printVersion(true);
+        sender.sendMessage(printVersion(true));
         return true;
     }
 
