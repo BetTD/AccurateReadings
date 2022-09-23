@@ -68,6 +68,7 @@ public class Main extends JavaPlugin {
 
         getSettings().loadValues();
 
+        // FIXME This check **ALWAYS** fails under ideal conditions. Maybe checking for /entrypoint.sh isn't a great idea?
         if (!isPterodactyl()) {
             log(Level.SEVERE, "Pterodactyl check failed! Are you sure this server is running in Pterodactyl?");
         }
@@ -206,6 +207,7 @@ public class Main extends JavaPlugin {
                 getSettings().pterodactyl_updateFrequency == updateFrequency);
     }
 
+    // FIXME This check **ALWAYS** fails under ideal conditions. Maybe checking for /entrypoint.sh isn't a great idea?
     private boolean isPterodactyl() {
         return Files.exists(Paths.get("/entrypoint.sh")) && System.getProperty("user.name").equals("container");
     }
