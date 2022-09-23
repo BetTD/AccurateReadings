@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class HelpSubCommand extends SubCommand {
-    public void onCommand(CommandSender sender, Command command, String[] args) {
+    public void execute(CommandSender sender, Command command, String[] args) {
         // TODO Finish help message
         sender.sendMessage(Utils.colorize(String.join("\n",
                 "&e&lACCURATE&6&lREADINGS &f&lHELP MENU",

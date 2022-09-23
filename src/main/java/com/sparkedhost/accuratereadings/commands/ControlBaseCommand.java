@@ -3,6 +3,7 @@ package com.sparkedhost.accuratereadings.commands;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.commands.control.*;
+import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,20 +13,24 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class ControlBaseCommand implements CommandExecutor, TabCompleter {
+    @Getter
     private final Map<String, SubCommand> subcommands = new HashMap<>();
 
     public ControlBaseCommand() {
-        subcommands.put("help", new HelpSubCommand());
-        subcommands.put("tasks", new TasksSubCommand());
-        subcommands.put("task", TasksSubCommand.getInst());
-        subcommands.put("res", new ResourceSubCommand());
-        subcommands.put("version", new VersionSubCommand());
+        // Subcommands
+        getSubcommands().put("help", new HelpSubCommand());
+        getSubcommands().put("tasks", new TasksSubCommand());
+        getSubcommands().put("res", new ResourceSubCommand());
+        getSubcommands().put("version", new VersionSubCommand());
+
+        // Aliases to subcommands
+        getSubcommands().put("task", TasksSubCommand.getInst());
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
         // If sender is a player, and it does not have the "readings.control" permission node, send no permission message and return
-        if (sender instanceof Player && !((Player) sender).getPlayer().hasPermission("readings.control")) {
+        if (!Utils.hasPermission(sender, "readings.control")) {
             sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
             return false;
         }
@@ -38,7 +43,14 @@ public class ControlBaseCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
 
-            subcommands.get(args[0].toLowerCase()).onCommand(sender, c, args);
+            SubCommand subCommand = getSubcommands().get(args[0].toLowerCase());
+
+            if (!Utils.hasPermission(sender, subCommand.getPermission())) {
+                sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
+                return false;
+            }
+
+            subCommand.execute(sender, c, args);
             return true;
         }
 
@@ -57,8 +69,14 @@ public class ControlBaseCommand implements CommandExecutor, TabCompleter {
             subcommands = Arrays.asList("help", "reload", "res", "resource", "version");
         }
 
-        if (args.length == 2 && (args[1].equals("res") || args[1].equals("resource"))) {
-            subcommands = Arrays.asList("start", "status", "stop");
+        if (args.length == 2) {
+            String subcommand = args[1].toLowerCase();
+
+            if (subcommand.equals("res") || subcommand.equals("resource"))
+                subcommands = Arrays.asList("start", "status", "stop");
+
+            if (subcommand.equals("tasks") || subcommand.equals("task"))
+                subcommands = Arrays.asList("list", "fire");
         }
 
         return subcommands;

@@ -20,7 +20,7 @@ public class TasksSubCommand extends SubCommand {
         inst = this;
     }
 
-    public void onCommand(CommandSender sender, Command command, String[] args) {
+    public void execute(CommandSender sender, Command command, String[] args) {
         TaskManager taskManager = TaskManager.getInst();
         if (args.length < 2) {
             // TODO complete

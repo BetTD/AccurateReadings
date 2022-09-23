@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 
 public class ResourceSubCommand extends SubCommand {
     ResourceUsageManager resManager = plugin.getPteroAPI().getResourceUsageManager();
-    public void onCommand(CommandSender sender, Command command, String[] args) {
+    public void execute(CommandSender sender, Command command, String[] args) {
         if (args.length != 2) {
             // TODO complete
             sender.sendMessage(Utils.colorize(new StringJoiner("\n")

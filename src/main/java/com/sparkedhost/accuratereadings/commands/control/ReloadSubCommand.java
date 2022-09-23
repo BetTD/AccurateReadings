@@ -7,12 +7,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class ReloadSubCommand extends SubCommand {
-    public void onCommand(CommandSender sender, Command command, String[] args) {
+    public void execute(CommandSender sender, Command command, String[] args) {
         Main.getInstance().reload();
         sender.sendMessage(Utils.colorize("&aThe configuration file has been reloaded!"));
     }
 
     public String getPermission() {
-        return null;
+        return "readings.control.reload";
     }
 }

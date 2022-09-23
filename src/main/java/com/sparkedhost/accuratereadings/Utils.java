@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,6 +64,13 @@ public class Utils {
         }
 
         return input;
+    }
+
+    public static boolean hasPermission(CommandSender sender, String permission) {
+        if (!(sender instanceof Player))
+            return true;
+
+        return sender.hasPermission(permission);
     }
 
     public static void logi(String message) {

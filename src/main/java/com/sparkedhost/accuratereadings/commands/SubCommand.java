@@ -6,6 +6,6 @@ import org.bukkit.command.CommandSender;
 
 public abstract class SubCommand {
     public Main plugin = Main.getInstance();
-    protected abstract void onCommand(CommandSender sender, Command command, String[] args);
+    protected abstract void execute(CommandSender sender, Command command, String[] args);
     protected abstract String getPermission();
 }
