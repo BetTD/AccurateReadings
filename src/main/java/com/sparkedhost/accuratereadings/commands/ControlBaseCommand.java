@@ -3,9 +3,6 @@ package com.sparkedhost.accuratereadings.commands;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.commands.control.*;
-import com.sparkedhost.accuratereadings.managers.TaskManager;
-import com.sparkedhost.accuratereadings.tasks.Task;
-import com.sparkedhost.accuratereadings.tasks.TaskProcessor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,10 +11,10 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-public class ARCCommand implements CommandExecutor, TabCompleter {
+public class ControlBaseCommand implements CommandExecutor, TabCompleter {
     private final Map<String, SubCommand> subcommands = new HashMap<>();
 
-    public ARCCommand() {
+    public ControlBaseCommand() {
         subcommands.put("help", new HelpSubCommand());
         subcommands.put("tasks", new TasksSubCommand());
         subcommands.put("task", TasksSubCommand.getInst());

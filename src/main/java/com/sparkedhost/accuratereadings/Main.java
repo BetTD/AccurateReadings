@@ -81,7 +81,7 @@ public class Main extends JavaPlugin {
         log(Level.INFO, "AccurateReadings is loading...");
 
         getCommand("perf").setExecutor(new PerformanceCmd());
-        getCommand("arc").setExecutor(new ARCCommand());
+        getCommand("arc").setExecutor(new ControlBaseCommand());
 
         if (getConfig().getBoolean("enableRestartCmd")) {
             // TODO Switch back to onCommand
