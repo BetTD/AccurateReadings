@@ -81,9 +81,6 @@ public class Main extends JavaPlugin {
 
         log(Level.INFO, "AccurateReadings is loading...");
 
-        getCommand("perf").setExecutor(new PerformanceCmd());
-        getCommand("arc").setExecutor(new ControlBaseCommand());
-
         if (getConfig().getBoolean("enableRestartCmd")) {
             // TODO Switch back to onCommand
             getServer().getPluginManager().registerEvents(new RestartCommandListener(), this);
@@ -98,12 +95,12 @@ public class Main extends JavaPlugin {
 
         // Initialize Pterodactyl User API interface
         pteroAPI = new PterodactylManager();
-
-        // Initialize PteroClient
         pteroAPI.initializeClient();
 
-        // Register PlaceholderAPI placeholders
+        // Register PlaceholderAPI placeholders and plugin commands
         registerPlaceholders();
+        getCommand("perf").setExecutor(new PerformanceCmd());
+        getCommand("arc").setExecutor(new ControlBaseCommand());
     }
 
     public void onDisable() {
