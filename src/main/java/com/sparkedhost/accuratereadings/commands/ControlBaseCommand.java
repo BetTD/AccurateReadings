@@ -44,8 +44,8 @@ public class ControlBaseCommand implements CommandExecutor, TabCompleter {
 
         // No args
 
-        sender.sendMessage(String.format("&7This server is running running &fAccurateReadings&7 version &f%s&7. " +
-                "Run &f/arc help&7 for a full list of subcommands.", Main.getInstance().getDescription().getVersion()));
+        sender.sendMessage(Utils.colorize(String.format("&7This server is running running &fAccurateReadings&7 version &f%s&7. " +
+                "Run &f/arc help&7 for a full list of subcommands.", Main.getInstance().getDescription().getVersion())));
         return true;
     }
 
