@@ -45,7 +45,7 @@ public class ControlBaseCommand implements CommandExecutor, TabCompleter {
 
             SubCommand subCommand = getSubcommands().get(args[0].toLowerCase());
 
-            if (!Utils.hasPermission(sender, subCommand.getPermission())) {
+            if (subCommand.getPermission() != null && !Utils.hasPermission(sender, subCommand.getPermission())) {
                 sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
                 return false;
             }
