@@ -6,20 +6,18 @@ import com.sparkedhost.accuratereadings.managers.CooldownManager;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class PerformanceCmd implements CommandExecutor, TabCompleter {
+public class PerformanceCmd extends BaseCommand {
     private final CooldownManager cooldown = new CooldownManager();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         // Player-specific code: permissions & cooldown checking
         if (sender instanceof Player) {
             Player p = (Player) sender;

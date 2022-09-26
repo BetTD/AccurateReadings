@@ -5,14 +5,12 @@ import com.sparkedhost.accuratereadings.Utils;
 import com.sparkedhost.accuratereadings.commands.control.*;
 import lombok.Getter;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class ControlBaseCommand implements CommandExecutor, TabCompleter {
+public class ControlBaseCommand extends BaseCommand {
     @Getter
     private final Map<String, SubCommand> subcommands = new HashMap<>();
 
@@ -28,7 +26,7 @@ public class ControlBaseCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         // If sender is a player, and it does not have the "readings.control" permission node, send no permission message and return
         if (!Utils.hasPermission(sender, "readings.control")) {
             sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
@@ -50,7 +48,7 @@ public class ControlBaseCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
 
-            subCommand.execute(sender, c, args);
+            subCommand.execute(sender, command, args);
             return true;
         }
 
