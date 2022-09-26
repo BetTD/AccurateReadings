@@ -3,9 +3,15 @@ package com.sparkedhost.accuratereadings.config;
 import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 
 public class Settings {
+    private final Main plugin = Main.getInstance();
 
     /*
      * Settings:
@@ -70,20 +76,35 @@ public class Settings {
          * PTERODACTYL-SPECIFIC
          */
 
-        pterodactyl_panelUrl = Main.getInstance().getConfig().getString("pterodactyl.panel-url");
-        pterodactyl_apiKey = Main.getInstance().getConfig().getString("pterodactyl.api-key");
-        pterodactyl_serverId = Main.getInstance().getConfig().getString("pterodactyl.server-id");
-        pterodactyl_useWebsocket = Main.getInstance().getConfig().getBoolean("pterodactyl.use-websocket");
-        pterodactyl_updateFrequency = Main.getInstance().getConfig().getLong("pterodactyl.update-frequency");
-        pterodactyl_autoStopOnEmpty = Main.getInstance().getConfig().getBoolean("pterodactyl.auto-stop-on-empty");
+        pterodactyl_panelUrl = plugin.getConfig().getString("pterodactyl.panel-url");
+        pterodactyl_apiKey = plugin.getConfig().getString("pterodactyl.api-key");
+
+        pterodactyl_serverId = plugin.getConfig().getString("pterodactyl.server-id");
+
+        if (pterodactyl_serverId == null) {
+            plugin.log(Level.INFO, "No server ID specified, we're going to try to determine the ID " +
+                    "from the machine's hostname.");
+
+            try {
+                pterodactyl_serverId = determineID();
+                plugin.log(Level.INFO, "Server ID found: " + pterodactyl_serverId);
+            } catch (IOException exception) {
+                plugin.log(Level.SEVERE, "An IOException occurred.");
+                exception.printStackTrace();
+            }
+        }
+
+        pterodactyl_useWebsocket = plugin.getConfig().getBoolean("pterodactyl.use-websocket");
+        pterodactyl_updateFrequency = plugin.getConfig().getLong("pterodactyl.update-frequency");
+        pterodactyl_autoStopOnEmpty = plugin.getConfig().getBoolean("pterodactyl.auto-stop-on-empty");
 
         /*
          * Settings:
          * RESTART COMMAND
          */
 
-        restart_enabled = Main.getInstance().getConfig().getBoolean("restart.enabled");
-        restart_announce = Main.getInstance().getConfig().getBoolean("restart.announce");
+        restart_enabled = plugin.getConfig().getBoolean("restart.enabled");
+        restart_announce = plugin.getConfig().getBoolean("restart.announce");
 
 
         /*
@@ -91,7 +112,7 @@ public class Settings {
          * /PERF COMMAND CUSTOMIZATION
          */
 
-        perf_postCommand = Main.getInstance().getConfig().getString("perf-customization.post-command");
+        perf_postCommand = plugin.getConfig().getString("perf-customization.post-command");
 
 
         /*
@@ -99,8 +120,8 @@ public class Settings {
          * COMMAND COOLDOWN
          */
 
-        cooldown_enabled = Main.getInstance().getConfig().getBoolean("cooldown.enabled");
-        cooldown_time = Main.getInstance().getConfig().getInt("cooldown.time");
+        cooldown_enabled = plugin.getConfig().getBoolean("cooldown.enabled");
+        cooldown_time = plugin.getConfig().getInt("cooldown.time");
 
 
         /*
@@ -115,7 +136,7 @@ public class Settings {
          * MESSAGES
          */
 
-        messages_statsMessage = Main.getInstance().getConfig().getString("messages.stats-message");
+        messages_statsMessage = plugin.getConfig().getString("messages.stats-message");
 
         // If 'stats-message' is a space (" ") or completely blank, replace with default value in memory and log warning
         if (messages_statsMessage.equals("") || messages_statsMessage.equals(" ")) {
@@ -128,10 +149,32 @@ public class Settings {
                     "&6&l- Players: &e{PLAYERCOUNT}&7/&f{PLAYERLIMIT}",
                     "&6&l- Uptime: &e{UPTIME}",
                     "&r &r");
-            Main.getInstance().log(Level.WARNING, "'stats-message' is empty, replacing with default value (only on runtime). Please fix this in the config file!");
+            plugin.log(Level.WARNING, "'stats-message' is empty, replacing with default value (only on runtime). Please fix this in the config file!");
         }
 
-        messages_noPerms = Main.getInstance().getConfig().getString("messages.no-permission");
-        messages_restartBroadcast = Main.getInstance().getConfig().getString("messages.restart-broadcast");
+        messages_noPerms = plugin.getConfig().getString("messages.no-permission");
+        messages_restartBroadcast = plugin.getConfig().getString("messages.restart-broadcast");
+    }
+
+    private boolean isNotLinux() {
+        return !System.getProperty("os.name").toLowerCase().contains("linux");
+    }
+
+    private String determineID() throws IOException {
+        final Path path = Paths.get("/etc/hostname");
+
+        if (isNotLinux() || Files.notExists(path)) {
+            plugin.log(Level.SEVERE, "Unable to determine server ID: system is not running a " +
+                    "Linux kernel or /etc/hostname does not exist.");
+            return null;
+        }
+
+        byte[] hostname = Files.readAllBytes(path);
+        String hostnameString = new String(hostname, StandardCharsets.US_ASCII).substring(0, 7);
+
+        if (!hostnameString.matches("([0-9a-f]{8})"))
+            return null;
+        
+        return hostnameString;
     }
 }

@@ -11,7 +11,8 @@ pterodactyl:
   panel-url: "https://control.sparkedhost.us"
   # Generate the API key on your control panel.
   api-key: "CHANGETHIS"
-  # The server ID to monitor
+  # The server ID to monitor.
+  # If empty, the plugin will try to determine the ID automatically.
   server-id: ""
   # Should the plugin use a websocket for resource usage polling?
   # IMPORTANT NOTE: The Pterodactyl4J primary developer has recently added a workaround for this which spoofs the
