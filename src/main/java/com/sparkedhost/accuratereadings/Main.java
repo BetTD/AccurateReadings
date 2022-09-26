@@ -186,11 +186,6 @@ public class Main extends JavaPlugin {
             return false;
         }
 
-        if (serverId == null) {
-            log(Level.SEVERE, "There's no server ID entry in the config. There should be one, even if it's empty (\"\").");
-            return false;
-        }
-
         // All checks passed
         return true;
     }

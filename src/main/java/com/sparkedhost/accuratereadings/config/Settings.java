@@ -81,7 +81,7 @@ public class Settings {
 
         pterodactyl_serverId = plugin.getConfig().getString("pterodactyl.server-id");
 
-        if (pterodactyl_serverId.isEmpty()) {
+        if (pterodactyl_serverId == null || pterodactyl_serverId.isEmpty()) {
             plugin.log(Level.INFO, "No server ID specified, we're going to try to determine the ID " +
                     "from the machine's hostname.");
 
