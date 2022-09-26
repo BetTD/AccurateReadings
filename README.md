@@ -36,8 +36,13 @@ copied earlier. Make sure you don't remove the quotation marks from any of the o
 7. Save the changes and start the server.
 
 ## How to use
-**The main command is `/perf`**, although there are aliases: `/performance` and `/lag`. This may override Essentials
-`/lag` command, but you can fix this in the `commands.yml` file on your server, or you can just use `/elag`.
+### Commands
+- `/perf`: Shows current resource usage. Aliases: `/performance`, `/lag`
+
+This may override Essentials' `/lag` command, but you can fix this in the `commands.yml` file on your server, or you can 
+just use `/elag`.
+
+- `/arc`: Main control command. 
 
 This plugin also registers a few PlaceholderAPI placeholders, you can find the complete list in the wiki.
 
@@ -45,20 +50,17 @@ This plugin also registers a few PlaceholderAPI placeholders, you can find the c
 None at this moment :)
 
 ## Credits
-- [OkHttp](https://github.com/square/okhttp) by Square
-- [Okio](https://github.com/square/okio) by Square
+- [OkHttp](https://github.com/square/okhttp) by Square *(provided by P4J)*
+- [Okio](https://github.com/square/okio) by Square *(provided by P4J)*
 - [Pterodactyl4J](https://github.com/mattmalec/Pterodactyl4J) by mattmalec
 - Thanks to the Sparked Host LLC community for providing feedback, suggestions and bug reports during initial
 development.
 
 ## Version history
-- **1.0.0-dev01**. First version of the plugin that actually worked. It made the main thread hang while the plugin
-- communicated with the panel.
-- **1.0.0-dev02**. Fixed the main thread freezing issue. Added new options to the config.yml
 - **1.0.0-pre1**. First public version of the plugin
 - **1.1.0**. Removed Sparked Host lock, added proper configuration checks and cooldown, and fixed a few bugs.
-- **1.2.0**. Tons of code quality improvements, restructured the config file, added PlaceholderAPI support, switched
-to a better API wrapper.
+- **1.2.0**. Tons of code quality and performance improvements, restructured the config file, added PlaceholderAPI
+support, switched to a better API wrapper.
 
 ## Support
 As this project has been officially released by Sparked Host, our support team may provide assistance with this plugin.
