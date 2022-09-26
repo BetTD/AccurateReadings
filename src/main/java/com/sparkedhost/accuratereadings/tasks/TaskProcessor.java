@@ -38,11 +38,12 @@ public class TaskProcessor {
                 Main.getInstance().getPteroAPI().sendPowerAction(action)
                         .executeAsync(unused -> {
                             if (action == PowerAction.START)
-                                sender.sendMessage(Utils.colorize("&aThe task has been completed successfully.\n" +
+                                sender.sendMessage(Utils.colorize("&aThe power action was sent successfully.\n" +
                                         "&7You're only receiving this message as this task has a power action of " +
                                         "START defined in its configuration. Any other value will not return " +
                                         "anything, because well, you'd definitely notice if the action was " +
                                         "successful."));
+                            notifySuccess(task, sender);
                         }, exception -> {
                             if (sender != null)
                                 sender.sendMessage(Utils.colorize("&cThe task could not be completed:\n&7" +
@@ -54,14 +55,8 @@ public class TaskProcessor {
                 break;
             case BROADCAST:
                 Bukkit.broadcastMessage(Utils.colorize((String) task.getPayload()));
-                sender.sendMessage(Utils.colorize(""));
+                notifySuccess(task, sender);
                 break;
-        }
-
-        Utils.logi("Task '" + task.getName() + "' has been triggered successfully.");
-
-        if (force && sender != null) {
-            sender.sendMessage(Utils.colorize("&aThe task '" + task.getName() + "&a' has been processed successfully."));
         }
     }
 
@@ -75,7 +70,16 @@ public class TaskProcessor {
 
     public static void processAllTasks() {
         for (Task task : TaskManager.getInst().getTasks()) {
-            processTask(task, false);
+            processTask(task);
         }
+    }
+
+    private static void notifySuccess(Task task, CommandSender sender) {
+        Main.getInstance().log(Level.INFO, "Task '" + task.getName() + "' has been triggered successfully.");
+
+        if (sender == null)
+            return;
+
+        sender.sendMessage(Utils.colorize("&aThe task has been completed successfully."));
     }
 }

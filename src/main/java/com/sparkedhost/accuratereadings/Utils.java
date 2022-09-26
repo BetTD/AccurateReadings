@@ -66,6 +66,13 @@ public class Utils {
         return input;
     }
 
+    /**
+     * Checks if a sender has a given permission, always returning true if the sender is an instance of
+     * {@link org.bukkit.command.ConsoleCommandSender}.
+     * @param sender Command sender to check against
+     * @param permission Permission node string
+     * @return Result, always true if sender is console
+     */
     public static boolean hasPermission(CommandSender sender, String permission) {
         if (!(sender instanceof Player))
             return true;
