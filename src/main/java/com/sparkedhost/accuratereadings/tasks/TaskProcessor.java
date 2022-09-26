@@ -16,17 +16,21 @@ public class TaskProcessor {
      * @param task The task to process.
      * @param force If true, the task will be processed even if the criteria isn't met.
      */
-    public static void processTask(Task task, boolean force, CommandSender sender) {
-        if (!force) {
-            if (task.getThresholdValue().endsWith("%")) {
-                try {
-                    int percentage = Integer.parseInt(task.getThresholdValue().replace("%", ""));
-                } catch (NumberFormatException exception) {
-                    exception.printStackTrace();
-                }
-                //
+
+    public static void processTask(Task task, boolean force, CommandSender sender) throws TaskExecutionException {
+
+        /*if (task.getThresholdValue().endsWith("%")) {
+            int percentage;
+
+            try {
+                percentage = Integer.parseInt(task.getThresholdValue().replace("%", ""));
+            } catch (NumberFormatException exception) {
+                throw new TaskExecutionException("");
             }
+
+            if (percentage)
         }
+        */
 
         switch (task.getType()) {
             case COMMAND:
@@ -60,17 +64,21 @@ public class TaskProcessor {
         }
     }
 
-    public static void processTask(Task task, boolean force) {
+    public static void processTask(Task task, boolean force) throws TaskExecutionException {
         processTask(task, force, null);
     }
 
-    public static void processTask(Task task) {
+    public static void processTask(Task task) throws TaskExecutionException {
         processTask(task, false, null);
     }
 
     public static void processAllTasks() {
         for (Task task : TaskManager.getInst().getTasks()) {
-            processTask(task);
+            try {
+                processTask(task);
+            } catch (TaskExecutionException exception) {
+                // TODO handle exception
+            }
         }
     }
 
