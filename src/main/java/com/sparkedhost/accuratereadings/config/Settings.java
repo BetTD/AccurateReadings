@@ -86,8 +86,13 @@ public class Settings {
                     "from the machine's hostname.");
 
             try {
-                pterodactyl_serverId = determineID();
-                plugin.log(Level.INFO, "Server ID found: " + pterodactyl_serverId);
+                String determinedID = determineID();
+                if (determinedID != null) {
+                    pterodactyl_serverId = determinedID;
+                    plugin.log(Level.INFO, "Server ID found: " + determinedID);
+                } else {
+                    plugin.log(Level.SEVERE, "Unable to determine server ID, read above for errors.");
+                }
             } catch (IOException exception) {
                 plugin.log(Level.SEVERE, "An IOException occurred.");
                 exception.printStackTrace();
@@ -164,17 +169,19 @@ public class Settings {
         final Path path = Paths.get("/etc/hostname");
 
         if (isNotLinux() || Files.notExists(path)) {
-            plugin.log(Level.SEVERE, "Unable to determine server ID: system is not running a " +
-                    "Linux kernel or /etc/hostname does not exist.");
+            plugin.log(Level.SEVERE, "System is not running a Linux kernel or /etc/hostname does not exist.");
             return null;
         }
 
         byte[] hostname = Files.readAllBytes(path);
-        String hostnameString = new String(hostname, StandardCharsets.US_ASCII).substring(0, 7);
+        String hostnameString = new String(hostname, StandardCharsets.US_ASCII);
+        String serverID = hostnameString.substring(0, 7);
 
-        if (!hostnameString.matches("([0-9a-f]{8})"))
+        if (!serverID.matches("([0-9a-f]{8})")) {
+            plugin.log(Level.SEVERE, "Hostname does not look like a valid server ID. Got '" + hostnameString + "'.");
             return null;
+        }
         
-        return hostnameString;
+        return serverID;
     }
 }
