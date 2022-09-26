@@ -10,9 +10,11 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
+import java.util.stream.Stream;
 
 public class Main extends JavaPlugin {
     @Getter
@@ -205,13 +207,24 @@ public class Main extends JavaPlugin {
                 getSettings().pterodactyl_updateFrequency == updateFrequency);
     }
 
-    // FIXME This check **ALWAYS** fails under ideal conditions. Maybe checking for /entrypoint.sh isn't a great idea?
     private boolean isPterodactyl() {
-        boolean fileExists = Files.exists(Paths.get("/entrypoint.sh"));
-        String userName = System.getProperty("user.name");
-        boolean userNameMatches = userName.equals("container");
-        log(Level.WARNING, "[DEBUG: Main#isPterodactyl()] fileExists? " + fileExists + " | userName = " + userName + " | userNameMatches? " + userNameMatches);
+        return Files.exists(Paths.get("/entrypoint.sh")) && isRunningInsideDocker();
+    }
 
-        return fileExists && userNameMatches;
+    /**
+     * Check if current process is running within a Docker container.
+     * <p>
+     * Source: <a href="https://stackoverflow.com/a/52581380">StackOverflow</a>
+     * </p>
+     * @return Whether the process is in Docker or not
+     */
+
+    public boolean isRunningInsideDocker() {
+        try (Stream < String > stream =
+                     Files.lines(Paths.get("/proc/1/cgroup"))) {
+            return stream.anyMatch(line -> line.contains("/docker"));
+        } catch (IOException exception) {
+            return false;
+        }
     }
 }
