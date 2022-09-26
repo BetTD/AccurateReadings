@@ -96,8 +96,8 @@ public class PterodactylManager {
 
     private ClientServer retrieveServer() {
         if (serverId.isEmpty()) {
-            throw new RuntimeException("The server ID appears to be empty in the code, which shouldn't have " +
-                    "happened. This is a bug!");
+            throw new RuntimeException("The server ID appears to be empty. Either we were unable to determine the" +
+                    "ID automatically, or there's a bug in the code.");
         }
 
         try {
