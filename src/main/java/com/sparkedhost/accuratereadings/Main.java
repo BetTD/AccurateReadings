@@ -206,6 +206,10 @@ public class Main extends JavaPlugin {
 
     // FIXME This check **ALWAYS** fails under ideal conditions. Maybe checking for /entrypoint.sh isn't a great idea?
     private boolean isPterodactyl() {
-        return Files.exists(Paths.get("/entrypoint.sh")) && System.getProperty("user.name").equals("container");
+        boolean fileExists = Files.exists(Paths.get("/entrypoint.sh"));
+        boolean userNameMatches = System.getProperty("user.name").equals("container");
+        log(Level.WARNING, "[DEBUG: Main#isPterodactyl()] fileExists? " + fileExists + " | userNameMatches? " + userNameMatches);
+
+        return fileExists && userNameMatches;
     }
 }
