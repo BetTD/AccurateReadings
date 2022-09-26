@@ -69,8 +69,9 @@ cooldown:
 # VALID THRESHOLD VALUES:
 # A threshold is the value at which the plugin will trigger a given task. There are two
 # possible ways to specify a value:
-# - PERCENTAGE
-# - ABSOLUTE
+# - PERCENTAGE -> Add a percentage symbol after the value. Should be >=100.
+# - ABSOLUTE ---> Do not add a percentage symbol. Should be >= the server's limit for the
+#                 specific resource being monitored.
 #
 # VALID THRESHOLD TYPES:
 # A threshold type is the kind of resource that should trigger the task once its usage is above
@@ -122,14 +123,14 @@ messages:
   # - {UPTIME} -> Prints total server uptime as reported by Pterodactyl (aka since the container was started)
   # - Any PlaceholderAPI placeholders if the plugin is present
   # If empty, the plugin will use the default value. It will also log a warning in console to let you know.
-  stats-message: |
+  stats-message: |-
     &8&m        &r &f&lSTATS&r &8&m        &r
     &r &r
-    &6&l- CPU: &e{CURRENTCPU}% &7(limit: {MAXCPU}%)
-    &6&l- RAM: &e{CURRENTRAM} &7(limit: {MAXRAM})
-    &6&l- Disk: &e{CURRENTDISK} &7(limit: {MAXDISK})
-    &6&l- Players: &e{PLAYERCOUNT}&7/&f{MAXPLAYERS}
-    &6&l- Uptime: &e{UPTIME}
+    &b&l» &7CPU: &f{CURRENTCPU}% &7(limit: {MAXCPU}%)
+    &b&l» &7RAM: &f{CURRENTRAM} &7(limit: {MAXRAM})
+    &b&l» &7Disk: &f{CURRENTDISK} &7(limit: {MAXDISK})
+    &b&l» &7Players: &f{PLAYERCOUNT}&7/&f{MAXPLAYERS}
+    &b&l» &7Uptime: &f{UPTIME}
     &r &r
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
