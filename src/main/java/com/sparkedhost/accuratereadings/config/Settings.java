@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Settings {
     private final Main plugin = Main.getInstance();
@@ -173,11 +175,14 @@ public class Settings {
             return null;
         }
 
-        byte[] hostname = Files.readAllBytes(path);
-        String hostnameString = new String(hostname, StandardCharsets.US_ASCII);
-        String serverID = hostnameString.substring(0, 7);
+        final byte[] hostname = Files.readAllBytes(path);
+        final String hostnameString = new String(hostname, StandardCharsets.US_ASCII);
+        final String serverID = hostnameString.substring(0, 7);
 
-        if (!serverID.matches("([0-9a-f]{8})")) {
+        final Pattern pattern = Pattern.compile("[0-9a-f]{8}");
+        final Matcher validator = pattern.matcher(serverID);
+
+        if (!validator.matches()) {
             plugin.log(Level.SEVERE, "Hostname does not look like a valid server ID. Got '" + hostnameString + "'.");
             return null;
         }
