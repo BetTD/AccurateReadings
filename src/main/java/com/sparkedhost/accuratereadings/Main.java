@@ -183,11 +183,6 @@ public class Main extends JavaPlugin {
             return false;
         }
 
-        if (serverId.isEmpty()) {
-            log(Level.SEVERE, "The plugin needs a server ID on its config.yml in order for the plugin to work.");
-            return false;
-        }
-
         // All checks passed
         return true;
     }
