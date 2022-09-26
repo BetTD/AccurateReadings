@@ -86,12 +86,13 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new RestartCommandListener(), this);
         }
 
-        log(Level.INFO, "Loaded all the commands. Connecting to the panel using '" + panelUrl + "'...");
-
         if (!isConfigValid()) {
+            // Actual logging output is handled in the Main#isConfigValid() method.
             disableItself();
             return;
         }
+
+        log(Level.INFO, "Attempting connection to '" + panelUrl + "'...");
 
         // Initialize Pterodactyl User API interface
         pteroAPI = new PterodactylManager();
@@ -183,6 +184,11 @@ public class Main extends JavaPlugin {
             return false;
         }
 
+        if (serverId == null) {
+            log(Level.SEVERE, "There's no server ID entry in the config. There should be one, even if it's empty (\"\").");
+            return false;
+        }
+
         // All checks passed
         return true;
     }
@@ -202,8 +208,9 @@ public class Main extends JavaPlugin {
     // FIXME This check **ALWAYS** fails under ideal conditions. Maybe checking for /entrypoint.sh isn't a great idea?
     private boolean isPterodactyl() {
         boolean fileExists = Files.exists(Paths.get("/entrypoint.sh"));
-        boolean userNameMatches = System.getProperty("user.name").equals("container");
-        log(Level.WARNING, "[DEBUG: Main#isPterodactyl()] fileExists? " + fileExists + " | userNameMatches? " + userNameMatches);
+        String userName = System.getProperty("user.name");
+        boolean userNameMatches = userName.equals("container");
+        log(Level.WARNING, "[DEBUG: Main#isPterodactyl()] fileExists? " + fileExists + " | userName = " + userName + " | userNameMatches? " + userNameMatches);
 
         return fileExists && userNameMatches;
     }

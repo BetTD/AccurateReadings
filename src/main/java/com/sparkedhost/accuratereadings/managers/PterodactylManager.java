@@ -15,30 +15,27 @@ import lombok.Setter;
 
 import java.util.logging.Level;
 
+@Getter
 public class PterodactylManager {
     String panelURL;
     String apiKey;
 
-    @Getter
     @Setter
     Account account;
 
-    @Getter
     @Setter
     ClientServer server;
 
-    @Getter
     String serverId;
 
-    @Getter
     private PteroClient api;
 
-    @Getter
     private ResourceUsageManager resourceUsageManager;
 
     private final Main plugin = Main.getInstance();
 
-    private final String userAgent = String.format("%s/%s; +https://sparked.host/arua", plugin.getName(), plugin.getDescription().getVersion());
+    private final String userAgent = String.format("%s/%s; +https://sparked.host/arua", plugin.getName(),
+            plugin.getDescription().getVersion());
 
     /**
      * Gets everything ready: initializes PteroClient object, validates credentials and server access, and starts the
@@ -52,7 +49,8 @@ public class PterodactylManager {
             account = login();
             server = retrieveServer();
 
-            plugin.log(Level.INFO, "Connection established successfully! The API key specified belongs to " + getAccount().getFirstName() + ", and is able to access the server '" + server.getName() + "'. You're good to go!");
+            plugin.log(Level.INFO, "Connection established successfully! The API key specified is able to " +
+                    "access the server '" + server.getName() + "' with ID " + getServerId() + ". You're good to go!");
 
             setLimits();
 
@@ -61,8 +59,8 @@ public class PterodactylManager {
 
             // Stores whether the account used to access this server owns it or not
             setServerOwner(server.isServerOwner());
-        } catch (LoginException | NotFoundException e) {
-            e.printStackTrace();
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
             plugin.disableItself();
         }
     }
@@ -97,10 +95,16 @@ public class PterodactylManager {
      */
 
     private ClientServer retrieveServer() {
+        if (serverId.isEmpty()) {
+            throw new RuntimeException("The server ID appears to be empty in the code, which shouldn't have " +
+                    "happened. This is a bug!");
+        }
+
         try {
             return api.retrieveServerByIdentifier(serverId).execute();
         } catch (NotFoundException e) {
-            throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() + "' is unable to access it.");
+            throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() +
+                    "' is unable to access it.");
         }
     }
 
@@ -132,38 +136,30 @@ public class PterodactylManager {
 
     /*
      * And here lies:
-     * The almighty list of Getters and Setters
+     * The almighty list of Setters
      */
 
-    @Getter
     @Setter
     boolean isServerOwner;
 
-    @Getter
     @Setter
     long memoryUsage = 0;
 
-    @Getter
     @Setter
     long memoryLimit = 0;
 
-    @Getter
     @Setter
     long diskUsage = 0;
 
-    @Getter
     @Setter
     long diskLimit = 0;
 
-    @Getter
     @Setter
     long cpuUsage = 0;
 
-    @Getter
     @Setter
     long cpuLimit = 0;
 
-    @Getter
     @Setter
     String uptime;
 }
