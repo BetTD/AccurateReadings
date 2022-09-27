@@ -7,10 +7,11 @@ import org.bukkit.command.CommandSender;
 
 public class HelpSubCommand extends SubCommand {
     public void execute(CommandSender sender, Command command, String[] args) {
-        // TODO Finish help message
+        // TODO Maybe store usage and description in each SubCommand
         sender.sendMessage(Utils.colorize(String.join("\n",
-                "&e&lACCURATE&6&lREADINGS &f&lHELP MENU",
+                "&3ACCURATE&b&lREADINGS &f&lHELP MENU",
                 "&7- &f/arc &lres&7 <start|stop|status>&8 »&7 Manage resource usage monitor.",
+                "&7- &f/arc &ltasks&7 <list|fire>&8 »&7 Manage automated tasks.",
                 "&7- &f/arc &lreload&8 »&7 Reload configuration file.",
                 "&7- &f/arc &lversion&8 »&7 Show current plugin version.")));
     }
