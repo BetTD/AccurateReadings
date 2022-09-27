@@ -175,7 +175,7 @@ public class Settings {
         }
 
         final String hostname = Files.readAllLines(path).get(0);
-        final String serverID = hostname.substring(0, 7);
+        final String serverID = hostname.substring(0, 8);
 
         final Pattern pattern = Pattern.compile("([0-9a-f]{8})");
         final Matcher validator = pattern.matcher(serverID);
