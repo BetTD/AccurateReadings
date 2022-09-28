@@ -6,13 +6,16 @@ import com.sparkedhost.accuratereadings.commands.control.*;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.util.StringUtil;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ControlBaseCommand extends BaseCommand {
     @Getter
     private final Map<String, SubCommand> subcommands = new HashMap<>();
+
+    @Getter
+    private final List<String> subcommandList = new ArrayList<>(getSubcommands().keySet());
 
     public ControlBaseCommand() {
         // Subcommands
@@ -61,22 +64,23 @@ public class ControlBaseCommand extends BaseCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        List<String> subcommands = Collections.emptyList();
+        final List<String> completions = new ArrayList<>();
 
-        if (args.length == 1) {
-            subcommands = Arrays.asList("help", "reload", "res", "resource", "version");
+        if (args.length > 1) {
+            if (!subcommands.containsKey(args[0]))
+                return Collections.emptyList();
+
+            SubCommand subCommand = getSubcommands().get(args[0]);
+
+            if (subCommand.getPermission() != null && !Utils.hasPermission(sender, subCommand.getPermission()))
+                return Collections.emptyList();
+
+            return subCommand.tabComplete(sender, command, args);
         }
 
-        if (args.length == 2) {
-            String subcommand = args[1].toLowerCase();
+        StringUtil.copyPartialMatches(args[0], getSubcommandList(), completions);
+        Collections.sort(completions);
 
-            if (subcommand.equals("res") || subcommand.equals("resource"))
-                subcommands = Arrays.asList("start", "status", "stop");
-
-            if (subcommand.equals("tasks") || subcommand.equals("task"))
-                subcommands = Arrays.asList("list", "fire");
-        }
-
-        return subcommands;
+        return completions;
     }
 }
