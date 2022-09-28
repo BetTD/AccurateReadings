@@ -23,6 +23,7 @@ public class ControlBaseCommand extends BaseCommand {
         getSubcommands().put("tasks", new TasksSubCommand());
         getSubcommands().put("res", new ResourceSubCommand());
         getSubcommands().put("version", new VersionSubCommand());
+        getSubcommands().put("reload", new ReloadSubCommand());
 
         // Aliases to subcommands
         getSubcommands().put("task", TasksSubCommand.getInst());

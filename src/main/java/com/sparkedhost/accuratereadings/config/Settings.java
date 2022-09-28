@@ -4,7 +4,6 @@ import com.sparkedhost.accuratereadings.Main;
 import lombok.Getter;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -175,15 +174,14 @@ public class Settings {
             return null;
         }
 
-        final byte[] hostname = Files.readAllBytes(path);
-        final String hostnameString = new String(hostname, StandardCharsets.US_ASCII);
-        final String serverID = hostnameString.substring(0, 7);
+        final String hostname = Files.readAllLines(path).get(0);
+        final String serverID = hostname.substring(0, 8);
 
-        final Pattern pattern = Pattern.compile("[0-9a-f]{8}");
+        final Pattern pattern = Pattern.compile("([0-9a-f]{8})");
         final Matcher validator = pattern.matcher(serverID);
 
         if (!validator.matches()) {
-            plugin.log(Level.SEVERE, "Hostname does not look like a valid server ID. Got '" + hostnameString + "'.");
+            plugin.log(Level.SEVERE, "Hostname does not look like a valid server ID. Got '" + hostname + "'.");
             return null;
         }
         
