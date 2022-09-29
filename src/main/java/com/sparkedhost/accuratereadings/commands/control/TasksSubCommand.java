@@ -65,6 +65,7 @@ public class TasksSubCommand extends SubCommand {
         }
     }
 
+    @Override
     public String getPermission() {
         return "readings.control.tasks";
     }

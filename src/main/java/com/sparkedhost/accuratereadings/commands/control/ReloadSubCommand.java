@@ -12,6 +12,7 @@ public class ReloadSubCommand extends SubCommand {
         sender.sendMessage(Utils.colorize("&aThe configuration file has been reloaded!"));
     }
 
+    @Override
     public String getPermission() {
         return "readings.control.reload";
     }

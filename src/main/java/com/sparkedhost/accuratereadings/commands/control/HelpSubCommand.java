@@ -15,8 +15,4 @@ public class HelpSubCommand extends SubCommand {
                 "&7- &f/arc &lreload&8 »&7 Reload configuration file.",
                 "&7- &f/arc &lversion&8 »&7 Show current plugin version.")));
     }
-
-    public String getPermission() {
-        return null;
-    }
 }
