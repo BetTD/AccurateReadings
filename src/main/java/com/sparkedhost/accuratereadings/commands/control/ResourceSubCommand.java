@@ -51,6 +51,6 @@ public class ResourceSubCommand extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "readings.control.res";
+        return "readings.control.resource";
     }
 }
