@@ -51,7 +51,6 @@ dependencies {
 
 spigot {
     authors = ['BetTD']
-    load = POST_WORLD
     description = 'Your go-to solution for keeping track of server resource utilization!'
     softDepends = ['PlaceholderAPI']
     commands {
@@ -73,7 +72,8 @@ spigot {
             children = [
                     'readings.perf': true,
                     'readings.restart': true,
-                    'readings.control': true
+                    'readings.control': true,
+                    'readings.control.*': true
             ]
         }
         'readings.perf' {
@@ -87,6 +87,15 @@ spigot {
         'readings.control' {
             description = 'Grants access to /arc command'
             defaults = 'op'
+        }
+        'readings.control.*' {
+            description = 'Grants access to every subcommand in /arc'
+            defaults = 'op'
+            children = [
+                    'readings.control.reload': true,
+                    'readings.control.resource': true,
+                    'readings.control.tasks': true
+            ]
         }
     }
 }
