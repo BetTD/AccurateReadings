@@ -1,0 +1,42 @@
+name: AccurateReadings
+author: BetTD
+description: "Your go-to solution for keeping track of server resource utilization!"
+version: ${version}
+website: https://github.com/SparkedHost/AccurateReadings
+main: com.sparkedhost.accuratereadings.Main
+softdepend:
+  - PlaceholderAPI
+commands:
+  perf:
+    aliases: ["performance", "lag"]
+    description: "Displays the server resource usage"
+    permission: "readings.perf"
+  arc:
+    aliases: ["accuratereadings", "arcontrol"]
+    description: "Controls AccurateReadings functionality"
+    permission: "readings.control"
+permissions:
+  "readings.*":
+    description: "God mode - Grants access to everything in this plugin"
+    defaults: "op"
+    children:
+      "readings.perf": true
+      "readings.restart": true
+      "readings.control": true
+      "readings.control.*": true
+    "readings.perf":
+      description: "Gives access to resource usage commands"
+      defaults: "op"
+    "readings.restart":
+      description: "Restarts the server using the Pterodactyl API"
+      defaults: "op"
+    "readings.control":
+      description: "Grants access to /arc command"
+      defaults: "op"
+    "readings.control.*":
+      description: "Grants access to every subcommand in /arc"
+      defaults: "op"
+      children:
+        "readings.control.reload": true
+        "readings.control.resource": true
+        "readings.control.tasks": true
