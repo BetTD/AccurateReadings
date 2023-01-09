@@ -8,6 +8,7 @@ import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
+import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import org.bukkit.Bukkit;
 
 import java.net.ProtocolException;
@@ -26,9 +27,9 @@ public class WebsocketListener extends ClientSocketListenerAdapter {
 
     @Override
     public void onStatsUpdate(StatsUpdateEvent e) {
-        pteroManager.setCpuUsage((long) e.getCPU());
-        pteroManager.setMemoryUsage(e.getMemory());
-        pteroManager.setDiskUsage(e.getDisk());
+        pteroManager.setUsage(ResourceType.CPU, (long) e.getCPU());
+        pteroManager.setUsage(ResourceType.MEMORY, e.getMemory());
+        pteroManager.setUsage(ResourceType.DISK, e.getDisk());
         pteroManager.setUptime(e.getUptimeFormatted());
     }
 

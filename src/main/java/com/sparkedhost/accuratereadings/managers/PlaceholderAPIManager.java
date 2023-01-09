@@ -38,37 +38,13 @@ public class PlaceholderAPIManager extends PlaceholderExpansion {
             case "cpulimit":
                 return manager.getCpuLimit() + "%";
             case "memoryusage":
-                String memoryUsage = (manager.getMemoryUsage() / 1024000) + " MB";
-
-                if (manager.getMemoryUsage() >= 1024000000) {
-                    memoryUsage = manager.getMemoryUsage() / 1024000000 + " GB";
-                }
-
-                return memoryUsage;
+                return manager.getMemoryUsageString();
             case "memorylimit":
-                String memoryLimit = manager.getMemoryLimit() + " MB";
-
-                if (manager.getMemoryLimit() >= 1024) {
-                    memoryLimit = manager.getMemoryLimit() / 1024 + " GB";
-                }
-
-                return memoryLimit;
+                return manager.getMemoryLimitString();
             case "diskusage":
-                String diskUsage = (manager.getDiskUsage() / 1024000) + " MB";
-
-                if (manager.getDiskUsage() >= 1024000000) {
-                    diskUsage = manager.getDiskUsage() / 1024000000 + " GB";
-                }
-
-                return diskUsage;
+                return manager.getDiskUsageString();
             case "disklimit":
-                String diskLimit = manager.getDiskLimit() + " MB";
-
-                if (manager.getDiskLimit() >= 1024) {
-                    diskLimit = manager.getDiskLimit() / 1024 + " GB";
-                }
-
-                return diskLimit;
+                return manager.getDiskLimitString();
         }
 
         // Requested placeholder does not exist in this expansion

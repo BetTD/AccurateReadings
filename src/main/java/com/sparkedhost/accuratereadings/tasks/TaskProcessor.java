@@ -3,7 +3,6 @@ package com.sparkedhost.accuratereadings.tasks;
 import com.mattmalec.pterodactyl4j.PowerAction;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
-import com.sparkedhost.accuratereadings.exceptions.TaskExecutionException;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -51,7 +50,7 @@ public class TaskProcessor {
                                         "\n&cCheck the console for a stacktrace."));
                             Main.getInstance().log(Level.SEVERE, "An exception occurred while processing task '" + task.getName() + "'!");
                             exception.printStackTrace();
-                        });;
+                        });
                 break;
             case BROADCAST:
                 Bukkit.broadcastMessage(Utils.colorize((String) task.getPayload()));

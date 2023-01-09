@@ -1,12 +1,12 @@
 package com.sparkedhost.accuratereadings.managers;
 
 import com.mattmalec.pterodactyl4j.client.entities.ClientServer;
-import com.mattmalec.pterodactyl4j.client.entities.Utilization;
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketBuilder;
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketManager;
 import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.listeners.WebsocketListener;
+import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -14,17 +14,15 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.logging.Level;
 
+@Getter
 public class ResourceUsageManager extends ClientSocketListenerAdapter {
     final PterodactylManager pteroManager = Main.getInstance().pteroAPI;
 
-    @Getter
     private BukkitTask fallbackTimer;
 
-    @Getter
     @Setter
     private boolean isRunning = false;
 
-    @Getter
     @Setter
     private WebSocketManager webSocketManager;
 
@@ -44,14 +42,16 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         }
 
         // Standard API polling as fallback, every X seconds (specified in the config)
-        fallbackTimer = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            Utilization usage = pteroManager.getServer().retrieveUtilization().execute();
-
-            pteroManager.setCpuUsage((long) usage.getCPU());
-            pteroManager.setMemoryUsage(usage.getMemory());
-            pteroManager.setDiskUsage(usage.getDisk());
-            pteroManager.setUptime(usage.getUptimeFormatted());
-        }, 0L, (Main.getInstance().getSettings().pterodactyl_updateFrequency) * 20L);
+        fallbackTimer = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(),
+                () -> getPteroManager().getServer().retrieveUtilization().executeAsync(utilization -> {
+                    getPteroManager().setUsage(ResourceType.CPU, (long) utilization.getCPU());
+                    getPteroManager().setUsage(ResourceType.MEMORY, utilization.getMemory());
+                    getPteroManager().setUsage(ResourceType.DISK, utilization.getDisk());
+                    getPteroManager().setUptime(utilization.getUptimeFormatted());
+        }, throwable -> {
+            Main.getInstance().log(Level.SEVERE, "Failed to asynchronously retrieve server utilization. Stacktrace below.");
+            throwable.printStackTrace();
+        }), 0L, (Main.getInstance().getSettings().pterodactyl_updateFrequency) * 20L);
     }
 
     /**

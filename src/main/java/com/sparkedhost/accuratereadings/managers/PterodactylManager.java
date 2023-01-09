@@ -10,6 +10,7 @@ import com.mattmalec.pterodactyl4j.entities.Limit;
 import com.mattmalec.pterodactyl4j.exceptions.LoginException;
 import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.Main;
+import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 
 @Getter
 public class PterodactylManager {
+    protected final double CONVERSION_UNIT = 1024.0;
     String panelURL;
     String apiKey;
 
@@ -114,9 +116,9 @@ public class PterodactylManager {
 
     private void setLimits() {
         Limit limits = getServer().getLimits();
-        setCpuLimit(limits.getCPULong());
-        setMemoryLimit(limits.getMemoryLong());
-        setDiskLimit(limits.getDiskLong());
+        setLimit(ResourceType.CPU, limits.getCPULong());
+        setLimit(ResourceType.MEMORY, limits.getMemoryLong());
+        setLimit(ResourceType.DISK, limits.getDiskLong());
     }
 
     /**
@@ -124,9 +126,9 @@ public class PterodactylManager {
      */
 
     protected void resetVariables() {
-        setCpuUsage(0);
-        setMemoryUsage(0);
-        setDiskUsage(0);
+        setUsage(ResourceType.CPU, 0);
+        setUsage(ResourceType.MEMORY, 0);
+        setUsage(ResourceType.DISK, 0);
         setUptime("(resource usage manager not running)");
     }
 
@@ -134,31 +136,134 @@ public class PterodactylManager {
         return getServer().setPower(action);
     }
 
-    /*
-     * And here lies:
-     * The almighty list of Setters
-     */
-
     @Setter
     boolean isServerOwner;
-
-    @Setter
-    long memoryUsage = 0;
-
-    @Setter
+    double memoryUsage = 0;
+    private String memoryUsageString = "0 MB";
     long memoryLimit = 0;
-
-    @Setter
-    long diskUsage = 0;
-
-    @Setter
+    private String memoryLimitString = "0 MB";
+    double diskUsage = 0;
+    private String diskUsageString = "0 MB";
     long diskLimit = 0;
-
-    @Setter
+    private String diskLimitString = "0 MB";
     long cpuUsage = 0;
 
-    @Setter
+    public long getCpuUsage() {
+        return normalizeIfNeeded(cpuUsage);
+    }
+
     long cpuLimit = 0;
+
+    public long getCpuLimit() {
+        return normalizeIfNeeded(cpuLimit);
+    }
+
+    /**
+     * Set resource usage utilization for a specific type of resource.
+     * @param type Type of resource to update
+     * @param value Value in bytes
+     */
+
+    public void setUsage(ResourceType type, long value) {
+        switch (type) {
+            case CPU:
+                cpuUsage = value;
+                break;
+            case DISK:
+                diskUsage = value;
+                diskUsageString = calculate1024FromBytes(value);
+                break;
+            case MEMORY:
+                memoryUsage = value;
+                memoryUsageString = calculate1024FromBytes(value);
+                break;
+            default:
+                getPlugin().log(Level.WARNING, "Tried to call PterodactylManager#setUsage with an invalid ResourceType.");
+                break;
+        }
+    }
+
+    /**
+     * Set resource utilization limit for a specific type of resource.
+     * @param type Type of resource to update
+     * @param value Value in megabytes
+     */
+
+    public void setLimit(ResourceType type, long value) {
+        switch (type) {
+            case CPU:
+                cpuLimit = value;
+                break;
+            case DISK:
+                diskLimit = value;
+                diskLimitString = calculate1024FromMB(value);
+                break;
+            case MEMORY:
+                memoryLimit = value;
+                memoryLimitString = calculate1024FromMB(value);
+                break;
+            default:
+                getPlugin().log(Level.WARNING, "Tried to call PterodactylManager#setLimit with an invalid ResourceType.");
+                break;
+        }
+    }
+
+    /**
+     * Normalize CPU usage/limit values if needed.
+     * @param value CPU value to normalize
+     * @return Normalized value, or the same value provided if normalization is disabled.
+     */
+
+    private long normalizeIfNeeded(long value) {
+        if (!getPlugin().getSettings().output_normalizeCpu)
+            return value;
+
+        if (value == getCpuLimit())
+            return value;
+
+        return value / getCpuLimit() * 100;
+    }
+
+    /**
+     * Converts a value in bytes to MB or GB.
+     * @param value Value in bytes
+     * @return String of the correct value (up to 2 decimal points) and unit.
+     */
+
+    private String calculate1024FromBytes(long value) {
+        // initial value is in bytes, we need to convert this to MB by dividing by 1024 twice
+        double calc = value / CONVERSION_UNIT / CONVERSION_UNIT;
+        String unit = "MB";
+
+        // if the value in MB is more than or equal to 1024, we divide again to get the value in GB
+        if (calc >= CONVERSION_UNIT) {
+            calc = calc / CONVERSION_UNIT;
+            unit = "GB";
+        }
+
+        // and finally, we return a formatted string
+        return String.format("%.2f %s", calc, unit);
+    }
+
+    /**
+     * Converts a value in megabytes to GB if necessary
+     * @param value Value in megabytes
+     * @return String of the correct value (up to 2 decimal points) and unit.
+     */
+
+    private String calculate1024FromMB(long value) {
+        // assign a new double based on the value, which is a long
+        double calc = value;
+        String decimalPoints = calc % CONVERSION_UNIT == 0 ? "%.0f" : "%.2f";
+
+        // if the value in MB is more than or equal to 1024, we divide again to get the value in GB
+        if (value >= CONVERSION_UNIT) {
+            calc = calc / CONVERSION_UNIT;
+            return String.format(decimalPoints + " GB", calc);
+        }
+
+        return String.format(decimalPoints + " MB", calc);
+    }
 
     @Setter
     String uptime;

@@ -40,7 +40,8 @@ public class Settings {
      * /PERF COMMAND CUSTOMIZATION
      */
 
-    public String perf_postCommand;
+    public String output_postCommand;
+    public boolean output_normalizeCpu;
 
 
     /*
@@ -118,7 +119,8 @@ public class Settings {
          * /PERF COMMAND CUSTOMIZATION
          */
 
-        perf_postCommand = plugin.getConfig().getString("perf-customization.post-command");
+        output_postCommand = plugin.getConfig().getString("output-customization.post-command");
+        output_normalizeCpu = plugin.getConfig().getBoolean("output-customization.normalize-cpu");
 
 
         /*

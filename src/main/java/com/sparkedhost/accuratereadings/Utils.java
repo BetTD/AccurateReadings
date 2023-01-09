@@ -73,14 +73,11 @@ public class Utils {
      * @param permission Permission node string
      * @return Result, always true if sender is console
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean hasPermission(CommandSender sender, String permission) {
         if (!(sender instanceof Player))
             return true;
 
         return sender.hasPermission(permission);
-    }
-
-    public static void logi(String message) {
-
     }
 }

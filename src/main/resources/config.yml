@@ -36,18 +36,25 @@ pterodactyl:
   ignore-pterodactyl-check: false
 
 restart:
-  # Should the plugin add the restart feature? It is experimental and may not always work. DEFAULT: false
+  # Should the plugin add the restart feature? It is experimental and may not always work.
+  # DEFAULT: false
   enabled: false
   # Should the plugin also broadcast a message to the entire server if successful? DEFAULT: false
   # NOTE: This has no effect if "enabled" is set false. You can customize the broadcast message below.
   announce-restarts: false
 
-# Customization options for the /perf command or any of its aliases
-perf-customization:
+# Customization options for the /perf command and placeholders
+output-customization:
   # Command to run right after sending the stats, without the slash. DEFAULT: spigot:tps
   # The player or console that sends the /perf command will also execute this one, so make sure they're able to run it.
-  # Leave blank for no command.
-  post-command: "spigot:tps"
+  # Leave empty for no command.
+  # DEFAULT: (empty)
+  post-command: ""
+  # Normalizing in this context means the CPU usage and limit values will be displayed as a proper percentage from 0 to
+  # 100%. The default behavior is to print the values provided from the panel, which can extend past 100% given a server
+  # with more than one (virtual) core (so 200% would mean 2 virtual cores, and 50% would mean... half a core.
+  # DEFAULT: false
+  normalize-cpu: false
 
 cooldown:
   # Pretty self-explanatory. This now comes disabled by default as the plugin no longer makes a request every single

@@ -51,14 +51,6 @@ public class PerformanceCmd extends BaseCommand {
 
         char cpuUsageColorCode;
 
-        // Resource usage is reported in bytes, while actual limits are returned in megabytes, which means we have to do
-        // some maths.
-
-        String diskUsage = (manager.getDiskUsage() / 1024000) + " MB";
-        String diskLimit = manager.getDiskLimit() + " MB";
-        String memoryUsage = (manager.getMemoryUsage() / 1024000) + " MB";
-        String memoryLimit = manager.getMemoryLimit() + " MB";
-
         /*
          * Changes CPU usage color depending on its value.
          * I don't know a better way to do this.
@@ -71,24 +63,6 @@ public class PerformanceCmd extends BaseCommand {
             cpuUsageColorCode = 'c';
         }
 
-        // The following block of if statements just changes the unit to GBs when applicable
-
-        if (manager.getMemoryUsage() >= 1024000000) {
-            memoryUsage = manager.getMemoryUsage() / 1024000000 + " GB";
-        }
-
-        if (manager.getMemoryLimit() >= 1024) {
-            memoryLimit = manager.getMemoryLimit() / 1024 + " GB";
-        }
-
-        if (manager.getDiskUsage() >= 1024000000) {
-            diskUsage = manager.getDiskUsage() / 1024000000 + " GB";
-        }
-
-        if (manager.getDiskLimit() >= 1024) {
-            diskLimit = manager.getDiskLimit() / 1024 + " GB";
-        }
-
         // Append base message
         outputBuilder.append(Main.getInstance().getSettings().messages_statsMessage);
 
@@ -96,18 +70,18 @@ public class PerformanceCmd extends BaseCommand {
         String output = Utils.parsePlaceholdersIfPresent(sender instanceof Player ? (Player) sender : null, outputBuilder.toString()
                 .replace("{CURRENTCPU}", "&" + cpuUsageColorCode + manager.getCpuUsage())
                 .replace("{MAXCPU}", String.valueOf(manager.getCpuLimit()))
-                .replace("{CURRENTRAM}", memoryUsage)
-                .replace("{MAXRAM}", memoryLimit)
-                .replace("{CURRENTDISK}", diskUsage)
-                .replace("{MAXDISK}", diskLimit)
+                .replace("{CURRENTRAM}", manager.getMemoryUsageString())
+                .replace("{MAXRAM}", manager.getMemoryLimitString())
+                .replace("{CURRENTDISK}", manager.getDiskUsageString())
+                .replace("{MAXDISK}", manager.getDiskLimitString())
                 .replace("{PLAYERCOUNT}", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()))
                 .replace("{MAXPLAYERS}", String.valueOf(Bukkit.getMaxPlayers()))
                 .replace("{SERVERID}", manager.getServerId())
                 .replace("{UPTIME}", manager.getUptime()));
 
         // If a post command is set in the config, make the sender execute it
-        if (!Main.getInstance().getSettings().perf_postCommand.isEmpty()) {
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getServer().dispatchCommand(sender, Main.getInstance().getSettings().perf_postCommand), 1);
+        if (!Main.getInstance().getSettings().output_postCommand.isEmpty()) {
+            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getServer().dispatchCommand(sender, Main.getInstance().getSettings().output_postCommand), 1);
         }
 
         // Finally, send response to sender
