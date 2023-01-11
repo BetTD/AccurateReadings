@@ -48,10 +48,10 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
                     getPteroManager().setUsage(ResourceType.MEMORY, utilization.getMemory());
                     getPteroManager().setUsage(ResourceType.DISK, utilization.getDisk());
                     getPteroManager().setUptime(utilization.getUptimeFormatted());
-        }, throwable -> {
-            Main.getInstance().log(Level.SEVERE, "Failed to asynchronously retrieve server utilization. Stacktrace below.");
-            throwable.printStackTrace();
-        }), 0L, (Main.getInstance().getSettings().pterodactyl_updateFrequency) * 20L);
+                }, throwable -> {
+                    Main.getInstance().log(Level.SEVERE, "Failed to asynchronously retrieve server utilization. Stacktrace below.");
+                    throwable.printStackTrace();
+                }), 0L, Main.getInstance().getSettings().pterodactyl_updateFrequency * 20L);
     }
 
     /**
@@ -61,9 +61,14 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         setRunning(false);
 
         if (getFallbackTimer() == null && getWebSocketManager() != null) {
-            getWebSocketManager().shutdown();
+            try {
+                getWebSocketManager().shutdown();
+            } catch (IllegalStateException exception) {
+                Main.getInstance().log(Level.WARNING, "The websocket client isn't connected!");
+            }
             setWebSocketManager(null);
         } else {
+            assert getFallbackTimer() != null;
             getFallbackTimer().cancel();
         }
 
