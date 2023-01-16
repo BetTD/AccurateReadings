@@ -1,6 +1,7 @@
 package com.sparkedhost.accuratereadings;
 
 import com.sparkedhost.accuratereadings.commands.*;
+import com.sparkedhost.accuratereadings.commands.control.ControlBaseCommand;
 import com.sparkedhost.accuratereadings.config.Settings;
 import com.sparkedhost.accuratereadings.listeners.RestartCommandListener;
 import com.sparkedhost.accuratereadings.managers.PlaceholderAPIManager;

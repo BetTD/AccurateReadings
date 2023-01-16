@@ -1,8 +1,9 @@
-package com.sparkedhost.accuratereadings.commands;
+package com.sparkedhost.accuratereadings.commands.control;
 
 import com.sparkedhost.accuratereadings.Main;
 import com.sparkedhost.accuratereadings.Utils;
-import com.sparkedhost.accuratereadings.commands.control.*;
+import com.sparkedhost.accuratereadings.commands.BaseCommand;
+import com.sparkedhost.accuratereadings.commands.SubCommand;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,18 +16,18 @@ public class ControlBaseCommand extends BaseCommand {
     private final Map<String, SubCommand> subcommands = new HashMap<>();
 
     @Getter
-    private final List<String> subcommandList = new ArrayList<>(getSubcommands().keySet());
+    private final List<String> subcommandList;
 
     public ControlBaseCommand() {
         // Subcommands
-        getSubcommands().put("help", new HelpSubCommand());
-        getSubcommands().put("tasks", new TasksSubCommand());
-        getSubcommands().put("res", new ResourceSubCommand());
-        getSubcommands().put("version", new VersionSubCommand());
-        getSubcommands().put("reload", new ReloadSubCommand());
+        getSubcommands().put("help", new HelpSubCommand(this));
+        getSubcommands().put("tasks", new TasksSubCommand(this));
+        getSubcommands().put("res", new ResourceSubCommand(this));
+        getSubcommands().put("version", new VersionSubCommand(this));
+        getSubcommands().put("reload", new ReloadSubCommand(this));
 
-        // Aliases to subcommands
-        getSubcommands().put("task", TasksSubCommand.getInst());
+        // Generate subcommand list
+        subcommandList = new ArrayList<>(getSubcommands().keySet());
     }
 
     @Override

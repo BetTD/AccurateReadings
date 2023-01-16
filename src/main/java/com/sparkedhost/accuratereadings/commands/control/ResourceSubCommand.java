@@ -1,6 +1,7 @@
 package com.sparkedhost.accuratereadings.commands.control;
 
 import com.sparkedhost.accuratereadings.Utils;
+import com.sparkedhost.accuratereadings.commands.BaseCommand;
 import com.sparkedhost.accuratereadings.commands.SubCommand;
 import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
 import org.bukkit.command.Command;
@@ -10,6 +11,15 @@ import java.util.StringJoiner;
 
 public class ResourceSubCommand extends SubCommand {
     ResourceUsageManager resManager = plugin.getPteroAPI().getResourceUsageManager();
+
+    protected ResourceSubCommand(BaseCommand baseCommand) {
+        super(
+                baseCommand,
+                "<status|start|stop>",
+                "Allows you to manage the resource usage monitor."
+        );
+    }
+
     public void execute(CommandSender sender, Command command, String[] args) {
         if (args.length != 2) {
             // TODO complete

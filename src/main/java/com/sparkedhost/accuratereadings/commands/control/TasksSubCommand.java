@@ -1,11 +1,11 @@
 package com.sparkedhost.accuratereadings.commands.control;
 
 import com.sparkedhost.accuratereadings.Utils;
+import com.sparkedhost.accuratereadings.commands.BaseCommand;
 import com.sparkedhost.accuratereadings.commands.SubCommand;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import com.sparkedhost.accuratereadings.tasks.Task;
 import com.sparkedhost.accuratereadings.tasks.TaskProcessor;
-import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -13,11 +13,12 @@ import java.util.Set;
 import java.util.StringJoiner;
 
 public class TasksSubCommand extends SubCommand {
-    @Getter
-    private static TasksSubCommand inst;
-
-    public TasksSubCommand() {
-        inst = this;
+    protected TasksSubCommand(BaseCommand baseCommand) {
+        super(
+                baseCommand,
+                "<list|enable|disable|fire>",
+                "Allows you to manage the resource usage monitor."
+        );
     }
 
     public void execute(CommandSender sender, Command command, String[] args) {
@@ -50,7 +51,11 @@ public class TasksSubCommand extends SubCommand {
                 break;
             case "fire":
                 if (args.length < 3) {
-                    sender.sendMessage(Utils.colorize("&7You need to specify the name of the task that you'd like to fire."));
+                    sender.sendMessage(
+                            Utils.colorize(
+                                    "&7You need to specify the name of the task that you'd like to fire."
+                            )
+                    );
                     break;
                 }
 

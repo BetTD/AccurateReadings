@@ -1,18 +1,35 @@
 package com.sparkedhost.accuratereadings.commands.control;
 
 import com.sparkedhost.accuratereadings.Utils;
+import com.sparkedhost.accuratereadings.commands.BaseCommand;
 import com.sparkedhost.accuratereadings.commands.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.StringJoiner;
+
 public class HelpSubCommand extends SubCommand {
+    protected HelpSubCommand(BaseCommand baseCommand) {
+        super(baseCommand, null, "Shows this help message.");
+    }
+
     public void execute(CommandSender sender, Command command, String[] args) {
-        // TODO Maybe store usage and description in each SubCommand
-        sender.sendMessage(Utils.colorize(String.join("\n",
-                "&3ACCURATE&b&lREADINGS &f&lHELP MENU",
-                "&7- &f/arc &lres&7 <start|stop|status>&8 »&7 Manage resource usage monitor.",
-                "&7- &f/arc &ltasks&7 <list|fire>&8 »&7 Manage automated tasks.",
-                "&7- &f/arc &lreload&8 »&7 Reload configuration file.",
-                "&7- &f/arc &lversion&8 »&7 Show current plugin version.")));
+        if (!(baseCommand instanceof ControlBaseCommand)) {
+            throw new ClassCastException("Base command object in subcommand is not an instance of the correct subclass type.");
+        }
+
+        ControlBaseCommand controlCommand = (ControlBaseCommand) baseCommand;
+
+        StringJoiner output = new StringJoiner("\n");
+        output.add("&3ACCURATE&b&lREADINGS&f&l HELP MENU");
+
+        controlCommand.getSubcommands().forEach((cmd, subCommand) -> output.add(
+                String.format(
+                        "&7- &f/arc &l%s&7 %s&8 »&7 %s",
+                        cmd, subCommand.getUsage(), subCommand.getDescription()
+                )
+        ));
+
+        sender.sendMessage(Utils.colorize(output.toString()));
     }
 }
