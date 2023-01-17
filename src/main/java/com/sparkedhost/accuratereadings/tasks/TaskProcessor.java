@@ -48,7 +48,8 @@ public class TaskProcessor {
                                 sender.sendMessage(Utils.colorize("&cThe task could not be completed:\n&7" +
                                         exception.getMessage() +
                                         "\n&cCheck the console for a stacktrace."));
-                            Main.getInstance().log(Level.SEVERE, "An exception occurred while processing task '" + task.getName() + "'!");
+                            Main.getInstance().log(Level.SEVERE, "An exception occurred while processing task '" +
+                                    task.getName() + "'!");
                             exception.printStackTrace();
                         });
                 break;
