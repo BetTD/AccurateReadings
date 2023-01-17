@@ -7,10 +7,10 @@ main: com.sparkedhost.accuratereadings.Main
 softdepend:
   - PlaceholderAPI
 commands:
-  perf:
-    aliases: ["performance", "lag"]
+  stats:
+    aliases: ["perf", "performance", "lag"]
     description: "Displays the server resource usage"
-    permission: "readings.perf"
+    permission: "readings.stats"
   arc:
     aliases: ["accuratereadings", "arcontrol"]
     description: "Controls AccurateReadings functionality"
@@ -20,11 +20,16 @@ permissions:
     description: "God mode - Grants access to everything in this plugin"
     defaults: "op"
     children:
-      "readings.perf": true
+      "readings.stats": true
       "readings.restart": true
       "readings.control": true
       "readings.control.*": true
     "readings.perf":
+      description: "Deprecated - only kept for compatibility purposes."
+      defaults: false
+      children:
+        "readings.stats": true
+    "readings.stats":
       description: "Gives access to resource usage commands"
       defaults: "op"
     "readings.restart":
@@ -37,6 +42,19 @@ permissions:
       description: "Grants access to every subcommand in /arc"
       defaults: "op"
       children:
+        "readings.control.power": true
         "readings.control.reload": true
         "readings.control.resource": true
         "readings.control.tasks": true
+    "readings.control.power":
+      description: "Allows sending power actions"
+      defaults: "op"
+    "readings.control.reload":
+      description: "Allows user to reload the AccurateReadings config"
+      defaults: "op"
+    "readings.control.resource":
+      description: "Manage "
+      defaults: "op"
+    "readings.control.tasks":
+      description: "Allows user to reload the AccurateReadings config"
+      defaults: "op"

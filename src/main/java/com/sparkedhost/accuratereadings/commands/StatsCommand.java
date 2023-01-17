@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
-public class PerformanceCmd extends BaseCommand {
+public class StatsCommand extends BaseCommand {
     private final CooldownManager cooldown = new CooldownManager();
 
     @Override
@@ -20,7 +20,7 @@ public class PerformanceCmd extends BaseCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
 
-            if (!p.hasPermission("readings.perf")) {
+            if (!p.hasPermission("readings.stats")) {
                 p.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
                 return false;
             }

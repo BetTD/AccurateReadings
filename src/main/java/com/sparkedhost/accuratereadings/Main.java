@@ -3,7 +3,6 @@ package com.sparkedhost.accuratereadings;
 import com.sparkedhost.accuratereadings.commands.*;
 import com.sparkedhost.accuratereadings.commands.control.ControlBaseCommand;
 import com.sparkedhost.accuratereadings.config.Settings;
-import com.sparkedhost.accuratereadings.listeners.RestartCommandListener;
 import com.sparkedhost.accuratereadings.managers.PlaceholderAPIManager;
 import com.sparkedhost.accuratereadings.managers.PterodactylManager;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
@@ -84,11 +83,6 @@ public class Main extends JavaPlugin {
 
         log(Level.INFO, "AccurateReadings is loading...");
 
-        if (getConfig().getBoolean("enableRestartCmd")) {
-            // TODO Switch back to onCommand
-            getServer().getPluginManager().registerEvents(new RestartCommandListener(), this);
-        }
-
         if (!isConfigValid()) {
             // Actual logging output is handled in the Main#isConfigValid() method.
             disableItself();
@@ -103,7 +97,7 @@ public class Main extends JavaPlugin {
 
         // Register PlaceholderAPI placeholders and plugin commands
         registerPlaceholders();
-        getCommand("perf").setExecutor(new PerformanceCmd());
+        getCommand("stats").setExecutor(new StatsCommand());
         getCommand("arc").setExecutor(new ControlBaseCommand());
     }
 

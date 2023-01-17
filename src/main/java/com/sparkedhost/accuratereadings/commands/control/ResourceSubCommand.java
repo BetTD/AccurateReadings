@@ -56,6 +56,7 @@ public class ResourceSubCommand extends SubCommand {
                 break;
             default:
                 sender.sendMessage(Utils.colorize("&cThis subcommand does not exist!"));
+                break;
         }
     }
 
