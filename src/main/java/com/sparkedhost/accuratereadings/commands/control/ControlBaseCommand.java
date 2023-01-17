@@ -13,21 +13,22 @@ import java.util.*;
 
 public class ControlBaseCommand extends BaseCommand {
     @Getter
-    private final Map<String, SubCommand> subcommands = new HashMap<>();
+    private final Map<String, SubCommand> subCommands = new HashMap<>();
 
     @Getter
-    private final List<String> subcommandList;
+    private final List<String> subCommandList;
 
     public ControlBaseCommand() {
         // Subcommands
-        getSubcommands().put("help", new HelpSubCommand(this));
-        getSubcommands().put("tasks", new TasksSubCommand(this));
-        getSubcommands().put("res", new ResourceSubCommand(this));
-        getSubcommands().put("version", new VersionSubCommand(this));
-        getSubcommands().put("reload", new ReloadSubCommand(this));
+        getSubCommands().put("help", new HelpSubCommand(this));
+        getSubCommands().put("power", new PowerSubCommand(this));
+        getSubCommands().put("reload", new ReloadSubCommand(this));
+        getSubCommands().put("res", new ResourceSubCommand(this));
+        getSubCommands().put("tasks", new TasksSubCommand(this));
+        getSubCommands().put("version", new VersionSubCommand(this));
 
         // Generate subcommand list
-        subcommandList = new ArrayList<>(getSubcommands().keySet());
+        subCommandList = new ArrayList<>(getSubCommands().keySet());
     }
 
     @Override
@@ -41,12 +42,12 @@ public class ControlBaseCommand extends BaseCommand {
         // TODO Make messages from this command configurable
 
         if (args.length > 0) {
-            if (!subcommands.containsKey(args[0].toLowerCase())) {
+            if (!subCommands.containsKey(args[0].toLowerCase())) {
                 sender.sendMessage(Utils.colorize("&7Invalid subcommand. Run &f/arc help&7 for a full list of subcommands."));
                 return false;
             }
 
-            SubCommand subCommand = getSubcommands().get(args[0].toLowerCase());
+            SubCommand subCommand = getSubCommands().get(args[0].toLowerCase());
 
             if (subCommand.getPermission() != null && !Utils.hasPermission(sender, subCommand.getPermission())) {
                 sender.sendMessage(Utils.colorize(Main.getInstance().getSettings().messages_noPerms));
@@ -69,10 +70,10 @@ public class ControlBaseCommand extends BaseCommand {
         final List<String> completions = new ArrayList<>();
 
         if (args.length > 1) {
-            if (!subcommands.containsKey(args[0]))
+            if (!subCommands.containsKey(args[0]))
                 return Collections.emptyList();
 
-            SubCommand subCommand = getSubcommands().get(args[0]);
+            SubCommand subCommand = getSubCommands().get(args[0]);
 
             if (subCommand.getPermission() != null && !Utils.hasPermission(sender, subCommand.getPermission()))
                 return Collections.emptyList();
@@ -80,7 +81,7 @@ public class ControlBaseCommand extends BaseCommand {
             return subCommand.tabComplete(sender, command, args);
         }
 
-        StringUtil.copyPartialMatches(args[0], getSubcommandList(), completions);
+        StringUtil.copyPartialMatches(args[0], getSubCommandList(), completions);
         Collections.sort(completions);
 
         return completions;

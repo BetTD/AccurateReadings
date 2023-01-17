@@ -23,7 +23,7 @@ public class HelpSubCommand extends SubCommand {
         StringJoiner output = new StringJoiner("\n");
         output.add("&3ACCURATE&b&lREADINGS&f&l HELP MENU");
 
-        controlCommand.getSubcommands().forEach((cmd, subCommand) -> output.add(
+        controlCommand.getSubCommands().forEach((cmd, subCommand) -> output.add(
                 String.format(
                         "&7- &f/arc &l%s&7 %s&8 »&7 %s",
                         cmd, subCommand.getUsage(), subCommand.getDescription()
