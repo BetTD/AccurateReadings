@@ -49,20 +49,34 @@ public class Main extends JavaPlugin {
         settings = new Settings();
 
         // This plugin's expected config version
-        int expectedConfigVersion = 1;
+        final int EXPECTED_CONFIG_VERSION = 2;
 
         // Config version stored on config file
-        int configVersion = getConfig().getInt("version");
+        final int configVersion = getConfig().getInt("version", 0);
 
-        if (configVersion != expectedConfigVersion) {
-            log(Level.WARNING, String.format("Config version does not match! Expected %s, got %s. It's very likely the " +
-                    "configuration file is out of date. Continue at your own risk.", expectedConfigVersion, configVersion));
-            log(Level.WARNING, "Resuming startup in 2 seconds...");
+        if (configVersion == 0) {
+            log(Level.SEVERE, "Config version is not defined! If you're using your old config file " +
+                    "(AccurateReadings prior to v1.2.0), it is strongly recommended that you remove it and let the " +
+                    "plugin generate a new one. Much of the config structure has been changed in v1.2.0. As a " +
+                    "precautionary measure, the plugin will disable itself.");
+            disableItself();
+        } else {
+            if (configVersion < EXPECTED_CONFIG_VERSION) {
+                log(Level.WARNING, String.format("Config version does not match! Expected %s, got %s. It's very likely the " +
+                        "configuration file is out of date. Continue at your own risk.", EXPECTED_CONFIG_VERSION, configVersion));
+                log(Level.WARNING, "Resuming startup in 2 seconds...");
 
-            try {
-                wait(2000);
-            } catch (InterruptedException e) {
-                log(Level.WARNING, "Timeout interrupted.");
+                try {
+                    wait(2000);
+                } catch (InterruptedException e) {
+                    log(Level.WARNING, "Timeout interrupted.");
+                }
+            }
+
+            if (configVersion > EXPECTED_CONFIG_VERSION) {
+                log(Level.SEVERE, String.format("Config version is NEWER (Expected %s, got %s)! This will cause problems, so the plugin is " +
+                        "going to disable itself.", EXPECTED_CONFIG_VERSION, configVersion));
+                disableItself();
             }
         }
 
@@ -70,7 +84,6 @@ public class Main extends JavaPlugin {
 
         getSettings().loadValues();
 
-        // FIXME This check **ALWAYS** fails under ideal conditions. Maybe checking for /entrypoint.sh isn't a great idea?
         if (!isPterodactyl()) {
             log(Level.SEVERE, "Pterodactyl check failed! Are you sure this server is running in Pterodactyl?");
         }
@@ -208,8 +221,7 @@ public class Main extends JavaPlugin {
      * </p>
      * @return Whether the process is in Docker or not
      */
-
-    public boolean isRunningInsideDocker() {
+    private boolean isRunningInsideDocker() {
         try (Stream < String > stream =
                      Files.lines(Paths.get("/proc/1/cgroup"))) {
             return stream.anyMatch(line -> line.contains("/docker"));

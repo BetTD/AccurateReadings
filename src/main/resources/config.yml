@@ -35,15 +35,7 @@ pterodactyl:
   # DEFAULT: false
   ignore-pterodactyl-check: false
 
-restart:
-  # Should the plugin add the restart feature? It is experimental and may not always work.
-  # DEFAULT: false
-  enabled: false
-  # Should the plugin also broadcast a message to the entire server if successful? DEFAULT: false
-  # NOTE: This has no effect if "enabled" is set false. You can customize the broadcast message below.
-  announce-restarts: false
-
-# Customization options for the /perf command and placeholders
+# Customization options for the /stats command and placeholders
 output-customization:
   # Command to run right after sending the stats, without the slash. DEFAULT: spigot:tps
   # The player or console that sends the /perf command will also execute this one, so make sure they're able to run it.
@@ -147,4 +139,4 @@ messages:
   restart-broadcast: "&e&lTHE SERVER IS RESTARTING!"
 
 # DO NOT change this, it's used internally within the plugin to determine the config version.
-version: 1
+version: 2
