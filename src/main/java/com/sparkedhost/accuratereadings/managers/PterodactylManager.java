@@ -152,11 +152,18 @@ public class PterodactylManager {
         return normalizeIfNeeded(cpuUsage);
     }
 
+    public long getActualCpuUsage() {
+        return cpuUsage;
+    }
+
     long cpuLimit = 0;
-    long cpuActualLimit = 0;
 
     public long getCpuLimit() {
         return normalizeIfNeeded(cpuLimit);
+    }
+
+    public long getActualCpuLimit() {
+        return cpuLimit;
     }
 
     /**
@@ -194,7 +201,6 @@ public class PterodactylManager {
         switch (type) {
             case CPU:
                 cpuLimit = value;
-                cpuActualLimit = value;
                 break;
             case DISK:
                 diskLimit = value;
@@ -220,10 +226,7 @@ public class PterodactylManager {
         if (!getPlugin().getSettings().output_normalizeCpu)
             return value;
 
-        if (value == getCpuActualLimit())
-            return value;
-
-        return value / getCpuActualLimit() * 100;
+        return value / cpuLimit * 100;
     }
 
     /**
