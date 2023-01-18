@@ -67,9 +67,11 @@ public class Main extends JavaPlugin {
                 log(Level.WARNING, "Resuming startup in 2 seconds...");
 
                 try {
-                    wait(2000);
-                } catch (InterruptedException e) {
+                    Bukkit.getServer().wait(2000);
+                } catch (InterruptedException exception) {
                     log(Level.WARNING, "Timeout interrupted.");
+                } catch (IllegalMonitorStateException exception) {
+                    log(Level.WARNING, "I tried very hard to pause the main server thread, but so far I cannot make it work.");
                 }
             }
 
