@@ -2,16 +2,18 @@
 #### **WARNING:** This version of the plugin will **NOT** work with Pterodactyl 1.x and newer versions of Spigot.
 A new version (v1.2.0) is being worked on in a separate branch, it is not production-ready yet but it is, to our knowledge, fully functional so far. Please take a look at the ``v1.2.0`` branch if you'd like to compile the code yourself, or check out the following pull request to stay updated: [#1 AccurateReadings v1.2.0](https://github.com/SparkedHost/AccurateReadings/pull/1)
 
-**Alternatively, you may download the latest stable v1.2.0 build by clicking [here](https://builds.bettd.me/java/bukkit/accuratereadings/AccurateReadings-1.2.0-pre1.jar).** This build has been in use in a live environment for over 4 months without major issues. If you have an old config file, **it will not be compatible** and you should remake it. Before v1.2.0 is released, we will attempt to create a system that automatically converts your old configuration to the new format.
-
-[There's also a CI server with freshly-baked builds](https://ci.bettd.me/job/SparkedHost/job/AccurateReadings/), but at the time of writing (September 20th, 2022) they currently contain unfinished features which may break the plugin's functionality entirely during runtime.
+**Alternatively, you may download the latest development builds for v1.2.0 by clicking [here](https://ci.bettd.me/job/sparkedhost/job/AccurateReadings/).** If you have an old config file, **it will not be compatible** and you should remake it. Before v1.2.0 is released, we will attempt to create a system that automatically converts your old configuration to the new format. These builds are sufficiently stable at the time of writing (January 19th, 2023) and the config file will remain the same until v1.2.0 is fully released. 
 
 Here's a few of the new version's highlights:
 
 - Code quality has been greatly improved
 - Switched to a better & newer API wrapper for Pterodactyl
 - Added PlaceholderAPI support: this plugin now registers a number of placeholders that may be used with any other plugin that supports the use of PAPI placeholders.
-- Multi-version support: even though this is considered a "legacy" plugin and was compiled against Java 8, it should still work with anything from Spigot 1.8.8 all the way to the latest Purpur build for **1.19.2**.
+- Multi-version support: even though this is considered a "legacy" plugin and was compiled against Java 8, it should still work with anything from Spigot 1.8.8 all the way to the latest Purpur build for **1.19.3**.
+    - Tested builds:
+        - Pufferfish 1.17.1
+        - Purpur 1.19.2 and 1.19.3
+        - Dionysus (Paper) 1.12.2
 
 **ANYTHING BELOW THIS LINE IS PART OF v1.1.0's README!** [You can find an up-to-date README here](https://github.com/SparkedHost/AccurateReadings/tree/v1.2.0#readme).
 
