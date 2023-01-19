@@ -25,8 +25,12 @@ public class HelpSubCommand extends SubCommand {
 
         controlCommand.getSubCommands().forEach((cmd, subCommand) -> output.add(
                 String.format(
-                        "&7- &f/arc &l%s&7 %s&8 »&7 %s",
-                        cmd, subCommand.getUsage(), subCommand.getDescription()
+                        "&7- &f/arc &l%s&7%s&8 »&7 %s",
+                        cmd,
+                        subCommand.getUsage() == null
+                                ? ""
+                                : (" " + subCommand.getUsage()),
+                        subCommand.getDescription()
                 )
         ));
 
