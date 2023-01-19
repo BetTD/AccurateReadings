@@ -14,7 +14,7 @@ import org.bukkit.Bukkit;
 import java.net.ProtocolException;
 import java.util.logging.Level;
 
-public class WebsocketListener extends ClientSocketListenerAdapter {
+public class WebSocketListener extends ClientSocketListenerAdapter {
     PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     ResourceUsageManager resourceUsageManager = pteroManager.getResourceUsageManager();
 

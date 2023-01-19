@@ -5,7 +5,7 @@ import com.mattmalec.pterodactyl4j.client.managers.WebSocketBuilder;
 import com.mattmalec.pterodactyl4j.client.managers.WebSocketManager;
 import com.mattmalec.pterodactyl4j.client.ws.hooks.ClientSocketListenerAdapter;
 import com.sparkedhost.accuratereadings.Main;
-import com.sparkedhost.accuratereadings.listeners.WebsocketListener;
+import com.sparkedhost.accuratereadings.listeners.WebSocketListener;
 import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,7 +37,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
         // If use-websocket is set to true in the config, use that to gather resource usage stats.
         if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
             pteroManager.getApi().retrieveServerByIdentifier(pteroManager.getServerId()).map(ClientServer::getWebSocketBuilder)
-                    .map(builder -> builder.addEventListeners(new WebsocketListener())).executeAsync(WebSocketBuilder::build);
+                    .map(builder -> builder.addEventListeners(new WebSocketListener())).executeAsync(WebSocketBuilder::build);
             return;
         }
 
