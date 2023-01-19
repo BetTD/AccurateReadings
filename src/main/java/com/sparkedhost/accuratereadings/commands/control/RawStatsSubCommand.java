@@ -41,5 +41,7 @@ public class RawStatsSubCommand extends SubCommand {
         output.add("Disk limit in MB: " + pterodactylManager.getDiskLimit());
 
         output.add("Server uptime: " + pterodactylManager.getUptime());
+
+        sender.sendMessage(output.toString());
     }
 }
