@@ -36,7 +36,7 @@ public class PowerSubCommand extends SubCommand {
 
         PterodactylManager pterodactylManager = plugin.getPteroAPI();
         try {
-            pterodactylManager.sendPowerAction(PowerAction.valueOf(args[1])).executeAsync(unused -> {
+            pterodactylManager.sendPowerAction(PowerAction.valueOf(args[1].toUpperCase())).executeAsync(unused -> {
                 sender.sendMessage(Utils.colorize("&aPower action was successful."));
                 Main.getInstance().log(Level.INFO, "Power action " + args[1].toLowerCase() + " was executed successfully, requested by " + sender.getName() + ".");
             }, exception -> {
