@@ -1,42 +1,146 @@
 # MAIN CONFIG FILE FOR ACCURATEREADINGS
+# Last updated on AccurateReadings v1.2.0
 # DO NOT forget ANY of the parameters, or it may result in a server crash.
 # For more information, please read the wiki:
 # https://github.com/sparkedhost/AccurateReadings/wiki/Configuration-Guide/
 
 
-# What's the Pterodactyl panel URL?
-panelUrl: "https://control.sparkedhost.us/" # Did you know? Sparked Host LLC has the best prices, with Budget Minecraft Hosting starting at $1/GB. Enough spam, sorry!
-# Generate the API key on your control panel.
-apiKey: "CHANGETHIS"
-# The server ID to monitor
-serverId: ""
-# Should the plugin add the restart feature? DEFAULT: false
-enableRestartCmd: false
-# Should the plugin also broadcast a message to the entire server whenever the restart command is ran successfully? DEFAULT: false
-# NOTE: This has no effect if enableRestartCmd is false.
-announceRestart: false
-# Should we show tips specifically tailored towards Sparked Host servers? DEFAULT: true
-# This will ONLY work if the panel URL is https://control.sparkedhost.us/, this will NOT work with other panels
-# as these tips are specifically aimed towards Sparked Host servers.
-showSparkedTips: true
-# This cooldown helps prevent getting rate-limited from the Pterodactyl panel. DEFAULT: true
-cooldownEnable: true
-# Cooldown time. DEFAULT: 30
-cooldownTime: 30
+pterodactyl:
+  # What's the Pterodactyl panel URL?
+  # Note: include the protocol in the URL. Do not add the trailing slash! Example: https://control.sparkedhost.us
+  panel-url: "https://control.sparkedhost.us"
+  # Generate the API key on your control panel.
+  api-key: "CHANGETHIS"
+  # The server ID to monitor.
+  # If empty, the plugin will try to determine the ID automatically.
+  server-id: ""
+  # Should the plugin use a websocket for resource usage polling?
+  # IMPORTANT NOTE: The Pterodactyl4J primary developer has recently added a workaround for this which spoofs the
+  # origin header to the panel URL. This may not always work, but it should work for most cases. If you're seeing a
+  # 403 Forbidden error, you may need to disable this option. Please note that the API fallback method is kind of slow.
+  use-websocket: true
+  # Frequency (in seconds) at which the plugin should make a request to the panel to poll resource usage statistics.
+  # This is then converted to in-game ticks. THIS VALUE IS ONLY USED WHEN IN API FALLBACK MODE, AND IS IGNORED WHEN
+  # USING A WEBSOCKET CONNECTION!
+  # DEFAULT: 10 (this is how often Pterodactyl itself pulls data from Wings, going any lower is not going to yield
+  # better results by default)
+  update-frequency: 10
+  # Auto-stop resource usage monitor if server is empty.
+  # Useful to avoid unnecessary requests.
+  # DEFAULT: false
+  auto-stop-on-empty: false
+  # Bypasses Pterodactyl check - only set to "true" if REALLY needed.
+  # This check ensures that the server is running as the "container" user (which is default for all Pterodactyl
+  # installations) and that the .dockerenv file exists in the filesystem root.
+  # DEFAULT: false
+  ignore-pterodactyl-check: false
+
+# Customization options for the /stats command and placeholders
+output-customization:
+  # Command to run right after sending the stats, without the slash. DEFAULT: spigot:tps
+  # The player or console that sends the /perf command will also execute this one, so make sure they're able to run it.
+  # Leave empty for no command.
+  # DEFAULT: (empty)
+  post-command: ""
+  # Normalizing in this context means the CPU usage and limit values will be displayed as a proper percentage from 0 to
+  # 100%. The default behavior is to print the values provided from the panel, which can extend past 100% given a server
+  # with more than one (virtual) core (so 200% would mean 2 virtual cores, and 50% would mean... half a core.
+  # DEFAULT: false
+  normalize-cpu: false
+
+cooldown:
+  # Pretty self-explanatory. This now comes disabled by default as the plugin no longer makes a request every single
+  # time the command is run.
+  enabled: false
+  # Cooldown time in seconds. DEFAULT: 30
+  time: 30
+
+# --------------------------------------------------------------------------------------
+# TASKS SECTION
+#
+# -- WARNING: THE TASKS SECTION HAS BEEN DISABLED UNTIL WE'RE DONE MAKING CHANGES
+#             TO THE LOGIC BEHIND THIS FEATURE.
+#
+# This section is for customizing the tasks that the plugin will run on the server when
+# certain conditions are met. Have fun!
+#
+# VALID TASK TYPES:
+# - COMMAND ----> This will execute a command via console.
+# - BROADCAST --> This will send a message to all online players.
+# - POWER ------> This will run a power action against your server, see valid power actions
+#                 below.
+#
+# VALID THRESHOLD VALUES:
+# A threshold is the value at which the plugin will trigger a given task. There are two
+# possible ways to specify a value:
+# - PERCENTAGE -> Add a percentage symbol after the value. Should be >=100.
+# - ABSOLUTE ---> Do not add a percentage symbol. Should be >= the server's limit for the
+#                 specific resource being monitored.
+#
+# VALID THRESHOLD TYPES:
+# A threshold type is the kind of resource that should trigger the task once its usage is above
+# the specified threshold value.
+# - CPU
+# - MEMORY
+# - DISK
+#
+# VALID POWER ACTIONS:
+# (these go in "payload")
+# - START ------> This is basically useless, it's assumed that your server is already started
+#                 up.
+# - STOP    ----> STOP and RESTART will gracefully stop your server. RESTART will also
+# - RESTART _/    automatically start your server back up.
+# - KILL -------> This will **IMMEDIATELY** kill your server process. Use at your own risk.
+# ---------------------------------------------------------------------------------------
+
+tasks:
+  'example':
+    active: true
+    type: BROADCAST
+    threshold-value: '90%'
+    threshold-type: MEMORY
+    payload: "This is an example task that runs after the server has reached 90% memory usage."
+  'poweraction':
+    active: true
+    type: POWER
+    threshold-value: '100%'
+    threshold-type: CPU
+    payload: STOP
 
 # --------------------------------------------------------------------------------------
 # MESSAGES SECTION
 # This allows you to customize the messages sent by the plugin to your liking.
-# If any of these lines are left empty (""), the plugin will skip the message entirely.
 # --------------------------------------------------------------------------------------
 
 messages:
-  # This is the title of the stats message.
-  stats-title: "&8&m        &r &f&lSTATS&r &8&m        &r"
-  # This message will show up BEFORE the stats message if the API key provided belongs to an account that doesn't own the server but has access to it.
-  api-key-not-owner: "&e&lINFO: &6The API key provided in the config does not own this server, but is in fact added as a subuser."
+  # /perf message body
+  # Valid placeholders:
+  # - {CURRENTCPU} -> Prints current CPU usage, no % sign
+  # - {MAXCPU} -> Prints CPU limit, no % sign
+  # - {CURRENTRAM} -> Prints current memory usage, incl. units (MB or GB)
+  # - {MAXRAM} -> Prints memory limit, incl. units (MB or GB)
+  # - {CURRENTDISK} -> Prints current disk usage, incl. units (MB or GB)
+  # - {MAXDISK} -> Prints disk limit, incl. units (MB or GB)
+  # - {PLAYERCOUNT} -> Prints current amount of players (does NOT include vanished players)
+  # - {MAXPLAYERS} -> Prints total player slots available
+  # - {SERVERID} -> Prints server ID being monitored
+  # - {UPTIME} -> Prints total server uptime as reported by Pterodactyl (aka since the container was started)
+  # - Any PlaceholderAPI placeholders if the plugin is present
+  # If empty, the plugin will use the default value. It will also log a warning in console to let you know.
+  stats-message: |-
+    &8&m        &r &f&lSTATS&r &8&m        &r
+    &r &r
+    &b&l» &7CPU: &f{CURRENTCPU}% &7(limit: {MAXCPU}%)
+    &b&l» &7RAM: &f{CURRENTRAM} &7(limit: {MAXRAM})
+    &b&l» &7Disk: &f{CURRENTDISK} &7(limit: {MAXDISK})
+    &b&l» &7Players: &f{PLAYERCOUNT}&7/&f{MAXPLAYERS}
+    &b&l» &7Uptime: &f{UPTIME}
+    &r &r
   # Will be displayed when the command sender does not have the required permission to run a command.
   no-permission: "&cYou do not have permission to execute this command."
   # The plugin will broadcast this message to the entire server whenever the restart command is used.
   # This only works with the restart feature of this plugin, and will only display this message if announceRestart is set to true.
   restart-broadcast: "&e&lTHE SERVER IS RESTARTING!"
+
+# DO NOT change this, it's used internally within the plugin to determine the config version.
+version: 2

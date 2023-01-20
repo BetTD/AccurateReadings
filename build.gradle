@@ -3,17 +3,14 @@ plugins {
     id "java"
     id 'jacoco'
     id "idea"
-    id 'com.github.johnrengelman.shadow' version '6.0.0'
-    id 'kr.entree.spigradle' version '2.2.4'
-    // TODO Switch to Lombok plugin instead of using the non-plugin version, and update Gradle (only can do after Ptero4J is no longer a dependency)
-    //id "io.freefair.lombok" version "6.1.0-m3"
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
 group 'com.sparkedhost'
-version '1.1.0-SNAPSHOT'
+version '1.2.0-SNAPSHOT-b' + (System.getenv("BUILD_NUMBER") ?: 'local')
 
 sourceCompatibility = 1.8
 
@@ -28,6 +25,12 @@ repositories {
     }
     maven { url = uri('https://oss.sonatype.org/content/repositories/snapshots') }
     maven { url = 'https://jitpack.io' }
+    maven {
+        url = 'https://repo.mattmalec.com/repository/releases'
+    }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
     allprojects {
         repositories {
             maven { url 'https://jitpack.io' }
@@ -36,54 +39,36 @@ repositories {
 }
 
 dependencies {
-    compileOnly spigot('1.12.2')
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    // TODO Remove Ptero4J and make our own wrapper
-    compile 'com.github.stanjg:Ptero4J:master-SNAPSHOT'
-    compile 'com.squareup.okio:okio:2.10.0'
-    compile 'com.squareup.okhttp3:okhttp:4.9.1'
-    compile 'org.json:json:20210307'
+    implementation 'org.jetbrains:annotations:23.0.0'
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testImplementation 'junit:junit:4.13.2'
+    implementation 'com.mattmalec:Pterodactyl4J:2.BETA_134'
+    compileOnly 'me.clip:placeholderapi:2.11.2'
 }
 
-spigot {
-    authors = ['BetTD', 'stanjg', 'Pterodactyl Software']
-    load = POST_WORLD
-    commands {
-        perf {
-            aliases = ['performance', 'lag', 'gc']
-            description = 'Displays the server resource usage'
-            permission = 'readings.perf'
-            usage = '/<command>'
-        }
-    }
-    permissions {
-        'readings.perf' {
-            description = 'Gives access to resource usage commands'
-            defaults = 'op'
-        }
-        'readings.restart' {
-            description = 'Restarts the server using the Pterodactyl API'
-            defaults = 'op'
-        }
-    }
-}
-
-compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += ["-parameters"]
-    options.fork = true
-    options.forkOptions.executable = 'javac'
-}
 
 shadowJar {
+    configurations = [project.configurations.runtimeClasspath]
     dependencies {
-        include(dependency('com.github.stanjg:Ptero4J:master-SNAPSHOT'))
-        include(dependency('com.squareup.okhttp3:okhttp:4.9.1'))
-        include(dependency('com.squareup.okio:okio:2.10.0'))
-        include(dependency('org.json:json:20210307'))
+        exclude dependency('org.jetbrains:annotations:23.0.0')
     }
+    configure {
+        classifier = null
+    }
+    relocate("com.mattmalec.pterodactyl4j", "com.sparkedhost.libs.p4j")
+    relocate("okhttp3", "com.sparkedhost.libs.okhttp3")
+    relocate("okio", "com.sparkedhost.libs.okio")
+    relocate("org.json", "com.sparkedhost.libs.json")
+}
+
+processResources {
+    expand(version: version)
+}
+
+tasks.jar.configure {
+    classifier = 'original'
 }
 
 tasks.build.dependsOn(shadowJar)
