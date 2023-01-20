@@ -2,9 +2,9 @@
 #### Ever wondered what your actual resource usage is on your server? **This plugin is for you!**
 
 ## What's this plugin?
-AccurateReadings aims to provide accurate readings on resource usage by communicating with a Pterodactyl panel using the
-[Pterodactyl4J](https://github.com/stanjg/Ptero4J) wrapper made by mattmalec, and of course using the Pterodactyl panel
-API. Furthermore, if PlaceholderAPI is present, the plugin will also register a few placeholders that you can use to
+AccurateReadings aims to provide accurate resource utilization statistics by communicating with a Pterodactyl panel using the
+[Pterodactyl4J](https://github.com/mattmalec/Pterodactyl4J) wrapper made by mattmalec, and of course using the Pterodactyl
+panel API. Furthermore, if PlaceholderAPI is present, the plugin will also register a few placeholders that you can use to
 display your resource usage statistics on any other plugin that supports PAPI placeholders: want to display RAM usage in
 your server's playerlist/tab using TitleManager? No problem!    
 
@@ -31,23 +31,23 @@ to the plugins directory on your server.
 5. Restart your server in order to generate the config file. The plugin will then disable itself, please stop the server
 after it has fully loaded and navigate to `plugins/AccurateReadings`, then open the config.yml file.
 6. Then fill in the rest of the options: `panel-url` is the URL of your Pterodactyl panel; `server-id` is your server ID
-and you can find it on the main page of your panel, at the very left of the server list; `api-key` is the API key we
-copied earlier. Make sure you don't remove the quotation marks from any of the options.
+and you can find it under 'Settings' in your server, but it is not necessary; `api-key` is the API key we copied earlier.
+Make sure you don't remove the quotation marks from any of the options.
 7. Save the changes and start the server.
 
 ## How to use
 ### Commands
-- `/perf`: Shows current resource usage. Aliases: `/performance`, `/lag`
+- `/stats`: Shows current resource usage. Aliases: `/perf`, `/performance`, `/lag`
 
 This may override Essentials' `/lag` command, but you can fix this in the `commands.yml` file on your server, or you can 
 just use `/elag`.
 
-- `/arc`: Main control command. 
+- `/arc`: Main control command. This contains a few subcommands that allow you to control different aspects of the plugin and your server.
 
 This plugin also registers a few PlaceholderAPI placeholders, you can find the complete list in the wiki.
 
 ## Known issues
-None at this moment :)
+- CPU normalization might not work.
 
 ## Credits
 - [OkHttp](https://github.com/square/okhttp) by Square *(provided by P4J)*
