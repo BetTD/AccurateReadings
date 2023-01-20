@@ -137,7 +137,7 @@ public class Settings {
          * TASKS
          */
 
-        getTaskSettings().load();
+        //getTaskSettings().load();
 
         /*
          * Settings:

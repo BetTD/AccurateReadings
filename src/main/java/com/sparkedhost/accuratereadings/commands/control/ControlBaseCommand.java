@@ -25,7 +25,7 @@ public class ControlBaseCommand extends BaseCommand {
         getSubCommands().put("raw", new RawStatsSubCommand(this));
         getSubCommands().put("reload", new ReloadSubCommand(this));
         getSubCommands().put("res", new ResourceSubCommand(this));
-        getSubCommands().put("tasks", new TasksSubCommand(this));
+        //getSubCommands().put("tasks", new TasksSubCommand(this));
         getSubCommands().put("version", new VersionSubCommand(this));
 
         // Generate subcommand list

@@ -57,6 +57,10 @@ cooldown:
 
 # --------------------------------------------------------------------------------------
 # TASKS SECTION
+#
+# -- WARNING: THE TASKS SECTION HAS BEEN DISABLED UNTIL WE'RE DONE MAKING CHANGES
+#             TO THE LOGIC BEHIND THIS FEATURE.
+#
 # This section is for customizing the tasks that the plugin will run on the server when
 # certain conditions are met. Have fun!
 #
