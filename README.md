@@ -14,9 +14,8 @@ able to use this plugin. If you're self-hosting your server (home server, your P
 sure you use Pterodactyl, not only is it really easy to install, but it is an excellent panel software. Please read the
 wiki for instructions on how to check if the panel you're using is powered by Pterodactyl.
 - **A Spigot server.** This plugin has been coded against Spigot 1.12.2, but it has been tested on Pufferfish 1.17.1 and 
-Purpur 1.18.1. It should work on any server running Spigot, or one of its forks: Paper, Purpur...
-While it is only expected to work on 1.12.2 through 1.18.2, this plugin has been coded with simplicity in mind, so it
-should work on 1.8.8 and newer versions of the game.
+the latest Purpur 1.19.3 build. It should work on any server running Spigot, or one of its forks: Paper, Purpur...
+Therefore, this plugin is expected to work on versions as old as 1.8.8 (tested on Paper 1.8.8 build 445).
 
 ## How to install
 1. Go to your Pterodactyl panel and, on the left sidebar, click on 'Account API'. If you're using a Sparked Host server,
