@@ -176,17 +176,23 @@ public class Settings {
             return null;
         }
 
-        final String hostname = Files.readAllLines(path).get(0);
-        final String serverID = hostname.substring(0, 8);
+        try {
+            final String hostname = Files.readAllLines(path).get(0);
+            final String serverID = hostname.substring(0, 8);
 
-        final Pattern pattern = Pattern.compile("([0-9a-f]{8})");
-        final Matcher validator = pattern.matcher(serverID);
+            final Pattern pattern = Pattern.compile("([0-9a-f]{8})");
+            final Matcher validator = pattern.matcher(serverID);
 
-        if (!validator.matches()) {
-            plugin.log(Level.SEVERE, "Hostname does not look like a valid server ID. Got '" + hostname + "'.");
+            if (!validator.matches()) {
+                plugin.log(Level.SEVERE, "Hostname does not look like a valid server ID. Got '" + hostname + "'.");
+                return null;
+            }
+
+            return serverID;
+        } catch (Exception exception) {
+            plugin.log(Level.SEVERE, "Unable to get a valid hostname from the /etc/hostname file.");
+            exception.printStackTrace();
             return null;
         }
-        
-        return serverID;
     }
 }
