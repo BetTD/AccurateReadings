@@ -148,17 +148,18 @@ public class Main extends JavaPlugin {
      * Registers AccurateReadings' placeholders into PlaceholderAPI.
      */
     private void registerPlaceholders() {
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            boolean placeholderApiSuccess = new PlaceholderAPIManager().register();
-            isPAPIPresent = true;
-
-            if (!placeholderApiSuccess) {
-                log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
-                return;
-            }
-
-            log(Level.INFO, "Successfully hooked into PlaceholderAPI and registered our placeholders.");
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            return;
         }
+        boolean placeholderApiSuccess = new PlaceholderAPIManager().register();
+        isPAPIPresent = true;
+
+        if (!placeholderApiSuccess) {
+            log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
+            return;
+        }
+
+        log(Level.INFO, "Successfully hooked into PlaceholderAPI and registered our placeholders.");
     }
 
     /**
