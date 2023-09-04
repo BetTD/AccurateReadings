@@ -137,6 +137,16 @@ public class Main extends JavaPlugin {
     }
 
     /**
+     * Shorthand function to log a message with the appropriate prefix.
+     * @param level Level of logging
+     * @param msg Message to log
+     * @param throwable The throwable to log
+     */
+    public void log(Level level, String msg, Throwable throwable) {
+        getLogger().log(level, msg, throwable);
+    }
+
+    /**
      * Disables the plugin, only used when an error occurs during startup.
      */
     public void disableItself() {

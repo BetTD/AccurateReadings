@@ -35,19 +35,22 @@ public class PowerSubCommand extends SubCommand {
         }
 
         PterodactylManager pterodactylManager = plugin.getPteroAPI();
+        PowerAction action;
         try {
-            pterodactylManager.sendPowerAction(PowerAction.valueOf(args[1].toUpperCase())).executeAsync(unused -> {
-                sender.sendMessage(Utils.colorize("&aPower action was successful."));
-                Main.getInstance().log(Level.INFO, "Power action " + args[1].toLowerCase() + " was executed successfully, requested by " + sender.getName() + ".");
-            }, exception -> {
-                Main.getInstance().log(Level.SEVERE, "An exception occurred while processing power action '" +
-                        args[1].toLowerCase() + "'!");
-                exception.printStackTrace();
-                sender.sendMessage(Utils.colorize("&cPower action was unsuccessful, check console for more info."));
-            });
+            action = PowerAction.valueOf(args[1].toUpperCase());
         } catch (IllegalArgumentException exception) {
             sender.sendMessage(Utils.colorize("Invalid power action type. Valid options are: start, stop, restart, kill"));
+            return;
         }
+
+        pterodactylManager.sendPowerAction(action).executeAsync(unused -> {
+            sender.sendMessage(Utils.colorize("&aPower action was successful."));
+            Main.getInstance().log(Level.INFO, "Power action " + args[1].toLowerCase() + " was executed successfully, requested by " + sender.getName() + ".");
+        }, exception -> {
+            Main.getInstance().log(Level.SEVERE, "An exception occurred while processing power action '" +
+                    args[1].toLowerCase() + "'!", exception);
+            sender.sendMessage(Utils.colorize("&cPower action was unsuccessful, check console for more info."));
+        });
     }
 
     @Override
