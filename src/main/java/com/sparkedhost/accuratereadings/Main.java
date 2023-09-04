@@ -137,6 +137,16 @@ public class Main extends JavaPlugin {
     }
 
     /**
+     * Shorthand function to log a message with the appropriate prefix.
+     * @param level Level of logging
+     * @param msg Message to log
+     * @param throwable The throwable to log
+     */
+    public void log(Level level, String msg, Throwable throwable) {
+        getLogger().log(level, msg, throwable);
+    }
+
+    /**
      * Disables the plugin, only used when an error occurs during startup.
      */
     public void disableItself() {
@@ -148,17 +158,18 @@ public class Main extends JavaPlugin {
      * Registers AccurateReadings' placeholders into PlaceholderAPI.
      */
     private void registerPlaceholders() {
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            boolean placeholderApiSuccess = new PlaceholderAPIManager().register();
-            isPAPIPresent = true;
-
-            if (!placeholderApiSuccess) {
-                log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
-                return;
-            }
-
-            log(Level.INFO, "Successfully hooked into PlaceholderAPI and registered our placeholders.");
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            return;
         }
+        boolean placeholderApiSuccess = new PlaceholderAPIManager().register();
+        isPAPIPresent = true;
+
+        if (!placeholderApiSuccess) {
+            log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
+            return;
+        }
+
+        log(Level.INFO, "Successfully hooked into PlaceholderAPI and registered our placeholders.");
     }
 
     /**
