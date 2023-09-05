@@ -11,10 +11,12 @@ import com.sparkedhost.accuratereadings.managers.ResourceUsageManager;
 import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import org.bukkit.Bukkit;
 
+import java.io.EOFException;
 import java.net.ProtocolException;
 import java.util.logging.Level;
 
 public class WebSocketListener extends ClientSocketListenerAdapter {
+    private int retries = 0;
     PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     ResourceUsageManager resourceUsageManager = pteroManager.getResourceUsageManager();
 
@@ -35,22 +37,23 @@ public class WebSocketListener extends ClientSocketListenerAdapter {
 
     @Override
     public void onFailure(FailureEvent e) {
-        if (e.getThrowable() instanceof ProtocolException) {
+        if (e.getThrowable() instanceof ProtocolException || retries > 3) {
             Main.getInstance().log(Level.WARNING, "Unable to utilize websockets, falling back to API polling...");
             resourceUsageManager.stopListener();
             Main.getInstance().getSettings().pterodactyl_useWebsocket = false;
             resourceUsageManager.startListener();
+            retries = 0;
             return;
         }
 
-        Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
+        retries++;
 
-        if (resourceUsageManager.getWebSocketManager() != null) {
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> resourceUsageManager.getWebSocketManager().reconnect(), 60L);
-            return;
+        if (e.getThrowable() instanceof EOFException) {
+            Main.getInstance().log(Level.WARNING, "Connection to wings ended unexpectedly, reconnecting...");
+        } else {
+            Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
         }
 
-        // Fallback just in case getWebSocketManager() returns null
         resourceUsageManager.stopListener();
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> resourceUsageManager.startListener(), 60L);
     }
