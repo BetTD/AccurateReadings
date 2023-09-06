@@ -35,13 +35,12 @@ public class Utils {
      * @return Validation status in boolean
      */
 
-    public static boolean validateURL(String url)
+    public static boolean validateUrl(String url)
     {
         try {
             new URL(url).toURI();
             return true;
-        }
-        catch (URISyntaxException | MalformedURLException e) {
+        } catch (URISyntaxException | MalformedURLException e) {
             return false;
         }
     }
