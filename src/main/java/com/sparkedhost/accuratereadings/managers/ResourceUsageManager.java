@@ -16,7 +16,7 @@ import java.util.logging.Level;
 
 @Getter
 public class ResourceUsageManager extends ClientSocketListenerAdapter {
-    final PterodactylManager pteroManager = Main.getInstance().pteroAPI;
+    final PterodactylManager pteroManager = Main.getInstance().getPteroApi();
 
     private BukkitTask fallbackTimer;
 

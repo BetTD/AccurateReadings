@@ -17,7 +17,7 @@ import java.util.logging.Level;
 
 public class WebSocketListener extends ClientSocketListenerAdapter {
     private int retries = 0;
-    PterodactylManager pteroManager = Main.getInstance().pteroAPI;
+    PterodactylManager pteroManager = Main.getInstance().getPteroApi();
     ResourceUsageManager resourceUsageManager = pteroManager.getResourceUsageManager();
 
     @Override

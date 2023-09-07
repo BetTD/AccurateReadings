@@ -6,7 +6,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
 public class PlaceholderAPIManager extends PlaceholderExpansion {
-    final PterodactylManager manager = Main.getInstance().pteroAPI;
+    final PterodactylManager manager = Main.getInstance().getPteroApi();
 
     @Override
     public @NotNull String getAuthor() {

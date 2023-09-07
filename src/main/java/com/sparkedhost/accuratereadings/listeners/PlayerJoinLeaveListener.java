@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.logging.Level;
 
 public class PlayerJoinLeaveListener implements Listener {
-    private final ResourceUsageManager resManager = Main.getInstance().pteroAPI.getResourceUsageManager();
+    private final ResourceUsageManager resManager = Main.getInstance().getPteroApi().getResourceUsageManager();
     private final boolean autoStopOnEmpty = Main.getInstance().getSettings().pterodactyl_autoStopOnEmpty;
 
     @EventHandler(priority = EventPriority.MONITOR)

@@ -45,7 +45,7 @@ public class StatsCommand extends BaseCommand {
 
         // Sender is able to execute the command, continue execution
 
-        PterodactylManager manager = Main.getInstance().pteroAPI;
+        PterodactylManager manager = Main.getInstance().getPteroApi();
 
         StringBuilder outputBuilder = new StringBuilder();
 
