@@ -21,7 +21,8 @@ public class TaskProcessor {
                 try {
                     int percentage = Integer.parseInt(task.getThresholdValue().replace("%", ""));
                 } catch (NumberFormatException exception) {
-                    exception.printStackTrace();
+                    Main.getInstance().getLogger().log(Level.SEVERE, "An error occurred while parsing the " +
+                            "threshold value for this task!", exception);
                 }
                 //
             }
@@ -41,7 +42,7 @@ public class TaskProcessor {
                                         "&7You're only receiving this message as this task has a power action of " +
                                         "START defined in its configuration. Any other value will not return " +
                                         "anything, because well, you'd definitely notice if the action was " +
-                                        "successful."));
+                                        "successful as you'd get kicked from the server."));
                             notifySuccess(task, sender);
                         }, exception -> {
                             if (sender != null)
@@ -49,8 +50,7 @@ public class TaskProcessor {
                                         exception.getMessage() +
                                         "\n&cCheck the console for a stacktrace."));
                             Main.getInstance().log(Level.SEVERE, "An exception occurred while processing task '" +
-                                    task.getName() + "'!");
-                            exception.printStackTrace();
+                                    task.getName() + "'!", exception);
                         });
                 break;
             case BROADCAST:
@@ -69,7 +69,7 @@ public class TaskProcessor {
     }
 
     public static void processAllTasks() {
-        for (Task task : TaskManager.getInst().getTasks()) {
+        for (Task task : TaskManager.getInst().getTasks().values()) {
             processTask(task);
         }
     }

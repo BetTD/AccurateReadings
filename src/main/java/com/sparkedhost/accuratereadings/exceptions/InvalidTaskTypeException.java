@@ -1,7 +1,7 @@
 package com.sparkedhost.accuratereadings.exceptions;
 
 public class InvalidTaskTypeException extends Exception {
-    public InvalidTaskTypeException(String message) {
-        super(message);
+    public InvalidTaskTypeException() {
+        super("The supplied task type is invalid.");
     }
 }

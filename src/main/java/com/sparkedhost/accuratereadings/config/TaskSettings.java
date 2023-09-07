@@ -22,7 +22,7 @@ public class TaskSettings {
 
         Set<String> tasksSet = tasksSection.getKeys(false);
 
-        if (tasksSet.size() == 0) {
+        if (tasksSet.isEmpty()) {
             Main.getInstance().getLogger().info("No tasks found.");
             return;
         }

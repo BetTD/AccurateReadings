@@ -11,7 +11,7 @@ public class TaskValidator {
         try {
             result = TaskType.valueOf(valueOf);
         } catch (IllegalArgumentException e) {
-            throw new InvalidTaskTypeException("The task type is invalid.");
+            throw new InvalidTaskTypeException();
         }
 
         return result;
@@ -23,7 +23,7 @@ public class TaskValidator {
         try {
             result = PowerAction.valueOf(valueOf);
         } catch (IllegalArgumentException e) {
-            throw new InvalidPowerActionException("The task type is invalid.");
+            throw new InvalidPowerActionException();
         }
 
         return result;

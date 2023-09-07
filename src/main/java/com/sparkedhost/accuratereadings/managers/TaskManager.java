@@ -4,26 +4,25 @@ import com.sparkedhost.accuratereadings.exceptions.AlreadyExistsException;
 import com.sparkedhost.accuratereadings.tasks.Task;
 import lombok.Getter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 
 public class TaskManager {
     @Getter
     private static TaskManager inst;
 
     @Getter
-    private final Set<Task> tasks = new HashSet<>();
+    private final HashMap<String, Task> tasks = new HashMap<>();
 
     public TaskManager() {
         inst = this;
     }
 
     public void addTask(Task task) throws AlreadyExistsException {
-        if (getTasks().contains(task)) {
+        if (getTasks().containsKey(task.getName())) {
             throw new AlreadyExistsException("Task already exists.");
         }
 
-        getTasks().add(task);
+        getTasks().put(task.getName(), task);
     }
 
     public void clear() {
@@ -36,11 +35,6 @@ public class TaskManager {
      * @return Task object, or null if it doesn't exist
      */
     public Task findTask(String name) {
-        for (Task task : getTasks()) {
-            if (task.getName().equalsIgnoreCase(name)) {
-                return task;
-            }
-        }
-        return null;
+        return getTasks().get(name);
     }
 }
