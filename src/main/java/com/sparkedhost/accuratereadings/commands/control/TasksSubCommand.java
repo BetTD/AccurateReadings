@@ -34,11 +34,10 @@ public class TasksSubCommand extends SubCommand {
 
         switch (args[1].toLowerCase()) {
             case "list":
-                Set<Task> tasks = taskManager.getTasks();
                 StringJoiner joiner = new StringJoiner("\n");
                 joiner.add("&bList of loaded tasks:");
 
-                for (Task task : tasks) {
+                for (Task task : taskManager.getTasks().values()) {
                     joiner.add(String.format("%s&l•&7 %s", task.isActive() ? "&a" : "&c", task.getName()));
                 }
 
