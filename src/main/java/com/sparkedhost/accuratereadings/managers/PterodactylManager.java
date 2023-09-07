@@ -10,6 +10,7 @@ import com.mattmalec.pterodactyl4j.entities.Limit;
 import com.mattmalec.pterodactyl4j.exceptions.LoginException;
 import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.Main;
+import com.sparkedhost.accuratereadings.exceptions.ServerIdEmptyException;
 import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +47,7 @@ public class PterodactylManager {
 
     public void initializeClient() {
         // Initialize values and PteroClient API object
-        initializeAPI();
+        initializeApi();
         try {
             account = login();
             server = retrieveServer();
@@ -61,8 +62,16 @@ public class PterodactylManager {
 
             // Stores whether the account used to access this server owns it or not
             setServerOwner(server.isServerOwner());
-        } catch (RuntimeException exception) {
-            exception.printStackTrace();
+        } catch (LoginException exception) {
+            getPlugin().getLogger().log(Level.SEVERE, "Failed to authenticate! This usually means the API key " +
+                    "you provided is invalid, or does not allow connections from this server's IP address.");
+            plugin.disableItself();
+        } catch (NotFoundException exception) {
+            getPlugin().getLogger().log(Level.SEVERE, "This server doesn't exist, or the account '" +
+                    getAccount().getEmail() + "' is unable to access it.");
+            plugin.disableItself();
+        } catch (ServerIdEmptyException exception) {
+            getPlugin().getLogger().log(Level.SEVERE, exception.getMessage());
             plugin.disableItself();
         }
     }
@@ -71,7 +80,7 @@ public class PterodactylManager {
      * Initializes values from config file, and PteroClient object.
      */
 
-    private void initializeAPI() {
+    private void initializeApi() {
         panelURL = plugin.getSettings().pterodactyl_panelUrl;
         apiKey = plugin.getSettings().pterodactyl_apiKey;
         serverId = plugin.getSettings().pterodactyl_serverId;
@@ -83,12 +92,8 @@ public class PterodactylManager {
      * @return Account object
      */
 
-    private Account login() {
-        try {
-            return api.retrieveAccount().execute();
-        } catch (LoginException e) {
-            throw new LoginException("The API key provided is invalid.");
-        }
+    private Account login() throws LoginException {
+        return api.retrieveAccount().execute();
     }
 
     /**
@@ -96,18 +101,12 @@ public class PterodactylManager {
      * @return Server object
      */
 
-    private ClientServer retrieveServer() {
+    private ClientServer retrieveServer() throws NotFoundException, ServerIdEmptyException {
         if (serverId.isEmpty()) {
-            throw new RuntimeException("The server ID appears to be empty. Either we were unable to determine the " +
-                    "ID automatically, or there's a bug in the code.");
+            throw new ServerIdEmptyException();
         }
 
-        try {
-            return api.retrieveServerByIdentifier(serverId).execute();
-        } catch (NotFoundException e) {
-            throw new NotFoundException("This server doesn't exist, or the account '" + getAccount().getEmail() +
-                    "' is unable to access it.");
-        }
+        return api.retrieveServerByIdentifier(serverId).execute();
     }
 
     /**
