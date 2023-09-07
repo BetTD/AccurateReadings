@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import java.util.StringJoiner;
 
 public class ResourceSubCommand extends SubCommand {
-    ResourceUsageManager resManager = plugin.getPteroAPI().getResourceUsageManager();
+    ResourceUsageManager resManager = plugin.getPteroApi().getResourceUsageManager();
 
     protected ResourceSubCommand(BaseCommand baseCommand) {
         super(

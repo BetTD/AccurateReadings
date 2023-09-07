@@ -13,7 +13,7 @@ import java.util.StringJoiner;
 
 public class RawStatsSubCommand extends SubCommand {
     Settings settings = Main.getInstance().getSettings();
-    PterodactylManager pterodactylManager = Main.getInstance().getPteroAPI();
+    PterodactylManager pterodactylManager = Main.getInstance().getPteroApi();
 
     protected RawStatsSubCommand(BaseCommand baseCommand) {
         super(baseCommand, null, "Debugging command, shows raw stats values.");

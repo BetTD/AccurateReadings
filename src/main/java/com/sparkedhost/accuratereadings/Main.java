@@ -33,7 +33,7 @@ public class Main extends JavaPlugin {
     private boolean isPAPIPresent;
 
     @Getter
-    public PterodactylManager pteroAPI;
+    private PterodactylManager pteroApi;
 
     @Getter
     private TaskManager taskManager;
@@ -107,8 +107,8 @@ public class Main extends JavaPlugin {
         log(Level.INFO, "Attempting connection to '" + panelUrl + "'...");
 
         // Initialize Pterodactyl User API interface
-        pteroAPI = new PterodactylManager();
-        pteroAPI.initializeClient();
+        pteroApi = new PterodactylManager();
+        pteroApi.initializeClient();
 
         // Register PlaceholderAPI placeholders and plugin commands
         registerPlaceholders();
@@ -119,9 +119,10 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         log(Level.INFO, "Plugin is disabling.");
 
-        if (pteroAPI != null && pteroAPI.getResourceUsageManager() != null) {
-            if (pteroAPI.getResourceUsageManager().isRunning())
-                pteroAPI.getResourceUsageManager().stopListener();
+        if (pteroApi != null
+                && pteroApi.getResourceUsageManager() != null
+                && pteroApi.getResourceUsageManager().isRunning()) {
+            pteroApi.getResourceUsageManager().stopListener();
         }
 
         log(Level.INFO, "Plugin disabled, have a nice day.");
@@ -182,8 +183,8 @@ public class Main extends JavaPlugin {
 
         if (hasPteroConfigChanged()) {
             log(Level.INFO, "Pterodactyl configuration has changed, logging back in...");
-            pteroAPI.getResourceUsageManager().stopListener();
-            pteroAPI.initializeClient();
+            pteroApi.getResourceUsageManager().stopListener();
+            pteroApi.initializeClient();
         }
     }
 

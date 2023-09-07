@@ -34,7 +34,7 @@ public class TaskProcessor {
                 break;
             case POWER:
                 PowerAction action = (PowerAction) task.getPayload();
-                Main.getInstance().getPteroAPI().sendPowerAction(action)
+                Main.getInstance().getPteroApi().sendPowerAction(action)
                         .executeAsync(unused -> {
                             if (action == PowerAction.START)
                                 sender.sendMessage(Utils.colorize("&aThe power action was sent successfully.\n" +

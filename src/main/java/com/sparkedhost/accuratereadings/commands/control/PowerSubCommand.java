@@ -34,7 +34,7 @@ public class PowerSubCommand extends SubCommand {
             return;
         }
 
-        PterodactylManager pterodactylManager = plugin.getPteroAPI();
+        PterodactylManager pterodactylManager = plugin.getPteroApi();
         PowerAction action;
         try {
             action = PowerAction.valueOf(args[1].toUpperCase());
