@@ -5,11 +5,11 @@ import com.sparkedhost.accuratereadings.exceptions.InvalidPowerActionException;
 import com.sparkedhost.accuratereadings.exceptions.InvalidTaskTypeException;
 
 public class TaskValidator {
-    public static TaskType validateTaskType(String valueOf) throws InvalidTaskTypeException {
+    public static TaskType validateTaskType(String s) throws InvalidTaskTypeException {
         TaskType result;
 
         try {
-            result = TaskType.valueOf(valueOf);
+            result = TaskType.valueOf(s);
         } catch (IllegalArgumentException e) {
             throw new InvalidTaskTypeException();
         }
@@ -17,11 +17,11 @@ public class TaskValidator {
         return result;
     }
 
-    public static PowerAction validatePowerAction(String valueOf) throws InvalidPowerActionException {
+    public static PowerAction validatePowerAction(String s) throws InvalidPowerActionException {
         PowerAction result;
 
         try {
-            result = PowerAction.valueOf(valueOf);
+            result = PowerAction.valueOf(s);
         } catch (IllegalArgumentException e) {
             throw new InvalidPowerActionException();
         }

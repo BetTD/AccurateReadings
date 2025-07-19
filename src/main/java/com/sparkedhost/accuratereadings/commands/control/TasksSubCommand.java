@@ -5,11 +5,9 @@ import com.sparkedhost.accuratereadings.commands.BaseCommand;
 import com.sparkedhost.accuratereadings.commands.SubCommand;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
 import com.sparkedhost.accuratereadings.tasks.Task;
-import com.sparkedhost.accuratereadings.tasks.TaskProcessor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.util.Set;
 import java.util.StringJoiner;
 
 public class TasksSubCommand extends SubCommand {
@@ -65,7 +63,7 @@ public class TasksSubCommand extends SubCommand {
                 }
 
                 // Let TaskProcessor take care of error handling
-                TaskProcessor.processTask(task, true, sender);
+                task.process(true, sender);
         }
     }
 

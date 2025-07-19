@@ -1,6 +1,6 @@
 package com.sparkedhost.accuratereadings.managers;
 
-import com.sparkedhost.accuratereadings.exceptions.AlreadyExistsException;
+import com.sparkedhost.accuratereadings.exceptions.TaskAlreadyExistsException;
 import com.sparkedhost.accuratereadings.tasks.Task;
 import lombok.Getter;
 
@@ -17,9 +17,9 @@ public class TaskManager {
         inst = this;
     }
 
-    public void addTask(Task task) throws AlreadyExistsException {
+    public void addTask(Task task) throws TaskAlreadyExistsException {
         if (getTasks().containsKey(task.getName())) {
-            throw new AlreadyExistsException("Task already exists.");
+            throw new TaskAlreadyExistsException();
         }
 
         getTasks().put(task.getName(), task);

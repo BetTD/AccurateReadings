@@ -1,7 +1,7 @@
 package com.sparkedhost.accuratereadings.config;
 
 import com.sparkedhost.accuratereadings.Main;
-import com.sparkedhost.accuratereadings.exceptions.AlreadyExistsException;
+import com.sparkedhost.accuratereadings.exceptions.TaskAlreadyExistsException;
 import com.sparkedhost.accuratereadings.exceptions.InvalidPowerActionException;
 import com.sparkedhost.accuratereadings.exceptions.InvalidTaskTypeException;
 import com.sparkedhost.accuratereadings.managers.TaskManager;
@@ -55,7 +55,7 @@ public class TaskSettings {
                 Main.getInstance().getLogger().warning("Invalid task type for task '" + taskEntry + "', ignoring task.");
             } catch (InvalidPowerActionException e) {
                 Main.getInstance().getLogger().warning("Invalid power action for task '" + taskEntry + "', ignoring task.");
-            } catch (AlreadyExistsException e) {
+            } catch (TaskAlreadyExistsException e) {
                 Main.getInstance().getLogger().warning("Task '" + taskEntry + "' is duplicated, ignoring.");
             }
         }
