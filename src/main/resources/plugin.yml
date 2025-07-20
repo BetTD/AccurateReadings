@@ -1,9 +1,9 @@
-name: AccurateReadings
+name: PteroLink
 author: BetTD
 description: "Your go-to solution for keeping track of server resource utilization!"
 version: ${version}
-website: https://github.com/SparkedHost/AccurateReadings
-main: com.sparkedhost.accuratereadings.Main
+website: https://github.com/BetTD/PteroLink
+main: me.bettd.pterolink.Main
 softdepend:
   - PlaceholderAPI
 commands:

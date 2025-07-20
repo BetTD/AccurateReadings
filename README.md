@@ -1,8 +1,10 @@
-# Accurate**Readings** ![Jenkins](https://ci.bettd.me/job/BetTD/job/AccurateReadings/badge/icon)
+# Ptero**Link** ![Jenkins](https://ci.bettd.me/job/BetTD/job/AccurateReadings/badge/icon)
+<small>*formerly AccurateReadings*</small>
+
 #### Ever wondered what your actual resource usage is on your server? **This plugin is for you!**
 
 ## What's this plugin?
-AccurateReadings aims to provide accurate resource utilization statistics by communicating with a Pterodactyl panel using the
+PteroLink aims to provide accurate resource utilization statistics by communicating with a Pterodactyl panel using the
 [Pterodactyl4J](https://github.com/mattmalec/Pterodactyl4J) wrapper made by mattmalec, and of course using the Pterodactyl
 panel API. Furthermore, if PlaceholderAPI is present, the plugin will also register a few placeholders that you can use to
 display your resource usage statistics on any other plugin that supports PAPI placeholders: want to display RAM usage in
@@ -20,7 +22,7 @@ Therefore, this plugin is expected to work on versions as old as 1.8.8 (tested o
 ## How to install
 1. Go to your Pterodactyl panel and, on the left sidebar, click on 'Account API'. If you're using a Sparked Host server,
 [click here](https://control.sparkedhost.us/account/api).
-2. In the top right corner, click on Create New. Add a description (e.g. "AccurateReadings") and leave the 'Allowed
+2. In the top right corner, click on Create New. Add a description (e.g. "PteroLink") and leave the 'Allowed
 Connection IPs' empty unless you're **100% sure** what IP will your server be using to connect to the API (this is hard
 to determine on shared hosting environments as it may use the node's main IP address to communicate, which is not always
 obvious).
@@ -28,7 +30,7 @@ obvious).
 4. Upload the plugin JAR (you can grab it from the [releases page](https://github.com/SparkedHost/AccurateReadings/releases/))
 to the plugins directory on your server.
 5. Restart your server in order to generate the config file. The plugin will then disable itself, please stop the server
-after it has fully loaded and navigate to `plugins/AccurateReadings`, then open the config.yml file.
+after it has fully loaded and navigate to `plugins/PteroLink`, then open the config.yml file.
 6. Then fill in the rest of the options: `panel-url` is the URL of your Pterodactyl panel; `server-id` is your server ID
 and you can find it under 'Settings' in your server, but it is not necessary; `api-key` is the API key we copied earlier.
 Make sure you don't remove the quotation marks from any of the options.
@@ -61,6 +63,6 @@ development.
 - **1.2.0**. Tons of code quality and performance improvements, restructured the config file, added PlaceholderAPI
 support, switched to a better API wrapper.
 
-## Support
+## Getting help
 As this project has been officially released by Sparked Host, our support team may provide assistance with this plugin.
 For any other inquiries, you may reach out to Raúl via email: raul.m@sparkedhost.com
