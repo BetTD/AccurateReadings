@@ -49,8 +49,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
                     getPteroManager().setUsage(ResourceType.DISK, utilization.getDisk());
                     getPteroManager().setUptime(utilization.getUptimeFormatted());
                 }, throwable -> {
-                    Main.getInstance().log(Level.SEVERE, "Failed to asynchronously retrieve server utilization. Stacktrace below.");
-                    throwable.printStackTrace();
+                    Main.getInstance().log(Level.WARNING, "Failed to asynchronously retrieve server utilization.", throwable);
                 }), 0L, Main.getInstance().getSettings().pterodactyl_updateFrequency * 20L);
     }
 
