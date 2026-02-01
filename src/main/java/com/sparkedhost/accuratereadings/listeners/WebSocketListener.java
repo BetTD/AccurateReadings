@@ -17,7 +17,7 @@ import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 
 public class WebSocketListener extends ClientSocketListenerAdapter {
-    private int retries = 0;
+    public static int retries = 0;
     PterodactylManager pteroManager = Main.getInstance().pteroAPI;
     ResourceUsageManager resourceUsageManager = pteroManager.getResourceUsageManager();
 
@@ -56,6 +56,8 @@ public class WebSocketListener extends ClientSocketListenerAdapter {
         } else {
             Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
         }
+
+        Main.getInstance().log(Level.INFO, "retries: " + retries);
 
         resourceUsageManager.stopListener();
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> resourceUsageManager.startListener(), 60L);

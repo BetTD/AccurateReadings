@@ -10,6 +10,7 @@ import com.mattmalec.pterodactyl4j.entities.Limit;
 import com.mattmalec.pterodactyl4j.exceptions.LoginException;
 import com.mattmalec.pterodactyl4j.exceptions.NotFoundException;
 import com.sparkedhost.accuratereadings.Main;
+import com.sparkedhost.accuratereadings.listeners.WebSocketListener;
 import com.sparkedhost.accuratereadings.tasks.ResourceType;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +62,8 @@ public class PterodactylManager {
 
             // Stores whether the account used to access this server owns it or not
             setServerOwner(server.isServerOwner());
+
+            WebSocketListener.retries = 0;
         } catch (RuntimeException exception) {
             exception.printStackTrace();
             plugin.disableItself();
