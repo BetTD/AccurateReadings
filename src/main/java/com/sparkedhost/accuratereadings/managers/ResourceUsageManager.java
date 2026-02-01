@@ -36,8 +36,11 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
 
         // If use-websocket is set to true in the config, use that to gather resource usage stats.
         if (Main.getInstance().getSettings().pterodactyl_useWebsocket) {
-            pteroManager.getApi().retrieveServerByIdentifier(pteroManager.getServerId()).map(ClientServer::getWebSocketBuilder)
-                    .map(builder -> builder.addEventListeners(new WebSocketListener())).executeAsync(WebSocketBuilder::build);
+            pteroManager.getApi()
+                    .retrieveServerByIdentifier(pteroManager.getServerId())
+                    .map(ClientServer::getWebSocketBuilder)
+                    .map(builder -> builder.addEventListeners(new WebSocketListener()))
+                    .executeAsync(WebSocketBuilder::build);
             return;
         }
 
