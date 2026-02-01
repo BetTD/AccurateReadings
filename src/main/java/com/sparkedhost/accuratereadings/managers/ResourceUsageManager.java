@@ -67,8 +67,7 @@ public class ResourceUsageManager extends ClientSocketListenerAdapter {
                 Main.getInstance().log(Level.WARNING, "The websocket client isn't connected!");
             }
             setWebSocketManager(null);
-        } else {
-            assert getFallbackTimer() != null;
+        } else if (getFallbackTimer() != null) {
             getFallbackTimer().cancel();
         }
 
