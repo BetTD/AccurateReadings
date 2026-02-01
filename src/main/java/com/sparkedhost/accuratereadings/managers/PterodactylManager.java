@@ -65,7 +65,7 @@ public class PterodactylManager {
 
             WebSocketListener.retries = 0;
         } catch (RuntimeException exception) {
-            exception.printStackTrace();
+            plugin.log(Level.SEVERE, "Unable to initialize client!", exception);
             plugin.disableItself();
         }
     }
