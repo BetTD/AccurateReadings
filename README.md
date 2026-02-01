@@ -1,4 +1,4 @@
-# Accurate**Readings** ![Jenkins](https://ci.bettd.me/job/SparkedHost/job/AccurateReadings/badge/icon)
+# Accurate**Readings** ![Jenkins](https://ci.bettd.me/job/BetTD/job/AccurateReadings/badge/icon)
 #### Ever wondered what your actual resource usage is on your server? **This plugin is for you!**
 
 ## What's this plugin?
