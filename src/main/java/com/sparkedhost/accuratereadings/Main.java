@@ -62,8 +62,12 @@ public class Main extends JavaPlugin {
             disableItself();
         } else {
             if (configVersion < EXPECTED_CONFIG_VERSION) {
-                log(Level.WARNING, String.format("Config version does not match! Expected %s, got %s. It's very likely the " +
-                        "configuration file is out of date. Continue at your own risk.", EXPECTED_CONFIG_VERSION, configVersion));
+                log(Level.WARNING, String.format(
+                        "Config version does not match! Expected %s, got %s. It's very likely the configuration file" +
+                                " is out of date. Continue at your own risk.",
+                        EXPECTED_CONFIG_VERSION,
+                        configVersion
+                ));
                 log(Level.WARNING, "Resuming startup in 2 seconds...");
 
                 try {
@@ -71,13 +75,18 @@ public class Main extends JavaPlugin {
                 } catch (InterruptedException exception) {
                     log(Level.WARNING, "Timeout interrupted.");
                 } catch (IllegalMonitorStateException exception) {
-                    log(Level.WARNING, "I tried very hard to pause the main server thread, but so far I cannot make it work.");
+                    log(Level.WARNING, "I tried very hard to pause the main server thread, but so far I cannot " +
+                            "make it work.");
                 }
             }
 
             if (configVersion > EXPECTED_CONFIG_VERSION) {
-                log(Level.SEVERE, String.format("Config version is NEWER (Expected %s, got %s)! This will cause problems, so the plugin is " +
-                        "going to disable itself.", EXPECTED_CONFIG_VERSION, configVersion));
+                log(Level.SEVERE, String.format(
+                        "Config version is NEWER (Expected %s, got %s)! This will cause problems, so the plugin is " +
+                                "going to disable itself.",
+                        EXPECTED_CONFIG_VERSION,
+                        configVersion
+                ));
                 disableItself();
             }
         }
@@ -165,7 +174,8 @@ public class Main extends JavaPlugin {
         isPAPIPresent = true;
 
         if (!placeholderApiSuccess) {
-            log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our placeholders.");
+            log(Level.WARNING, "PlaceholderAPI was found on your server, but we were unable to register our " +
+                    "placeholders.");
             return;
         }
 
@@ -203,7 +213,8 @@ public class Main extends JavaPlugin {
         }
 
         if (apiKey.isEmpty() || apiKey.equalsIgnoreCase("CHANGETHIS")) {
-            log(Level.SEVERE, "You have not provided an API key in your config.yml. Read how to get the API key on the GitHub page.");
+            log(Level.SEVERE, "You have not provided an API key in your config.yml. Read how to get the API key " +
+                    "on the GitHub page.");
             return false;
         }
 
