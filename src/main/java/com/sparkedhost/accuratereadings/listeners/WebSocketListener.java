@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 
 import java.io.EOFException;
 import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 
 public class WebSocketListener extends ClientSocketListenerAdapter {
@@ -50,6 +51,8 @@ public class WebSocketListener extends ClientSocketListenerAdapter {
 
         if (e.getThrowable() instanceof EOFException) {
             Main.getInstance().log(Level.WARNING, "Connection to wings ended unexpectedly, reconnecting...");
+        } else if (e.getThrowable() instanceof SocketTimeoutException) {
+            Main.getInstance().log(Level.WARNING, "Connection to wings websocket timed out, reconnecting...");
         } else {
             Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
         }
