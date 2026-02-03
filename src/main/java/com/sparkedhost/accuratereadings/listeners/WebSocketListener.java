@@ -23,6 +23,7 @@ public class WebSocketListener extends ClientSocketListenerAdapter {
 
     @Override
     public void onAuthSuccess(AuthSuccessEvent e) {
+        retries = 0;
         Main.getInstance().log(Level.INFO, "Successfully established a websocket connection.");
         e.getWebSocketManager().request(WebSocketManager.RequestAction.STATS);
         resourceUsageManager.setWebSocketManager(e.getWebSocketManager());
@@ -56,8 +57,6 @@ public class WebSocketListener extends ClientSocketListenerAdapter {
         } else {
             Main.getInstance().log(Level.WARNING, "An error occurred with the websocket connection, reconnecting...");
         }
-
-        Main.getInstance().log(Level.INFO, "retries: " + retries);
 
         resourceUsageManager.stopListener();
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> resourceUsageManager.startListener(), 60L);
