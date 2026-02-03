@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.text.NumberFormat;
 import java.util.StringJoiner;
 
 public class RawStatsSubCommand extends SubCommand {
@@ -47,16 +48,22 @@ public class RawStatsSubCommand extends SubCommand {
                 pterodactylManager.getActualCpuUsage(),
                 pterodactylManager.getActualCpuLimit(),
                 settings.output_normalizeCpu
-                        ? String.format("yes, %s/%s",
+                        ? String.format("yes, %s/%s %%",
                                 pterodactylManager.getCpuUsage(),
                                 pterodactylManager.getCpuLimit()
                         )
                         : "no"));
 
-        output.add("Memory usage in bytes: " + pterodactylManager.getMemoryUsage());
+        // formatter to avoid printing doubles in scientific notation
+        NumberFormat fmt = NumberFormat.getInstance();
+        fmt.setGroupingUsed(false);
+        fmt.setMaximumIntegerDigits(99);
+        fmt.setMaximumFractionDigits(99);
+
+        output.add("Memory usage in bytes: " + fmt.format(pterodactylManager.getMemoryUsage()));
         output.add("Memory limit in MB: " + pterodactylManager.getMemoryLimit());
 
-        output.add("Disk usage in bytes: " + pterodactylManager.getDiskUsage());
+        output.add("Disk usage in bytes: " + fmt.format(pterodactylManager.getDiskUsage()));
         output.add("Disk limit in MB: " + pterodactylManager.getDiskLimit());
 
         output.add("Server uptime: " + pterodactylManager.getUptime());
