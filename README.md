@@ -2,23 +2,24 @@
 #### Ever wondered what your actual resource usage is on your server? **This plugin is for you!**
 
 ## What's this plugin?
-AccurateReadings aims to provide accurate resource utilization statistics by communicating with a Pterodactyl panel using the
-[Pterodactyl4J](https://github.com/mattmalec/Pterodactyl4J) wrapper made by mattmalec, and of course using the Pterodactyl
-panel API. Furthermore, if PlaceholderAPI is present, the plugin will also register a few placeholders that you can use to
-display your resource usage statistics on any other plugin that supports PAPI placeholders: want to display RAM usage in
-your server's playerlist/tab using TitleManager? No problem!    
+AccurateReadings aims to provide accurate resource utilization statistics by communicating with a Pterodactyl panel
+using the [Pterodactyl4J](https://github.com/mattmalec/Pterodactyl4J) wrapper made by mattmalec, and of course using the Pterodactyl panel API. Furthermore, if
+PlaceholderAPI is present, the plugin will also register a few placeholders that you can use to display your resource
+usage statistics on any other plugin that supports PAPI placeholders: want to display RAM usage in your server's
+playerlist/tab using TitleManager? No problem!    
 
 ## Requirements
 - **A Pterodactyl panel.** If you're using a shared hosting plan and the panel is powered by Pterodactyl, then you are
 able to use this plugin. If you're self-hosting your server (home server, your PC, a VPS or dedicated server...), make
 sure you use Pterodactyl, not only is it really easy to install, but it is an excellent panel software. Please read the
-wiki for instructions on how to check if the panel you're using is powered by Pterodactyl.
+wiki for instructions on how to check if the panel you're using is powered by Pterodactyl. **This also works with Apollo
+Panel**, used by Sparked Host, Modern Hosting, and EasyMinecraftHosting.
 - **A Spigot server.** This plugin has been coded against Spigot 1.12.2, but it has been tested on Pufferfish 1.17.1 and 
-the latest Purpur 1.19.3 build. It should work on any server running Spigot, or one of its forks: Paper, Purpur...
+the latest Purpur 1.21.11 build. It should work on any server running Spigot, or one of its forks: Paper, Purpur...
 Therefore, this plugin is expected to work on versions as old as 1.8.8 (tested on Paper 1.8.8 build 445).
 
 ## How to install
-1. Go to your Pterodactyl panel and, on the left sidebar, click on 'Account API'. If you're using a Sparked Host server,
+1. Go to your Pterodactyl panel and, on the menu bar, click on 'API Credentials'. If you're using a Sparked Host server,
 [click here](https://control.sparkedhost.us/account/api).
 2. In the top right corner, click on Create New. Add a description (e.g. "AccurateReadings") and leave the 'Allowed
 Connection IPs' empty unless you're **100% sure** what IP will your server be using to connect to the API (this is hard
@@ -41,7 +42,8 @@ Make sure you don't remove the quotation marks from any of the options.
 This may override Essentials' `/lag` command, but you can fix this in the `commands.yml` file on your server, or you can 
 just use `/elag`.
 
-- `/arc`: Main control command. This contains a few subcommands that allow you to control different aspects of the plugin and your server.
+- `/arc`: Main control command. This contains a few subcommands that allow you to control different aspects of the
+- plugin and your server.
 
 This plugin also registers a few PlaceholderAPI placeholders, you can find the complete list in the wiki.
 
@@ -56,11 +58,12 @@ This plugin also registers a few PlaceholderAPI placeholders, you can find the c
 development.
 
 ## Version history
-- **1.0.0-pre1**. First public version of the plugin
-- **1.1.0**. Removed Sparked Host lock, added proper configuration checks and cooldown, and fixed a few bugs.
+- **1.2.1**. Stability fixes.
 - **1.2.0**. Tons of code quality and performance improvements, restructured the config file, added PlaceholderAPI
-support, switched to a better API wrapper.
+  support, switched to a better API wrapper.
+- **1.1.0**. Removed Sparked Host lock, added proper configuration checks and cooldown, and fixed a few bugs.
+- **1.0.0-pre1**. First public version of the plugin
 
 ## Support
-As this project has been officially released by Sparked Host, our support team may provide assistance with this plugin.
-For any other inquiries, you may reach out to Raúl via email: raul.m@sparkedhost.com
+This project used to be an official Sparked Host open-source release. However, I (Raúl) have since taken full ownership
+of the codebase and will do my best to provide support.
