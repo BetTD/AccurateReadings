@@ -235,20 +235,31 @@ public class Main extends JavaPlugin {
     }
 
     private boolean isPterodactyl() {
-        return Files.exists(Paths.get("/entrypoint.sh")) && isRunningInsideDocker();
+        return Files.exists(Paths.get("/entrypoint.sh")) && (isInDockerCgroup1() || isInDockerCgroup2());
     }
 
     /**
-     * Check if current process is running within a Docker container.
+     * Check if current process is running within a Docker container using Cgroup v1.
      * <p>
      * Source: <a href="https://stackoverflow.com/a/52581380">StackOverflow</a>
      * </p>
-     * @return Whether the process is in Docker or not
+     * @return Whether the process is in a Cgroup v1 Docker container or not.
      */
-    private boolean isRunningInsideDocker() {
-        try (Stream < String > stream =
-                     Files.lines(Paths.get("/proc/1/cgroup"))) {
-            return stream.anyMatch(line -> line.contains("/docker"));
+    private boolean isInDockerCgroup1() {
+        try (Stream<String> stream = Files.lines(Paths.get("/proc/1/cgroup"))) {
+            return stream.anyMatch(line -> line.contains("/docker/"));
+        } catch (IOException exception) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if current process is running within a Docker container using Cgroup v2.
+     * @return Whether the process is in a Cgroup v2 Docker container or not.
+     */
+    private boolean isInDockerCgroup2() {
+        try (Stream<String> stream = Files.lines(Paths.get("/proc/self/mountinfo"))) {
+            return stream.anyMatch(line -> line.contains("/docker/"));
         } catch (IOException exception) {
             return false;
         }
