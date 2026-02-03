@@ -95,8 +95,10 @@ public class Main extends JavaPlugin {
 
         getSettings().loadValues();
 
-        if (!isPterodactyl()) {
-            log(Level.SEVERE, "Pterodactyl check failed! Are you sure this server is running in Pterodactyl?");
+        if (isPterodactyl()) {
+            log(Level.INFO, "Pterodactyl check passed!");
+        } else {
+            log(Level.WARNING, "Pterodactyl check failed! Are you sure this server is running in Pterodactyl?");
         }
 
         panelUrl = getSettings().pterodactyl_panelUrl;
@@ -104,8 +106,6 @@ public class Main extends JavaPlugin {
         serverId = getSettings().pterodactyl_serverId;
         useWebsocket = getSettings().pterodactyl_useWebsocket;
         updateFrequency = getSettings().pterodactyl_updateFrequency;
-
-        log(Level.INFO, "AccurateReadings is loading...");
 
         if (!isConfigValid()) {
             // Actual logging output is handled in the Main#isConfigValid() method.
