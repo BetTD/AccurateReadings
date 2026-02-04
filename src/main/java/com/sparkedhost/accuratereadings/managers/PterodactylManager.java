@@ -229,7 +229,7 @@ public class PterodactylManager {
         if (!getPlugin().getSettings().output_normalizeCpu)
             return value;
 
-        return Math.round((double) value / cpuLimit) * 100;
+        return Math.round((double) value / cpuLimit * 100);
     }
 
     /**
