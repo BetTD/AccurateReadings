@@ -1,4 +1,4 @@
-# Ptero**Link** ![Jenkins](https://ci.bettd.me/job/BetTD/job/AccurateReadings/badge/icon)
+# Ptero**Link** [![Build Status](https://ci.5sm.online/buildStatus/icon?job=BetTD%2FPteroLink)](https://ci.5sm.online/job/BetTD/job/PteroLink/)
 <small>*formerly AccurateReadings*</small>
 
 #### Ever wondered what your actual resource usage is on your server? **This plugin is for you!**
