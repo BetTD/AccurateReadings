@@ -48,7 +48,7 @@ just use `/elag`.
 This plugin also registers a few PlaceholderAPI placeholders, you can find the complete list in the wiki.
 
 ## Known issues
-- CPU normalization might not work.
+None, at this time we believe the latest release (v1.2.1) is fairly stable. Please report any bugs in the Issues tab! 
 
 ## Credits
 - [OkHttp](https://github.com/square/okhttp) by Square *(provided by P4J)*
