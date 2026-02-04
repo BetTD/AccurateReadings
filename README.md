@@ -3,6 +3,13 @@
 
 #### Ever wondered what your actual resource usage is on your server? **This plugin is for you!**
 
+> [!IMPORTANT]
+> You're visiting the `next` branch for PteroLink. This is currently a work in progress, all the Pterodactyl-related
+> code and other common, reusable components will be moving to a separate package to allow me to port the plugin to
+> other platforms easily. If you're looking for a stable Spigot-compatible implementation of the codebase, please
+> look in the Releases page, or browse the code at the `v1.2.x` branch
+> [here](https://github.com/BetTD/AccurateReadings/tree/v1.2.x).
+
 ## What's this plugin?
 PteroLink aims to provide accurate resource utilization statistics by communicating with a Pterodactyl panel using the
 [Pterodactyl4J](https://github.com/mattmalec/Pterodactyl4J) wrapper made by mattmalec, and of course using the Pterodactyl
